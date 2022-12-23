@@ -5,6 +5,13 @@ import texts
 from config import *
 import stg
 
+sql.execute(f"""CREATE TABLE IF NOT EXISTS mainapp_catlink(
+ident_id TEXT PRIMARY KEY,
+item_id TEXT,
+cat_id TEXT
+)""")
+db.commit()
+
 
 @bot.message_handler(commands=['admin'])
 def start_command(message):
@@ -231,9 +238,8 @@ def glob_calls(call):
                         dm()
                     # Selected category
                     elif len(cd) == 2:
-                        stg.admin_find_by_category(chat_id, cd[1])
+                        stg.admin_find_by_category(chat_id, cat_id=cd[1])
                         dm()
-
 
 
         # Agent back office

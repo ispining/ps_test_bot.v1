@@ -13,6 +13,7 @@ cat_id TEXT
 db.commit()
 
 
+
 @bot.message_handler(commands=['admin'])
 def start_command(message):
     chat_id = message.chat.id

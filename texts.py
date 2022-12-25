@@ -180,7 +180,6 @@ ar::{content}
     'ar'
     ],
 
-
     # admin_find_by_category_msg
     ['admin_find_by_category_msg',
     """<b>Товар по категории</b>
@@ -190,7 +189,6 @@ ar::{content}
     'he',
     'ar'
     ],
-
 
     # admin_find_by_category_selector_msg
     ['admin_find_by_category_selector_msg',
@@ -202,7 +200,6 @@ ar::{content}
     'ar'
     ],
 
-
     # admin_item_panel_msg
     ['admin_item_panel_msg',
     """<b>Товар по категории</b>
@@ -213,12 +210,22 @@ ar::{content}
     'ar'
     ],
 
-
     # in_Dev
     ['in_Dev',
     """<b>В разработке</b>
     
 Данная функция находится на стадии разработки / обновлений.
+""",
+    'This feature is under development / updates.',
+    'תכונה זו נמצאת בפיתוח/עדכונים.',
+    'هذه الميزة قيد التطوير / التحديثات.'
+    ],
+
+    # admin_item_panel_set_picture_msg
+    ['admin_item_panel_set_picture_msg',
+    """<b>Изображение / Фото товара</b>
+    
+Выберите действие.
 """,
     'This feature is under development / updates.',
     'תכונה זו נמצאת בפיתוח/עדכונים.',
@@ -500,7 +507,10 @@ threading.main_thread()
 
 # get texts for regular use
 def get_text(user_id, text_id):
-    lng = configurer.Lang(user_id).get()
+    if user_id in ["ru", "en", "he", "ar"]:
+        lng = user_id
+    else:
+        lng = configurer.Lang(user_id).get()
     if lng != None:
         return content_by_lang(text_id, lng)
 

@@ -260,7 +260,7 @@ def admin_find_by_category(chat_id, cat_id=None):
         for ident_id, item_id, cat in sql.fetchall():
             if cat == cat_id:
                 cat = configurer.Categories(cat_id=cat_id).show_content(user_id=chat_id)
-                button = btn(cat, callback_data=f"admin_item_panel||{cat_id}||admin_find_by_category")
+                button = btn(cat, callback_data=f"admin_item_panel||{item_id}||admin_find_by_category")
                 k.row(button)
         msg = texts.get_text(chat_id, f"admin_find_by_category_selector_msg||{cat_id}")
         k.row(back(chat_id, "admin_find_by_category"))
@@ -271,6 +271,7 @@ def admin_item_panel(chat_id, item_id, back_callback):
     st = configurer.Stock()
     stock_dict = st.get(value=item_id)
     if stock_dict == None:
+        # if no items found
         pass
     else:
         k = kmarkup()
@@ -307,28 +308,63 @@ def admin_item_panel(chat_id, item_id, back_callback):
 
 
 def admin_item_panel_set(chat_id, item_id, set=None):
+    k = kmarkup()
+    msg = None
     if set == "name":
-        pass
+        msg = texts.get_text(chat_id, "").format(**{
+            "item_id": "",
+            "ru": texts.get_text("ru", ""),
+            "en": texts.get_text("en", ""),
+            "he": texts.get_text("he", ""),
+            "ar": texts.get_text("ar", "")
+        })
+
     elif set == "picture":
-        pass
+        st = configurer.Stock()
+        item_info = st.get("item_id", item_id)
+        picture = None
+        if item_info['picture'] != "None":
+            picture = item_info['picture']
+        msg = texts.get_text(chat_id, "admin_item_panel_set_picture_msg")
+        k.row(back(chat_id, f"admin_item_panel||{item_id}||admin_find_by_category"))
+        if picture == "None":
+            send(chat_id, msg, reply_markup=k)
+        else:
+            bot.send_photo(chat_id=chat_id, photo=open(item_info['picture'], "rb"), caption=msg, reply_markup=k)
     elif set == "item_firm":
-        pass
+        msg = texts.get_text(chat_id, "")
+        k.row(back(chat_id, f"admin_item_panel||{item_id}||admin_find_by_category"))
+        send(chat_id, msg, reply_markup=k)
     elif set == "barcode":
-        pass
+        msg = texts.get_text(chat_id, "")
+        k.row(back(chat_id, f"admin_item_panel||{item_id}||admin_find_by_category"))
+        send(chat_id, msg, reply_markup=k)
     elif set == "input_cost":
-        pass
+        msg = texts.get_text(chat_id, "")
+        k.row(back(chat_id, f"admin_item_panel||{item_id}||admin_find_by_category"))
+        send(chat_id, msg, reply_markup=k)
     elif set == "output_cost":
-        pass
+        msg = texts.get_text(chat_id, "")
+        k.row(back(chat_id, f"admin_item_panel||{item_id}||admin_find_by_category"))
+        send(chat_id, msg, reply_markup=k)
     elif set == "creation_date":
-        pass
+        msg = texts.get_text(chat_id, "")
+        k.row(back(chat_id, f"admin_item_panel||{item_id}||admin_find_by_category"))
+        send(chat_id, msg, reply_markup=k)
     elif set == "exp_date":
-        pass
+        msg = texts.get_text(chat_id, "")
+        k.row(back(chat_id, f"admin_item_panel||{item_id}||admin_find_by_category"))
+        send(chat_id, msg, reply_markup=k)
     elif set == "package_num":
-        pass
+        msg = texts.get_text(chat_id, "")
+        k.row(back(chat_id, f"admin_item_panel||{item_id}||admin_find_by_category"))
+        send(chat_id, msg, reply_markup=k)
     elif set == "item_count":
-        pass
+        msg = texts.get_text(chat_id, "")
+        k.row(back(chat_id, f"admin_item_panel||{item_id}||admin_find_by_category"))
+        send(chat_id, msg, reply_markup=k)
     elif set == "files":
-        pass
+        msg = texts.get_text(chat_id, "")
 
 
 def admin_item_panel_set_item_picture(chat_id, item_id):

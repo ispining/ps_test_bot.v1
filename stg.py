@@ -291,7 +291,7 @@ def admin_item_panel(chat_id, item_id, back_callback):
         })
         k.row(btn(texts.get_text(chat_id, "set_item_name_btn"), callback_data=f"admin_item_panel_set_name||{str(item_id)}"))
         k.row(btn(texts.get_text(chat_id, "set_item_picture_btn"), callback_data=f"admin_item_panel_set_item_picture||{str(item_id)}"))
-        k.row(btn(texts.get_text(chat_id, "set_item_firm_btn"), callback_data=f"admin_item_panel_set_item_firm||{str(item_id)}"))
+        k.row(btn(texts.get_text(chat_id, "set_item_item_firm_btn"), callback_data=f"admin_item_panel_set_item_firm||{str(item_id)}"))
         k.row(btn(texts.get_text(chat_id, "set_item_barcode_btn"), callback_data=f"admin_item_panel_set_item_barcode||{str(item_id)}"))
         k.row(btn(texts.get_text(chat_id, "set_item_input_cost_btn"), callback_data=f"admin_item_panel_set_item_input_cost||{str(item_id)}"))
         k.row(btn(texts.get_text(chat_id, "set_item_output_cost_btn"), callback_data=f"admin_item_panel_set_item_output_cost||{str(item_id)}"))
@@ -299,9 +299,8 @@ def admin_item_panel(chat_id, item_id, back_callback):
         k.row(btn(texts.get_text(chat_id, "set_item_exp_date_btn"), callback_data=f"admin_item_panel_set_item_exp_date||{str(item_id)}"))
         k.row(btn(texts.get_text(chat_id, "set_item_package_num_btn"), callback_data=f"admin_item_panel_set_item_package_num||{str(item_id)}"))
         k.row(btn(texts.get_text(chat_id, "set_item_count_btn"), callback_data=f"admin_item_panel_set_item_count||{str(item_id)}"))
-        k.row(btn(texts.get_text(chat_id, "set_item_in_stock_btn"), callback_data=f"admin_item_panel_set_item_in_stock||{str(item_id)}"))
+        k.row(btn(texts.get_text(chat_id, "set_item_item_count_btn"), callback_data=f"admin_item_panel_set_item_in_stock||{str(item_id)}"))
         k.row(btn(texts.get_text(chat_id, "set_item_special_files_btn"), callback_data=f"admin_item_panel_set_item_special_files||{str(item_id)}"))
-
 
         k.row(back(chat_id, back_callback))
         send(chat_id, msg, reply_markup=k)

@@ -314,7 +314,7 @@ ar::{content}
     'ar'
     ],
 
-    # set_item_item_firm_btn
+    # set_item_firm_btn
     ["set_item_item_firm_btn",
     "Изготовитель",
     'en',

@@ -276,21 +276,25 @@ def admin_item_panel(chat_id, item_id, back_callback):
         k = kmarkup()
         msg = texts.get_text(chat_id, "admin_item_panel_msg").format(**{
             "item_id": str(item_id),
-            "name": str(),
-            "picture": str(),
-            "item_firm": str(),
-            "barcode": str(),
-            "input_cost": str(),
-            "output_cost": str(),
-            "creation_date": str(),
-            "exp_date": str(),
-            "package_num": str(),
-            "item_count": str(),
-            "in_stock": str(),
-            "special_files": str()
-
+            "name": str(stock_dict['name']),
+            "picture": str(stock_dict['picture']),
+            "item_firm": str(stock_dict['item_firm']),
+            "barcode": str(stock_dict['barcode']),
+            "input_cost": str(stock_dict['input_cost']),
+            "output_cost": str(stock_dict['output_cost']),
+            "creation_date": str(stock_dict['creation_date']),
+            "exp_date": str(stock_dict['exp_date']),
+            "package_num": str(stock_dict['package_num']),
+            "item_count": str(stock_dict['item_count']),
+            "in_stock": str(stock_dict['in_stock']),
+            "special_files": str(stock_dict['special_files'])
         })
-        k.row()
+        k.row(btn(texts.get_text(chat_id, "set_item_name"), callback_data=f"admin_item_panel_set_name||{str(item_id)}"))
+        k.row(btn(texts.get_text(chat_id, "set_item_name"), callback_data=f"admin_item_panel_set_name||{str(item_id)}"))
+        k.row(btn(texts.get_text(chat_id, "set_item_name"), callback_data=f"admin_item_panel_set_name||{str(item_id)}"))
+        k.row(btn(texts.get_text(chat_id, "set_item_name"), callback_data=f"admin_item_panel_set_name||{str(item_id)}"))
+        k.row(btn(texts.get_text(chat_id, "set_item_name"), callback_data=f"admin_item_panel_set_name||{str(item_id)}"))
+        k.row(btn(texts.get_text(chat_id, "set_item_name"), callback_data=f"admin_item_panel_set_name||{str(item_id)}"))
         k.row(back(chat_id, back_callback))
         send(chat_id, msg, reply_markup=k)
 

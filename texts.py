@@ -203,6 +203,17 @@ ar::{content}
     ],
 
 
+    # admin_item_panel_msg
+    ['admin_item_panel_msg',
+    """<b>Товар по категории</b>
+    
+Выберите товар""",
+    'en',
+    'he',
+    'ar'
+    ],
+
+
 
 
 

@@ -392,6 +392,14 @@ ar::{content}
     'Save',
     'שמירה',
     'ar'
+    ],
+
+    # done_btn
+    ["done_btn",
+    "Сохранить",
+    'Save',
+    'שמירה',
+    'ar'
     ]
 
 

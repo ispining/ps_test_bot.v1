@@ -283,9 +283,6 @@ def admin_item_panel(chat_id, item_id, back_callback):
             "barcode": str(stock_dict['barcode']),
             "input_cost": str(stock_dict['input_cost']),
             "output_cost": str(stock_dict['output_cost']),
-            "creation_date": str(stock_dict['creation_date']),
-            "exp_date": str(stock_dict['exp_date']),
-            "package_num": str(stock_dict['package_num']),
             "item_count": str(stock_dict['item_count']),
             "in_stock": str(stock_dict['in_stock']),
             "special_files": str(stock_dict['special_files'])
@@ -296,9 +293,6 @@ def admin_item_panel(chat_id, item_id, back_callback):
         k.row(btn(texts.get_text(chat_id, "set_item_barcode_btn"), callback_data=f"admin_item_panel_set_item_barcode||{str(item_id)}"))
         k.row(btn(texts.get_text(chat_id, "set_item_input_cost_btn"), callback_data=f"admin_item_panel_set_item_input_cost||{str(item_id)}"))
         k.row(btn(texts.get_text(chat_id, "set_item_output_cost_btn"), callback_data=f"admin_item_panel_set_item_output_cost||{str(item_id)}"))
-        k.row(btn(texts.get_text(chat_id, "set_item_creation_date_btn"), callback_data=f"admin_item_panel_set_item_creation_date||{str(item_id)}"))
-        k.row(btn(texts.get_text(chat_id, "set_item_exp_date_btn"), callback_data=f"admin_item_panel_set_item_exp_date||{str(item_id)}"))
-        k.row(btn(texts.get_text(chat_id, "set_item_package_num_btn"), callback_data=f"admin_item_panel_set_item_package_num||{str(item_id)}"))
         k.row(btn(texts.get_text(chat_id, "set_item_count_btn"), callback_data=f"admin_item_panel_set_item_count||{str(item_id)}"))
         k.row(btn(texts.get_text(chat_id, "set_item_item_in_stock_btn"), callback_data=f"admin_item_panel_set_item_in_stock||{str(item_id)}"))
         k.row(btn(texts.get_text(chat_id, "set_item_special_files_btn"), callback_data=f"admin_item_panel_set_item_special_files||{str(item_id)}"))
@@ -331,6 +325,7 @@ def admin_item_panel_set(chat_id, item_id, set=None):
             send(chat_id, msg, reply_markup=k)
         else:
             bot.send_photo(chat_id=chat_id, photo=open(item_info['picture'], "rb"), caption=msg, reply_markup=k)
+
     elif set == "item_firm":
         msg = texts.get_text(chat_id, "")
         k.row(back(chat_id, f"admin_item_panel||{item_id}||admin_find_by_category"))
@@ -347,23 +342,12 @@ def admin_item_panel_set(chat_id, item_id, set=None):
         msg = texts.get_text(chat_id, "")
         k.row(back(chat_id, f"admin_item_panel||{item_id}||admin_find_by_category"))
         send(chat_id, msg, reply_markup=k)
-    elif set == "creation_date":
-        msg = texts.get_text(chat_id, "")
-        k.row(back(chat_id, f"admin_item_panel||{item_id}||admin_find_by_category"))
-        send(chat_id, msg, reply_markup=k)
-    elif set == "exp_date":
-        msg = texts.get_text(chat_id, "")
-        k.row(back(chat_id, f"admin_item_panel||{item_id}||admin_find_by_category"))
-        send(chat_id, msg, reply_markup=k)
-    elif set == "package_num":
-        msg = texts.get_text(chat_id, "")
-        k.row(back(chat_id, f"admin_item_panel||{item_id}||admin_find_by_category"))
-        send(chat_id, msg, reply_markup=k)
     elif set == "item_count":
         msg = texts.get_text(chat_id, "")
         k.row(back(chat_id, f"admin_item_panel||{item_id}||admin_find_by_category"))
         send(chat_id, msg, reply_markup=k)
     elif set == "files":
+        #
         msg = texts.get_text(chat_id, "")
 
 

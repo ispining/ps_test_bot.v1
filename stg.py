@@ -260,13 +260,38 @@ def admin_find_by_category(chat_id, cat_id=None):
         for ident_id, item_id, cat in sql.fetchall():
             if cat == cat_id:
                 cat = configurer.Categories(cat_id=cat_id).show_content(user_id=chat_id)
-                button = btn(cat, callback_data=f"admin_item_panel||{cat_id}")
+                button = btn(cat, callback_data=f"admin_item_panel||{cat_id}||admin_find_by_category")
                 k.row(button)
         msg = texts.get_text(chat_id, f"admin_find_by_category_selector_msg||{cat_id}")
         k.row(back(chat_id, "admin_find_by_category"))
         send(chat_id, msg, reply_markup=k)
 
 
-def admin_item_panel(chat_id):
-    pass
+def admin_item_panel(chat_id, item_id, back_callback):
+    st = configurer.Stock()
+    stock_dict = st.get(value=item_id)
+    if stock_dict == None:
+        pass
+    else:
+        k = kmarkup()
+        msg = texts.get_text(chat_id, "admin_item_panel_msg").format(**{
+            "item_id": str(item_id),
+            "name": str(),
+            "picture": str(),
+            "item_firm": str(),
+            "barcode": str(),
+            "input_cost": str(),
+            "output_cost": str(),
+            "creation_date": str(),
+            "exp_date": str(),
+            "package_num": str(),
+            "item_count": str(),
+            "in_stock": str(),
+            "special_files": str()
+
+        })
+        k.row()
+        k.row(back(chat_id, back_callback))
+        send(chat_id, msg, reply_markup=k)
+
 

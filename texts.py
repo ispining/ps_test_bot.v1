@@ -443,11 +443,11 @@ ar::{content}
     'ar'
     ],
 
-    # done_btn
-    ["done_btn",
-    "Сохранить",
-    'Save',
-    'שמירה',
+    # set_item_special_files_btn
+    ["set_item_special_files_btn",
+    "Доп. файлы",
+    'en',
+    'he',
     'ar'
     ]
 

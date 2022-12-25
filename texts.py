@@ -202,15 +202,18 @@ ar::{content}
 
     # admin_item_panel_msg
     ['admin_item_panel_msg',
-    """<b>Товар по категории</b>
+    """<b>{name}</b>
     
-ID товара: 
-Название товара: 
-Фото товара:
-Производитель:
-Штрих-код:
-Цена закупки:
-Цена продажи:
+<b>ID товара:</b> {item_id}
+<b>Название товара:</b> {name} 
+<b>Фото товара:</b> {picture}
+<b>Производитель:</b> {item_firm}
+<b>Штрих-код:</b> {barcode}
+<b>Цена закупки:</b> {input_cost}шек.
+<b>Цена продажи:</b> {output_cost}шек.
+<b>В наличии:</b> {item_count}шт.
+<b>На складе:</b> {in_stock}
+<b>Доп. файлы:</b> {special_files}
 """,
     'en',
     'he',
@@ -234,9 +237,20 @@ ID товара:
     
 Выберите действие.
 """,
-    'This feature is under development / updates.',
-    'תכונה זו נמצאת בפיתוח/עדכונים.',
-    'هذه الميزة قيد التطوير / التحديثات.'
+    'en',
+    'he',
+    'ar'
+    ],
+
+    # admin_item_panel_set_item_firm_msg
+    ['admin_item_panel_set_item_firm_msg',
+    """<b>Изображение / Фото товара</b>
+    
+Выберите действие.
+""",
+    'en',
+    'he',
+    'ar'
     ],
 
 

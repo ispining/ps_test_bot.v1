@@ -312,7 +312,6 @@ def admin_item_panel_set(chat_id, item_id, set=None):
             "he": texts.get_text("he", ""),
             "ar": texts.get_text("ar", "")
         })
-
     elif set == "picture":
         st = configurer.Stock()
         item_info = st.get("item_id", item_id)
@@ -325,9 +324,8 @@ def admin_item_panel_set(chat_id, item_id, set=None):
             send(chat_id, msg, reply_markup=k)
         else:
             bot.send_photo(chat_id=chat_id, photo=open(item_info['picture'], "rb"), caption=msg, reply_markup=k)
-
     elif set == "item_firm":
-        msg = texts.get_text(chat_id, "")
+        msg = texts.get_text(chat_id, "admin_item_panel_set_item_firm_msg")
         k.row(back(chat_id, f"admin_item_panel||{item_id}||admin_find_by_category"))
         send(chat_id, msg, reply_markup=k)
     elif set == "barcode":

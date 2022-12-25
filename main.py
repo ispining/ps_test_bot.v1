@@ -257,15 +257,6 @@ def glob_calls(call):
                 elif call_value == "admin_item_panel_set_item_output_cost":
                     stg.admin_item_panel_set(chat_id, item_id, set="output_cost")
                     dm()
-                elif call_value == "admin_item_panel_set_item_creation_date":
-                    stg.admin_item_panel_set(chat_id, item_id, set="creation_date")
-                    dm()
-                elif call_value == "admin_item_panel_set_item_exp_date":
-                    stg.admin_item_panel_set(chat_id, item_id, set="exp_date")
-                    dm()
-                elif call_value == "admin_item_panel_set_item_package_num":
-                    stg.admin_item_panel_set(chat_id, item_id, set="package_num")
-                    dm()
                 elif call_value == "admin_item_panel_set_item_count":
                     stg.admin_item_panel_set(chat_id, item_id, set="item_count")
                     dm()

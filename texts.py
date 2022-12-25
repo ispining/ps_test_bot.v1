@@ -254,6 +254,39 @@ ar::{content}
     'ar'
     ],
 
+    # item_not_found_msg
+    ['item_not_found_msg',
+    """<b>ОШИБКА</b>
+    
+Товар не был найден по указаным данным
+""",
+    'en',
+    'he',
+    'ar'
+    ],
+
+    # admin_edit_item_picture_msg
+    ['admin_edit_item_picture_msg',
+    """<b>Ред. фото товара</b>
+    
+Пришлите новое фото товара
+""",
+    'en',
+    'he',
+    'ar'
+    ],
+
+    # new_value_setted_msg
+    ['new_value_setted_msg',
+    """<b>Сохранено</b>
+    
+Изменения были сохранены успешно
+""",
+    'en',
+    'he',
+    'ar'
+    ],
+
 
 
 
@@ -446,6 +479,22 @@ ar::{content}
     # set_item_special_files_btn
     ["set_item_special_files_btn",
     "Доп. файлы",
+    'en',
+    'he',
+    'ar'
+    ],
+
+    # remove_item_picture_btn
+    ["remove_item_picture_btn",
+    "Удалить фото товара",
+    'en',
+    'he',
+    'ar'
+    ],
+
+    # edit_item_picture_btn
+    ["edit_item_picture_btn",
+    "Ред. фото товара",
     'en',
     'he',
     'ar'

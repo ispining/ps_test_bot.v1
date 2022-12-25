@@ -124,6 +124,20 @@ def glob_photo(message):
             ctg.add()
             stg.admin_add_item_panel(chat_id, stage.split("||")[1], stage.split("||")[2])
             Stages(chat_id).set("None")
+        elif stage.split("||")[0] == "admin_edit_item_picture":
+            item_id = stage.split("||")[1]
+            fileID = message.photo[-1].file_id
+
+            file_info = bot.get_file(fileID)
+            downloaded_file = bot.download_file(file_info.file_path)
+            filepath = f"sources/items_photo/{item_id}||{str(datetime.datetime.now()).split('.')[0]}.jpg"
+            with open(filepath, 'wb') as new_file:
+                new_file.write(downloaded_file)
+
+            st = configurer.Stock()
+            st.set(search_value=item_id, column="picture", value=filepath)
+
+            send(chat_id, texts.get_text(chat_id, "new_value_setted_msg"), reply_markup=kmarkup().row(stg.back(chat_id, "admin_item")))
 
 
 @bot.callback_query_handler(func=lambda m:True)
@@ -167,6 +181,7 @@ def glob_calls(call):
 
                 stg.admin_item_panel(chat_id, item_id, back_btn)
                 dm()
+
             # Admin add item page
             elif call_value == "admin_items_add":
                 stg.admin_items_add(chat_id)
@@ -237,33 +252,54 @@ def glob_calls(call):
 
                         bot.answer_callback_query(call.id, texts.get_text(chat_id, "admin_set_new_item_no_important_call"), show_alert=True)
 
+            # remove item picture
+            elif call_value == "admin_remove_item_picture":
+                item_id = cd[1]
+                stg.admin_remove_item_someshit(chat_id, item_id, 'picture')
+                dm()
 
+            # set item picture
+            elif call_value == "admin_edit_item_picture":
+                item_id = cd[1]
+                stg.admin_edit_item_picture(chat_id, item_id)
+                dm()
+
+            # set item values
             elif "admin_item_panel_set" in call_value:
                 item_id = cd[1]
+                # set item name
                 if call_value == "admin_item_panel_set_name":
                     stg.admin_item_panel_set(chat_id, item_id, set="name")
                     dm()
+                # set item picture
                 elif call_value == "admin_item_panel_set_item_picture":
                     stg.admin_item_panel_set(chat_id, item_id, set="picture")
                     dm()
+                # set item firm
                 elif call_value == "admin_item_panel_set_item_firm":
                     stg.admin_item_panel_set(chat_id, item_id, set="item_firm")
                     dm()
+                # set item barcode
                 elif call_value == "admin_item_panel_set_item_barcode":
                     stg.admin_item_panel_set(chat_id, item_id, set="barcode")
                     dm()
+                # set item input cost
                 elif call_value == "admin_item_panel_set_item_input_cost":
                     stg.admin_item_panel_set(chat_id, item_id, set="input_cost")
                     dm()
+                # set item output cost
                 elif call_value == "admin_item_panel_set_item_output_cost":
                     stg.admin_item_panel_set(chat_id, item_id, set="output_cost")
                     dm()
+                # set item count
                 elif call_value == "admin_item_panel_set_item_count":
                     stg.admin_item_panel_set(chat_id, item_id, set="item_count")
                     dm()
+                # set item in stock
                 elif call_value == "admin_item_panel_set_item_in_stock":
                     stg.admin_item_panel_set(chat_id, item_id, set="in_stock")
                     dm()
+                # set item special files
                 elif call_value == "admin_item_panel_set_item_special_files":
                     pass
 

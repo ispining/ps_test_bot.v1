@@ -267,12 +267,13 @@ def admin_find_by_category(chat_id, cat_id=None):
         send(chat_id, msg, reply_markup=k)
 
 
-def admin_item_panel(chat_id, item_id, back_callback):
+def admin_item_panel(chat_id, item_id):
     st = configurer.Stock()
     stock_dict = st.get(value=item_id)
     if stock_dict == None:
-        # if no items found
-        pass
+        k = kmarkup()
+        k.row(back(chat_id, f"admin_item"))
+        send(chat_id, texts.get_text(chat_id, "item_not_found_msg"), reply_markup=k)
     else:
         k = kmarkup()
         msg = texts.get_text(chat_id, "admin_item_panel_msg").format(**{
@@ -297,7 +298,7 @@ def admin_item_panel(chat_id, item_id, back_callback):
         k.row(btn(texts.get_text(chat_id, "set_item_item_in_stock_btn"), callback_data=f"admin_item_panel_set_item_in_stock||{str(item_id)}"))
         k.row(btn(texts.get_text(chat_id, "set_item_special_files_btn"), callback_data=f"admin_item_panel_set_item_special_files||{str(item_id)}"))
 
-        k.row(back(chat_id, back_callback))
+        k.row(back(chat_id, "admin_item"))
         send(chat_id, msg, reply_markup=k)
 
 
@@ -319,14 +320,17 @@ def admin_item_panel_set(chat_id, item_id, set=None):
         if item_info['picture'] != "None":
             picture = item_info['picture']
         msg = texts.get_text(chat_id, "admin_item_panel_set_picture_msg")
-        k.row(back(chat_id, f"admin_item_panel||{item_id}||admin_find_by_category"))
+
+        k.row(btn(texts.get_text(chat_id, "remove_item_picture_btn"), callback_data=f"admin_remove_item_picture||{str(item_id)}"))
+        k.row(btn(texts.get_text(chat_id, "edit_item_picture_btn"), callback_data=f"admin_edit_item_picture||{str(item_id)}"))
+        k.row(back(chat_id, f"admin_item"))
         if picture == "None":
             send(chat_id, msg, reply_markup=k)
         else:
             bot.send_photo(chat_id=chat_id, photo=open(item_info['picture'], "rb"), caption=msg, reply_markup=k)
     elif set == "item_firm":
         msg = texts.get_text(chat_id, "admin_item_panel_set_item_firm_msg")
-        k.row(back(chat_id, f"admin_item_panel||{item_id}||admin_find_by_category"))
+        k.row(back(chat_id, f"admin_item"))
         send(chat_id, msg, reply_markup=k)
     elif set == "barcode":
         msg = texts.get_text(chat_id, "")
@@ -349,7 +353,18 @@ def admin_item_panel_set(chat_id, item_id, set=None):
         msg = texts.get_text(chat_id, "")
 
 
-def admin_item_panel_set_item_picture(chat_id, item_id):
-    pass
+def admin_remove_item_someshit(chat_id, item_id, to_delete):
+    st = configurer.Stock()
+    st.item_id = item_id
+    st.remove(to_delete)
+    admin_item_panel_set(chat_id, item_id, to_delete)
+
+
+def admin_edit_item_picture(chat_id, item_id):
+    k = kmarkup()
+    msg = texts.get_text(chat_id, "admin_edit_item_picture_msg")
+    k.row(back(chat_id, "admin_item"))
+    send(chat_id, msg, reply_markup=k)
+    Stages(chat_id).set(f"admin_edit_item_picture||{str(item_id)}")
 
 

@@ -482,6 +482,10 @@ class Stock:
         )""")
         db.commit()
 
+    def remove(self, column: str):
+        sql.execute(f"UPDATE mainapp_stock SET {column} = 'None' WHERE item_id = '{self.item_id}' OR ident_id  = '{self.item_id}'")
+        db.commit()
+
 
 # Text model
 class Text:

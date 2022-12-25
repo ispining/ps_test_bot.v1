@@ -260,9 +260,13 @@ def admin_find_by_category(chat_id, cat_id=None):
         for ident_id, item_id, cat in sql.fetchall():
             if cat == cat_id:
                 cat = configurer.Categories(cat_id=cat_id).show_content(user_id=chat_id)
-                button = btn(cat, callback_data=f"admin_add_item_panel||{cat_id}")
+                button = btn(cat, callback_data=f"admin_item_panel||{cat_id}")
                 k.row(button)
-        msg = texts.get_text(chat_id, "")
+        msg = texts.get_text(chat_id, f"admin_find_by_category_selector_msg||{cat_id}")
         k.row(back(chat_id, "admin_find_by_category"))
         send(chat_id, msg, reply_markup=k)
+
+
+def admin_item_panel(chat_id):
+    pass
 

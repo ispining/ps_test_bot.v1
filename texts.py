@@ -192,6 +192,17 @@ ar::{content}
     ],
 
 
+    # admin_find_by_category_selector_msg
+    ['admin_find_by_category_selector_msg',
+    """<b>Товар по категории</b>
+    
+Выберите товар""",
+    'en',
+    'he',
+    'ar'
+    ],
+
+
 
 
 

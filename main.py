@@ -160,6 +160,9 @@ def glob_calls(call):
                 stg.admin_items(chat_id)
                 dm()
 
+            elif call_value == "admin_item_panel":
+                stg.admin_item_panel(chat_id)
+                dm()
             # Admin add item page
             elif call_value == "admin_items_add":
                 stg.admin_items_add(chat_id)
@@ -240,7 +243,6 @@ def glob_calls(call):
                     elif len(cd) == 2:
                         stg.admin_find_by_category(chat_id, cat_id=cd[1])
                         dm()
-
 
         # Agent back office
         elif call_category == "agent":

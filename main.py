@@ -237,6 +237,7 @@ def glob_calls(call):
 
                         bot.answer_callback_query(call.id, texts.get_text(chat_id, "admin_set_new_item_no_important_call"), show_alert=True)
 
+
             elif "admin_item_panel_set" in call_value:
                 item_id = cd[1]
                 if call_value == "admin_item_panel_set_name":

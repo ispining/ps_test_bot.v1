@@ -299,10 +299,39 @@ def admin_item_panel(chat_id, item_id, back_callback):
         k.row(btn(texts.get_text(chat_id, "set_item_exp_date_btn"), callback_data=f"admin_item_panel_set_item_exp_date||{str(item_id)}"))
         k.row(btn(texts.get_text(chat_id, "set_item_package_num_btn"), callback_data=f"admin_item_panel_set_item_package_num||{str(item_id)}"))
         k.row(btn(texts.get_text(chat_id, "set_item_count_btn"), callback_data=f"admin_item_panel_set_item_count||{str(item_id)}"))
-        k.row(btn(texts.get_text(chat_id, "set_item_item_count_btn"), callback_data=f"admin_item_panel_set_item_in_stock||{str(item_id)}"))
+        k.row(btn(texts.get_text(chat_id, "set_item_item_in_stock_btn"), callback_data=f"admin_item_panel_set_item_in_stock||{str(item_id)}"))
         k.row(btn(texts.get_text(chat_id, "set_item_special_files_btn"), callback_data=f"admin_item_panel_set_item_special_files||{str(item_id)}"))
 
         k.row(back(chat_id, back_callback))
         send(chat_id, msg, reply_markup=k)
+
+
+def admin_item_panel_set(chat_id, item_id, set=None):
+    if set == "name":
+        pass
+    elif set == "picture":
+        pass
+    elif set == "item_firm":
+        pass
+    elif set == "barcode":
+        pass
+    elif set == "input_cost":
+        pass
+    elif set == "output_cost":
+        pass
+    elif set == "creation_date":
+        pass
+    elif set == "exp_date":
+        pass
+    elif set == "package_num":
+        pass
+    elif set == "item_count":
+        pass
+    elif set == "files":
+        pass
+
+
+def admin_item_panel_set_item_picture(chat_id, item_id):
+    pass
 
 

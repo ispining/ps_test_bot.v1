@@ -240,32 +240,39 @@ def glob_calls(call):
             elif "admin_item_panel_set" in call_value:
                 item_id = cd[1]
                 if call_value == "admin_item_panel_set_name":
-                    pass
+                    stg.admin_item_panel_set(chat_id, item_id, set="name")
+                    dm()
                 elif call_value == "admin_item_panel_set_item_picture":
-                    pass
+                    stg.admin_item_panel_set(chat_id, item_id, set="picture")
+                    dm()
                 elif call_value == "admin_item_panel_set_item_firm":
-                    pass
+                    stg.admin_item_panel_set(chat_id, item_id, set="item_firm")
+                    dm()
                 elif call_value == "admin_item_panel_set_item_barcode":
-                    pass
-                elif call_value == "":
-                    pass
-                elif call_value == "":
-                    pass
-                elif call_value == "":
-                    pass
-                elif call_value == "":
-                    pass
-                elif call_value == "":
-                    pass
-                elif call_value == "":
-                    pass
-                elif call_value == "":
-                    pass
-                elif call_value == "":
-                    pass
-                elif call_value == "":
-                    pass
-                elif call_value == "":
+                    stg.admin_item_panel_set(chat_id, item_id, set="barcode")
+                    dm()
+                elif call_value == "admin_item_panel_set_item_input_cost":
+                    stg.admin_item_panel_set(chat_id, item_id, set="input_cost")
+                    dm()
+                elif call_value == "admin_item_panel_set_item_output_cost":
+                    stg.admin_item_panel_set(chat_id, item_id, set="output_cost")
+                    dm()
+                elif call_value == "admin_item_panel_set_item_creation_date":
+                    stg.admin_item_panel_set(chat_id, item_id, set="creation_date")
+                    dm()
+                elif call_value == "admin_item_panel_set_item_exp_date":
+                    stg.admin_item_panel_set(chat_id, item_id, set="exp_date")
+                    dm()
+                elif call_value == "admin_item_panel_set_item_package_num":
+                    stg.admin_item_panel_set(chat_id, item_id, set="package_num")
+                    dm()
+                elif call_value == "admin_item_panel_set_item_count":
+                    stg.admin_item_panel_set(chat_id, item_id, set="item_count")
+                    dm()
+                elif call_value == "admin_item_panel_set_item_in_stock":
+                    stg.admin_item_panel_set(chat_id, item_id, set="in_stock")
+                    dm()
+                elif call_value == "admin_item_panel_set_item_special_files":
                     pass
 
 
@@ -291,5 +298,9 @@ def glob_calls(call):
             #
             pass
 
+
+
+        else:
+            send(chat_id, texts.get_text(chat_id, "in_Dev"))
 
 bot.polling(timeout=10000)

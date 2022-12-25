@@ -214,6 +214,18 @@ ar::{content}
     ],
 
 
+    # in_Dev
+    ['in_Dev',
+    """<b>В разработке</b>
+    
+Данная функция находится на стадии разработки / обновлений.
+""",
+    'This feature is under development / updates.',
+    'תכונה זו נמצאת בפיתוח/עדכונים.',
+    'هذه الميزة قيد التطوير / التحديثات.'
+    ],
+
+
 
 
 
@@ -317,6 +329,14 @@ ar::{content}
     # set_item_firm_btn
     ["set_item_item_firm_btn",
     "Изготовитель",
+    'en',
+    'he',
+    'ar'
+    ],
+
+    # set_item_item_in_stock_btn
+    ["set_item_item_in_stock_btn",
+    "Есть на складе",
     'en',
     'he',
     'ar'

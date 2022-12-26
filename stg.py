@@ -1,3 +1,4 @@
+import os
 import sqlite3
 from pprint import pprint
 
@@ -382,6 +383,11 @@ def admin_item_panel_set_item_in_stock(chat_id, item_id):
 
 def admin_item_panel_set_item_special_files(chat_id, item_id):
     k = kmarkup()
-    msg = texts.get_text(chat_id, "")
+    if item_id not in os.listdir("sources/items_files"):
+        os.mkdir("sources/items_files/"+item_id)
+
+    for file in os.listdir("sources/items_files/"+item_id):
+        k.row(btn(file, callback_data=f"admin_select_item_file||{str(item_id)}||{file}"))
+    msg = texts.get_text(chat_id, "admin_set_item_special_files_msg")
     k.row(back(chat_id, ""))
     send(chat_id, msg, reply_markup=k)

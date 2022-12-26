@@ -389,5 +389,35 @@ def admin_item_panel_set_item_special_files(chat_id, item_id):
     for file in os.listdir("sources/items_files/"+item_id):
         k.row(btn(file, callback_data=f"admin_select_item_file||{str(item_id)}||{file}"))
     msg = texts.get_text(chat_id, "admin_set_item_special_files_msg")
-    k.row(back(chat_id, ""))
+    k.row(back(chat_id, f"admin_item_panel||{item_id}||admin_find_by_category"))
     send(chat_id, msg, reply_markup=k)
+
+
+def admin_select_item_file(chat_id, item_id, file_name):
+    k = kmarkup()
+    msg = texts.get_text(chat_id, "admin_select_item_file_msg")
+    k.row(btn(texts.get_text(chat_id, "download_file"), callback_data=f"admin_set_item_special_files_download||{str(item_id)}||{file_name}"))
+    k.row(btn(texts.get_text(chat_id, "update_file"), callback_data=f"admin_set_item_special_files_update||{str(item_id)}||{file_name}"))
+    k.row(btn(texts.get_text(chat_id, "remove_file"), callback_data=f"admin_set_item_special_files_remove||{str(item_id)}||{file_name}"))
+    k.row(back(chat_id, f"admin_item_panel_set_item_special_files||{str(item_id)}"))
+    send(chat_id, msg, reply_markup=k)
+
+
+def admin_set_item_special_files_download(chat_id, item_id, file_name):
+    filepath = f"sources/items_files/{str(item_id)}/{str(file_name)}"
+    file = open(filepath, "rb")
+    bot.send_document(chat_id=chat_id, document=file)
+    admin_select_item_file(chat_id, item_id, file_name)
+
+
+def admin_set_item_special_files_update(chat_id, item_id, file_name):
+    k = kmarkup()
+    msg = texts.get_text(chat_id, "admin_special_files_update")
+    k.row(back(chat_id, f"admin_select_item_file||{str(item_id)}||{file_name}"))
+    send(chat_id, msg, reply_markup=k)
+    Stages(chat_id).set(f"admin_set_item_special_files_update||{str(item_id)}||{file_name}")
+
+
+def admin_set_item_special_files_remove(chat_id, item_id, file_name):
+    os.remove(f"sources/items_files/{str(item_id)}/{str(file_name)}")
+    admin_item_panel(chat_id, item_id)

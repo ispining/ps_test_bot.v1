@@ -1,7 +1,12 @@
+import datetime
 import os
 import random
+import threading
+
 from config import *
 
+
+GLOBAL_VERBOSE = False
 
 # Lang model
 class Lang:
@@ -454,7 +459,7 @@ class Stock:
                 "files": files
             }
 
-    def set(self, by="ident_id", search_value=None, column=None, value=None, verbose=True):
+    def set(self, by="ident_id", search_value=None, column=None, value=None, verbose=GLOBAL_VERBOSE):
 
         sql.execute(f"UPDATE mainapp_stock SET {str(column)} = '{str(value)}' WHERE {by} = '{str(search_value)}'")
         db.commit()
@@ -849,6 +854,35 @@ def new_category_text(source):
                 result[row.split("::")[0]] = row.split("::")[1]
 
     return result
+
+
+def timer(verbose=GLOBAL_VERBOSE):
+    def decorator(func):
+        t1 = datetime.datetime.now()
+        r = func()
+        t2 = datetime.datetime.now()
+        if verbose:
+            print("[+] Func_time: "+str(t2-t1).split(":")[-1])
+        return r
+    return decorator
+
+
+def thread(with_timer=False):
+    if with_timer:
+        @timer
+        def decorator(func):
+            th = threading.Thread(target=func)
+            th.daemon = True
+            th.start()
+            threading.main_thread()
+        return decorator
+
+    def decorator(func):
+        th = threading.Thread(target=func)
+        th.daemon = True
+        th.start()
+        threading.main_thread()
+    return decorator
 
 
 print(Csv("new.csv").categories())

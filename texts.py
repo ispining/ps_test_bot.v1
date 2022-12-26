@@ -287,6 +287,18 @@ ar::{content}
     'ar'
     ],
 
+    # admin_set_item_special_files_msg
+    ['admin_set_item_special_files_msg',
+    """<b>Доп. файлы товара</b>
+    
+Перед вами список файлов, привязанных к товару.
+Выберите нужный файл
+""",
+    'en',
+    'he',
+    'ar'
+    ],
+
     # admin_item_panel_set_item_count_msg
     ['admin_item_panel_set_item_count_msg',
     """<b>Колличество товара</b>
@@ -325,6 +337,17 @@ ar::{content}
     """<b>Сохранено</b>
     
 Изменения были сохранены успешно
+""",
+    'en',
+    'he',
+    'ar'
+    ],
+
+    # admin_special_files_update
+    ['admin_special_files_update',
+    """<b>Обновление доп. файлов</b>
+    
+Отправь новый файл, который заменит текущий
 """,
     'en',
     'he',
@@ -542,8 +565,31 @@ ar::{content}
     'en',
     'he',
     'ar'
-    ]
+    ],
 
+    # download_file
+    ["download_file_btn",
+    "Скачать файл",
+    'en',
+    'he',
+    'ar'
+    ],
+
+    # update_file
+    ["update_file",
+    "Обновить файл",
+    'en',
+    'he',
+    'ar'
+    ],
+
+    # remove_file
+    ["remove_file",
+    "Удалить файл",
+    'en',
+    'he',
+    'ar'
+    ]
 
 ]
 

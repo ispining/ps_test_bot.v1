@@ -1,4 +1,5 @@
 import datetime
+import os
 
 import configurer
 import texts
@@ -196,7 +197,30 @@ def glob_photo(message):
             Stages(chat_id).set("None")
 
 
-@bot.callback_query_handler(func=lambda m:True)
+@bot.message_handler(content_types=['document'])
+def doc_message(message):
+    chat_id = message.chat.id
+    if message.chat.type == "private":
+        stage = Stages(chat_id).get()
+        if stage.split("||")[0] == "admin_set_item_special_files_update":
+            item_id = stage.split("||")[1]
+            old_file = stage.split("||")[2]
+            file_name = message.document.file_name
+
+            os.remove(f"sources/items_files/{str(item_id)}/{str(old_file)}")
+
+            @configurer.thread(with_timer=True)
+            def down_file():
+                file_info = bot.get_file(message.document.file_id)
+                downloaded_file = bot.download_file(file_info.file_path)
+                with open(file_name, 'wb') as new_file:
+                    new_file.write(downloaded_file)
+
+            stg.admin_select_item_file(chat_id, item_id, file_name)
+            Stages(chat_id).set("None")
+
+
+@bot.callback_query_handler(func=lambda m: True)
 def glob_calls(call):
     chat_id = call.message.chat.id
 
@@ -355,13 +379,39 @@ def glob_calls(call):
                 elif call_value == "admin_item_panel_set_item_in_stock":
                     stg.admin_item_panel_set_item_in_stock(chat_id, item_id)
                     dm()
-                # set item special files835 7710 0623
-                elif call_value == "admin_item_panel_set_item_special_files":
+
+            elif "admin_set_item_special_files" in call_value:
+                item_id = cd[1]
+
+                # set item special files
+                if call_value == "admin_item_panel_set_item_special_files":
                     stg.admin_item_panel_set_item_special_files(chat_id, item_id)
                     dm()
 
+                elif call_value == "admin_set_item_special_files_download":
+                    file_name = cd[2]
+                    stg.admin_set_item_special_files_download(chat_id, item_id, file_name)
+                    dm()
 
-            if "admin_find" in call_value:
+                elif call_value == "admin_set_item_special_files_update":
+                    file_name = cd[2]
+                    stg.admin_set_item_special_files_update(chat_id, item_id, file_name)
+                    dm()
+                elif call_value == "admin_set_item_special_files_remove":
+                    file_name = cd[2]
+                    stg.admin_set_item_special_files_remove(chat_id, item_id, file_name)
+                    dm()
+
+
+
+            elif call_value == "admin_select_item_file":
+                item_id = cd[1]
+                file_name = cd[2]
+                stg.admin_select_item_file(chat_id, item_id, file_name)
+                dm()
+
+
+            elif "admin_find" in call_value:
                 if call_value == "admin_find_by_category":
                     # Category list
                     if len(cd) == 1:

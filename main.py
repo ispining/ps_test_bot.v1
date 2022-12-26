@@ -353,11 +353,11 @@ def glob_calls(call):
                     dm()
                 # set item in stock
                 elif call_value == "admin_item_panel_set_item_in_stock":
-                    pass
+                    stg.admin_item_panel_set_item_in_stock(chat_id, item_id)
                     dm()
                 # set item special files835 7710 0623
                 elif call_value == "admin_item_panel_set_item_special_files":
-                    pass
+                    stg.admin_item_panel_set_item_special_files(chat_id, item_id)
                     dm()
 
 

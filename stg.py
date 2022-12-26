@@ -304,7 +304,6 @@ def admin_item_panel(chat_id, item_id):
 
 def admin_item_panel_set(chat_id, item_id, set=None):
     k = kmarkup()
-    msg = None
     if set == "name":
         msg = texts.get_text(chat_id, "").format(**{
             "item_id": "",
@@ -353,9 +352,6 @@ def admin_item_panel_set(chat_id, item_id, set=None):
         k.row(back(chat_id, f"admin_item_panel||{item_id}||admin_find_by_category"))
         send(chat_id, msg, reply_markup=k)
         Stages(chat_id).set(f"admin_item_panel_set_item_count||{str(item_id)}")
-    elif set == "files":
-        #
-        msg = texts.get_text(chat_id, "")
 
 
 def admin_remove_item_someshit(chat_id, item_id, to_delete):
@@ -373,3 +369,19 @@ def admin_edit_item_picture(chat_id, item_id):
     Stages(chat_id).set(f"admin_edit_item_picture||{str(item_id)}")
 
 
+def admin_item_panel_set_item_in_stock(chat_id, item_id):
+    st = configurer.Stock()
+    in_stock = st.get(value=item_id)['in_stock']
+    if in_stock in ["None", "False"]:
+        st.set(search_value=item_id, column="in_stock", value="True")
+    elif in_stock == "True":
+        st.set(search_value=item_id, column="in_stock", value="False")
+
+    admin_item_panel(chat_id, item_id)
+
+
+def admin_item_panel_set_item_special_files(chat_id, item_id):
+    k = kmarkup()
+    msg = texts.get_text(chat_id, "")
+    k.row(back(chat_id, ""))
+    send(chat_id, msg, reply_markup=k)

@@ -11,32 +11,37 @@ import stg
 
 
 
-sql.execute(f"""CREATE TABLE IF NOT EXISTS mainapp_catlink(
-ident_id TEXT PRIMARY KEY,
-item_id TEXT,
-cat_id TEXT
-)""")
-db.commit()
 
 
 @bot.message_handler(commands=['admin'])
-def start_command(message):
+def admin_command(message):
     chat_id = message.chat.id
     if message.chat.type == "private":
-        if configurer.Lang(chat_id).get() in [None, "None"]:
-            stg.set_lang(chat_id, 'admin')
-        else:
-            stg.admin_panel(chat_id)
+        if configurer.Staff(str(chat_id)).get()['status'] == "admin":
+            if configurer.Lang(chat_id).get() in [None, "None"]:
+                stg.set_lang(chat_id, 'admin')
+            else:
+                stg.admin_panel(chat_id)
 
 
 @bot.message_handler(commands=['agent'])
-def start_command(message):
+def agent_command(message):
     chat_id = message.chat.id
     if message.chat.type == "private":
         if configurer.Lang(chat_id).get() in [None, "None"]:
             stg.set_lang(chat_id, "agent")
         else:
             stg.agent_panel(chat_id)
+
+
+@bot.message_handler(commands=['start'])
+def customer_command(message):
+    chat_id = message.chat.id
+    if message.chat.type == "private":
+        if configurer.Lang(chat_id).get() in [None, "None"]:
+            stg.set_lang(chat_id, "customer")
+        else:
+            stg.customer_panel(chat_id)
 
 
 @bot.message_handler(content_types=['text'])
@@ -474,6 +479,14 @@ def glob_calls(call):
                     #
                     stg.admin_find_by_name(chat_id)
                     dm()
+
+            #
+            elif call_value == "admin_firms":
+                stg.admin_firms(chat_id)
+
+
+
+
 
         # Agent back office
         elif call_category == "agent":

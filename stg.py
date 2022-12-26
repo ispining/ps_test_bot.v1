@@ -13,12 +13,15 @@ def back(user_id, callback_data):
 
 
 def admin_panel(chat_id):
-    k = kmarkup()
-    items = btn(texts.get_text(chat_id, "items_btn"), callback_data=f"admin_item")
-    sellers = btn(texts.get_text(chat_id, "firms_btn"), callback_data=f"admin_firms")
+    s = configurer.Staff(chat_id).get()
+    if s != None:
+        if s['status'] in configurer.ADMIN_PANEL_ALLOWED_STATUSES:
+            k = kmarkup()
+            items = btn(texts.get_text(chat_id, "items_btn"), callback_data=f"admin_item")
+            firms = btn(texts.get_text(chat_id, "firms_btn"), callback_data=f"admin_firms")
 
-    k.row(items, sellers)
-    send(chat_id, texts.get_text(chat_id, "admin_msg"), reply_markup=k)
+            k.row(items, firms)
+            send(chat_id, texts.get_text(chat_id, "admin_msg"), reply_markup=k)
 
 
 def set_lang(chat_id, next):
@@ -442,6 +445,24 @@ def admin_set_item_special_files_remove(chat_id, item_id, file_name):
 
 def agent_panel(chat_id):
     k = kmarkup()
-    msg = texts.get_text(chat_id, "agent_panel")
-    k.row(back(chat_id, ""))
+    #msg = texts.get_text(chat_id, "agent_panel")
+    # k.row(btn(texts.get_text(chat_id, ""), callback_data=f""))
+    # k.row(btn(texts.get_text(chat_id, ""), callback_data=f""))
+    # k.row(btn(texts.get_text(chat_id, ""), callback_data=f""))
+    # k.row(btn(texts.get_text(chat_id, ""), callback_data=f""))
+    #send(chat_id, msg, reply_markup=k)
+
+def admin_firms(chat_id):
+    k = kmarkup()
+    msg = texts.get_text(chat_id, "admin_firms_msg")
+    k.row(back(chat_id, "admin"))
     send(chat_id, msg, reply_markup=k)
+def customer_panel(chat_id):
+    k = kmarkup()
+    msg = texts.get_text(chat_id, "customer_panel")
+    k.row(btn(texts.get_text(chat_id, ""), callback_data=f"categories"))
+    k.row(btn(texts.get_text(chat_id, ""), callback_data=f""))
+    k.row(btn(texts.get_text(chat_id, ""), callback_data=f""))
+    k.row(btn(texts.get_text(chat_id, ""), callback_data=f""))
+    send(chat_id, msg, reply_markup=k)
+

@@ -7,7 +7,8 @@ from config import *
 
 
 GLOBAL_VERBOSE = False
-
+ADMIN_PANEL_ALLOWED_STATUSES = ['admin']
+AGENT_PANEL_ALLOWED_STATUSES = ['admin']
 # Lang model
 class Lang:
     def __init__(self, user_id=None):
@@ -286,8 +287,18 @@ class Firm:
         cmd = f"SELECT * FROM mainapp_firm WHERE {by} = '{str(value)}'"
 
         sql.execute(cmd)
-        result = sql.fetchall()[0]
-        return result
+        for ident_id, firm_name, picture, contact_id, phone, site, email, reg_date, special_files in sql.fetchall():
+            return {
+                "ident_id": ident_id,
+                "firm_name": firm_name,
+                "picture": picture,
+                "contact_id": contact_id,
+                "phone": phone,
+                "site": site,
+                "email": email,
+                "reg_date": reg_date,
+                "special_files": special_files
+            }
 
     def set(self, by="ident_id", search_value=None, column=None, value=None, verbose=True):
 
@@ -896,4 +907,9 @@ def thread(with_timer=False):
     return decorator
 
 
-print(Csv("new.csv").categories())
+def id_admin(user_id):
+    return Staff(user_id).get() in ADMIN_PANEL_ALLOWED_STATUSES
+
+
+def is_agent(user_id):
+    return Firm().get(by="contact_id", value=user_id) != None

@@ -405,7 +405,8 @@ class Stock:
         def preDB():
 
             sql.execute(f"""CREATE TABLE IF NOT EXISTS mainapp_stock(
-            item_id TEXT PRIMARY KEY,
+            ident_id TEXT PRIMARY KEY,
+            item_id TEXT,
             name TEXT,
             picture TEXT,
             item_firm TEXT,
@@ -709,6 +710,16 @@ class Csv:
         self.generate_csv()
 
         return os.getcwd() + self.CSV_PATH + self.filename
+
+    def items(self):
+        self.content = "ident_id;name;item_firm;barcode;input_cost;output_cost;item_count\n"
+        sql.execute(f"SELECT * FROM mainapp_stock")
+        for _, item_ident, name, _____, item_firm, barcode, input_cost, output_cost, __, ___, item_count, ____ in sql.fetchall():
+            self.content += f"{item_ident};{name};{item_firm};{barcode};{input_cost};{output_cost};{item_count}\n"
+        self.generate_csv()
+
+        return os.getcwd() + self.CSV_PATH + self.filename
+
 
     def leads(self):
         self.content = "User id;First Name;Last Name;Teudat Zeut;Country;City;Address;Phone1;Phone2;email;Reg Date;Birth Date;Agent id\n"

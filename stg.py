@@ -47,10 +47,10 @@ def admin_items(chat_id):
     find_by_category = btn(texts.get_text(chat_id, "find_by_category_btn"), callback_data=f"admin_find_by_category")
     find_by_id = btn(texts.get_text(chat_id, "find_by_id_btn"), callback_data=f"admin_find_by_id")
     find_by_name = btn(texts.get_text(chat_id, "find_by_name_btn"), callback_data=f"admin_find_by_name")
-    find_by_firm = btn(texts.get_text(chat_id, "find_by_firm_btn"), callback_data=f"admin_find_by_firm")
-    generete_items_csv = btn(texts.get_text(chat_id, "generete_csv_btn"), callback_data=f"generete_csv")
+    #find_by_firm = btn(texts.get_text(chat_id, "find_by_firm_btn"), callback_data=f"admin_find_by_firm")
+    generete_items_csv = btn(texts.get_text(chat_id, "generete_csv_btn"), callback_data=f"generete_items_csv")
 
-    for button in [items_add, find_by_category, find_by_id, find_by_name, find_by_firm, generete_items_csv]:
+    for button in [items_add, find_by_category, find_by_id, find_by_name, generete_items_csv]:
         k.row(button)
 
     k.row(back(chat_id, "admin"))
@@ -268,6 +268,22 @@ def admin_find_by_category(chat_id, cat_id=None):
         send(chat_id, msg, reply_markup=k)
 
 
+def admin_find_by_id(chat_id):
+    k = kmarkup()
+    msg = texts.get_text(chat_id, "admin_find_by_id_msg")
+    k.row(back(chat_id, "admin_item"))
+    send(chat_id, msg, reply_markup=k)
+    Stages(chat_id).set("admin_find_by_id")
+
+
+def admin_find_by_name(chat_id):
+    k = kmarkup()
+    msg = texts.get_text(chat_id, "admin_find_by_name_msg")
+    k.row(back(chat_id, "admin_item"))
+    send(chat_id, msg, reply_markup=k)
+    Stages(chat_id).set("admin_find_by_name")
+
+
 def admin_item_panel(chat_id, item_id):
     st = configurer.Stock()
     stock_dict = st.get(value=item_id)
@@ -301,6 +317,7 @@ def admin_item_panel(chat_id, item_id):
 
         k.row(back(chat_id, "admin_item"))
         send(chat_id, msg, reply_markup=k)
+        Stages(chat_id).set("None")
 
 
 def admin_item_panel_set(chat_id, item_id, set=None):
@@ -421,3 +438,4 @@ def admin_set_item_special_files_update(chat_id, item_id, file_name):
 def admin_set_item_special_files_remove(chat_id, item_id, file_name):
     os.remove(f"sources/items_files/{str(item_id)}/{str(file_name)}")
     admin_item_panel(chat_id, item_id)
+

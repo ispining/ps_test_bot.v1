@@ -34,6 +34,8 @@ def glob_texts(message):
     chat_id = message.chat.id
     if message.chat.type == "private":
         stage = Stages(chat_id).get()
+
+        # set name for new item
         if stage.split("||")[0] == "admin_set_new_item_name":
             ctg = configurer.TG_item_pre_add()
             ctg.item_id = stage.split("||")[2]
@@ -42,6 +44,7 @@ def glob_texts(message):
             stg.admin_add_item_panel(chat_id, stage.split("||")[1], stage.split("||")[2])
             Stages(chat_id).set("None")
 
+        # set barcode for new item
         elif stage.split("||")[0] == "admin_set_new_item_barcode":
             ctg = configurer.TG_item_pre_add()
             ctg.item_id = stage.split("||")[2]
@@ -50,6 +53,7 @@ def glob_texts(message):
             stg.admin_add_item_panel(chat_id, stage.split("||")[1], stage.split("||")[2])
             Stages(chat_id).set("None")
 
+        # set firm for new item
         elif stage.split("||")[0] == "admin_set_new_item_firm":
             ctg = configurer.TG_item_pre_add()
             ctg.item_id = stage.split("||")[2]
@@ -58,6 +62,7 @@ def glob_texts(message):
             stg.admin_add_item_panel(chat_id, stage.split("||")[1], stage.split("||")[2])
             Stages(chat_id).set("None")
 
+        # set input cost for new item
         elif stage.split("||")[0] == "admin_set_new_item_input_cost":
             ctg = configurer.TG_item_pre_add()
             ctg.item_id = stage.split("||")[2]
@@ -66,6 +71,7 @@ def glob_texts(message):
             stg.admin_add_item_panel(chat_id, stage.split("||")[1], stage.split("||")[2])
             Stages(chat_id).set("None")
 
+        # set output for new item
         elif stage.split("||")[0] == "admin_set_new_item_output_cost":
             ctg = configurer.TG_item_pre_add()
             ctg.item_id = stage.split("||")[2]
@@ -74,6 +80,7 @@ def glob_texts(message):
             stg.admin_add_item_panel(chat_id, stage.split("||")[1], stage.split("||")[2])
             Stages(chat_id).set("None")
 
+        # set count for new item
         elif stage.split("||")[0] == "admin_set_new_item_count":
             ctg = configurer.TG_item_pre_add()
             ctg.item_id = stage.split("||")[2]
@@ -82,6 +89,7 @@ def glob_texts(message):
             stg.admin_add_item_panel(chat_id, stage.split("||")[1], stage.split("||")[2])
             Stages(chat_id).set("None")
 
+        # add new category
         elif stage == "admin_add_category":
             cat_source = configurer.new_category_text(message.text)
             try:
@@ -107,6 +115,7 @@ def glob_texts(message):
             Stages(chat_id).set("None")
             stg.admin_items_add(chat_id)
 
+        # update item firm
         elif stage.split("||")[0] == "admin_item_panel_set_item_firm":
             item_id = stage.split("||")[1]
             firm_name = message.text
@@ -116,6 +125,7 @@ def glob_texts(message):
             send(chat_id, texts.get_text(chat_id, "new_value_setted_msg"), reply_markup=kmarkup().row(stg.back(chat_id, "admin_item")))
             Stages(chat_id).set("None")
 
+        # update item barcode
         elif stage.split("||")[0] == "admin_item_panel_set_item_barcode":
             item_id = stage.split("||")[1]
             barcode = message.text
@@ -125,6 +135,7 @@ def glob_texts(message):
             send(chat_id, texts.get_text(chat_id, "new_value_setted_msg"), reply_markup=kmarkup().row(stg.back(chat_id, "admin_item")))
             Stages(chat_id).set("None")
 
+        # update item input cost
         elif stage.split("||")[0] == "admin_item_panel_set_item_input_cost":
             item_id = stage.split("||")[1]
             input_cost = message.text
@@ -135,6 +146,7 @@ def glob_texts(message):
                 send(chat_id, texts.get_text(chat_id, "new_value_setted_msg"), reply_markup=kmarkup().row(stg.back(chat_id, "admin_item")))
                 Stages(chat_id).set("None")
 
+        # update item output cost
         elif stage.split("||")[0] == "admin_item_panel_set_item_output_cost":
             item_id = stage.split("||")[1]
             output_cost = message.text
@@ -145,6 +157,7 @@ def glob_texts(message):
                 send(chat_id, texts.get_text(chat_id, "new_value_setted_msg"), reply_markup=kmarkup().row(stg.back(chat_id, "admin_item")))
                 Stages(chat_id).set("None")
 
+        # update item count
         elif stage.split("||")[0] == "admin_item_panel_set_item_count":
             item_id = stage.split("||")[1]
             item_count = message.text
@@ -154,6 +167,19 @@ def glob_texts(message):
 
                 send(chat_id, texts.get_text(chat_id, "new_value_setted_msg"), reply_markup=kmarkup().row(stg.back(chat_id, "admin_item")))
                 Stages(chat_id).set("None")
+
+        # admin find by id
+        elif stage.split("||")[0] == "admin_find_by_id":
+            st = configurer.Stock()
+            if st.get(value=message.text) != None:
+                stg.admin_item_panel(chat_id, message.text)
+
+        # admin find by name
+        elif stage.split("||")[0] == "admin_find_by_name":
+            st = configurer.Stock()
+            if st.get(by="name", value=message.text) != None:
+                stg.admin_item_panel(chat_id, message.text)
+
 
 
 
@@ -380,6 +406,7 @@ def glob_calls(call):
                     stg.admin_item_panel_set_item_in_stock(chat_id, item_id)
                     dm()
 
+            #
             elif "admin_set_item_special_files" in call_value:
                 item_id = cd[1]
 
@@ -388,29 +415,32 @@ def glob_calls(call):
                     stg.admin_item_panel_set_item_special_files(chat_id, item_id)
                     dm()
 
+                # download item special files
                 elif call_value == "admin_set_item_special_files_download":
                     file_name = cd[2]
                     stg.admin_set_item_special_files_download(chat_id, item_id, file_name)
                     dm()
 
+                # update item special files
                 elif call_value == "admin_set_item_special_files_update":
                     file_name = cd[2]
                     stg.admin_set_item_special_files_update(chat_id, item_id, file_name)
                     dm()
+
+                # remove item special files
                 elif call_value == "admin_set_item_special_files_remove":
                     file_name = cd[2]
                     stg.admin_set_item_special_files_remove(chat_id, item_id, file_name)
                     dm()
 
-
-
+            #
             elif call_value == "admin_select_item_file":
                 item_id = cd[1]
                 file_name = cd[2]
                 stg.admin_select_item_file(chat_id, item_id, file_name)
                 dm()
 
-
+            #
             elif "admin_find" in call_value:
                 if call_value == "admin_find_by_category":
                     # Category list
@@ -422,6 +452,16 @@ def glob_calls(call):
                     elif len(cd) == 2:
                         stg.admin_find_by_category(chat_id, cat_id=cd[1])
                         dm()
+                #
+                elif call_value == "admin_find_by_id":
+                    #
+                    stg.admin_find_by_id(chat_id)
+                    dm()
+
+                elif call_value == "admin_find_by_name":
+                    #
+                    stg.admin_find_by_name(chat_id)
+                    dm()
 
         # Agent back office
         elif call_category == "agent":
@@ -433,6 +473,14 @@ def glob_calls(call):
             #
             pass
 
+        elif call_category == "generete":
+            if call_value == "generete_csv":
+
+                file_path = configurer.Csv("sources/csv/items.csv").items()
+
+                file = open(file_path, "rb")
+                bot.send_document(chat_id=chat_id, document=file)
+                stg.admin_items(chat_id)
 
 
         else:

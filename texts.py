@@ -191,6 +191,16 @@ ar::{content}
     'ar'
     ],
 
+    # admin_find_by_id_msg
+    ['admin_find_by_id_msg',
+    """<b>Товар по категории</b>
+    
+Введите Ай ди товара""",
+    'en',
+    'he',
+    'ar'
+    ],
+
     # admin_find_by_category_selector_msg
     ['admin_find_by_category_selector_msg',
     """<b>Товар по категории</b>

@@ -364,6 +364,17 @@ ar::{content}
     'ar'
     ],
 
+    # admin_firms_msg
+    ['admin_firms_msg',
+    """<b>Фирмы и филиалы</b>
+    
+Выберите фирму из списка
+""",
+    'en',
+    'he',
+    'ar'
+    ],
+
 
 
 

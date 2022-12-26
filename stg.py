@@ -452,17 +452,21 @@ def agent_panel(chat_id):
     # k.row(btn(texts.get_text(chat_id, ""), callback_data=f""))
     #send(chat_id, msg, reply_markup=k)
 
+
 def admin_firms(chat_id):
     k = kmarkup()
     msg = texts.get_text(chat_id, "admin_firms_msg")
+    for firm in configurer.Firm().listall():
+        k.row(btn(firm['firm_name'], callback_data=f"admin_firm_panel||{str(firm['ident_id'])}"))
     k.row(back(chat_id, "admin"))
     send(chat_id, msg, reply_markup=k)
+
+
 def customer_panel(chat_id):
     k = kmarkup()
     msg = texts.get_text(chat_id, "customer_panel")
-    k.row(btn(texts.get_text(chat_id, ""), callback_data=f"categories"))
-    k.row(btn(texts.get_text(chat_id, ""), callback_data=f""))
-    k.row(btn(texts.get_text(chat_id, ""), callback_data=f""))
-    k.row(btn(texts.get_text(chat_id, ""), callback_data=f""))
+    k.row(btn(texts.get_text(chat_id, "categories_btn"), callback_data=f"customer_categories"))
+    k.row(btn(texts.get_text(chat_id, "firms_btn"), callback_data=f"customer_firms"))
+
     send(chat_id, msg, reply_markup=k)
 

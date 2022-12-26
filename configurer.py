@@ -314,6 +314,22 @@ class Firm:
         sql.execute(f"INSERT INTO mainapp_worker VALUES('{str(self.ident_id)}', '{str(self.firm_name)}', '{str(self.picture)}', '{str(self.contact_id)}', '{str(self.phone)}', '{str(self.site)}', '{str(self.email)}', '{str(self.reg_date)}', '{str(self.special_files)}')")
         db.commit()
 
+    def listall(self):
+        result = []
+        sql.execute(f"SELECT * FROM mainapp_worker")
+        for ident_id, firm_name, picture, contact_id, phone, site, email, reg_date, special_files in sql.fetchall():
+            result.append({
+                "ident_id": ident_id,
+                "firm_name": firm_name,
+                "picture": picture,
+                "contact_id": contact_id,
+                "phone": phone,
+                "site": site,
+                "email": email,
+                "reg_date": reg_date,
+                "special_files": special_files
+            })
+        return result
 
 # Affiliate model
 class Affiliate:

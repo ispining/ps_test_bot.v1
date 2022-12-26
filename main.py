@@ -483,6 +483,7 @@ def glob_calls(call):
             #
             elif call_value == "admin_firms":
                 stg.admin_firms(chat_id)
+                dm()
 
 
 

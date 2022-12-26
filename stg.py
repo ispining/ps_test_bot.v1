@@ -21,13 +21,13 @@ def admin_panel(chat_id):
     send(chat_id, texts.get_text(chat_id, "admin_msg"), reply_markup=k)
 
 
-def set_lang(chat_id):
+def set_lang(chat_id, next):
     k = kmarkup()
 
-    ru_btn = btn("Русский", callback_data=f"set_lang||ru")
-    en_btn = btn("English", callback_data=f"set_lang||en")
-    he_btn = btn("עברית", callback_data=f"set_lang||he")
-    ar_btn = btn("Arabic", callback_data=f"set_lang||ar")
+    ru_btn = btn("Русский", callback_data=f"set_lang||ru||{str(next)}")
+    en_btn = btn("English", callback_data=f"set_lang||en||{str(next)}")
+    he_btn = btn("עברית", callback_data=f"set_lang||he||{str(next)}")
+    ar_btn = btn("Arabic", callback_data=f"set_lang||ar||{str(next)}")
 
     msg = """
 <b>Select your language</b>    
@@ -439,3 +439,9 @@ def admin_set_item_special_files_remove(chat_id, item_id, file_name):
     os.remove(f"sources/items_files/{str(item_id)}/{str(file_name)}")
     admin_item_panel(chat_id, item_id)
 
+
+def agent_panel(chat_id):
+    k = kmarkup()
+    msg = texts.get_text(chat_id, "agent_panel")
+    k.row(back(chat_id, ""))
+    send(chat_id, msg, reply_markup=k)

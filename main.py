@@ -24,9 +24,19 @@ def start_command(message):
     chat_id = message.chat.id
     if message.chat.type == "private":
         if configurer.Lang(chat_id).get() in [None, "None"]:
-            stg.set_lang(chat_id)
+            stg.set_lang(chat_id, 'admin')
         else:
             stg.admin_panel(chat_id)
+
+
+@bot.message_handler(commands=['agent'])
+def start_command(message):
+    chat_id = message.chat.id
+    if message.chat.type == "private":
+        if configurer.Lang(chat_id).get() in [None, "None"]:
+            stg.set_lang(chat_id, "agent")
+        else:
+            stg.agent_panel(chat_id)
 
 
 @bot.message_handler(content_types=['text'])
@@ -264,9 +274,12 @@ def glob_calls(call):
 
         if call_value == "set_lang":
             configurer.Lang(chat_id).set(cd[1])
-
-            stg.admin_panel(chat_id)
-            dm()
+            if cd[2] == "admin":
+                stg.admin_panel(chat_id)
+                dm()
+            elif cd[2] == "agent":
+                stg.agent_panel(chat_id)
+                dm()
 
         elif "admin" in call_value:
 
@@ -283,9 +296,8 @@ def glob_calls(call):
             # Admin item panel
             elif call_value == "admin_item_panel":
                 item_id = cd[1]
-                back_btn = cd[2]
 
-                stg.admin_item_panel(chat_id, item_id, back_btn)
+                stg.admin_item_panel(chat_id, item_id)
                 dm()
 
             # Admin add item page
@@ -485,5 +497,6 @@ def glob_calls(call):
 
         else:
             send(chat_id, texts.get_text(chat_id, "in_Dev"))
+
 
 bot.polling(timeout=10000)

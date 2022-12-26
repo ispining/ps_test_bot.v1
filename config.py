@@ -53,3 +53,9 @@ class Stages:
         return new
 
 
+def str_is_only_integers(str_to_check):
+    try:
+        int(str_to_check)
+        return True
+    except:
+        return False

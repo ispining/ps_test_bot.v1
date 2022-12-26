@@ -245,9 +245,53 @@ ar::{content}
 
     # admin_item_panel_set_item_firm_msg
     ['admin_item_panel_set_item_firm_msg',
-    """<b>Изображение / Фото товара</b>
+    """<b>Производитель товара</b>
     
-Выберите действие.
+Введите название конторы производителя
+""",
+    'en',
+    'he',
+    'ar'
+    ],
+
+    # admin_item_panel_set_item_barcode_msg
+    ['admin_item_panel_set_item_barcode_msg',
+    """<b>Штрих-код товара</b>
+    
+Введите значения нового Штрих-кода
+""",
+    'en',
+    'he',
+    'ar'
+    ],
+
+    # admin_item_panel_set_item_input_cost_msg
+    ['admin_item_panel_set_item_input_cost_msg',
+    """<b>Цена закупки товара</b>
+    
+Введите новую цену закупки для данного товара (только в цифрах)
+""",
+    'en',
+    'he',
+    'ar'
+    ],
+
+    # admin_item_panel_set_item_output_cost_msg
+    ['admin_item_panel_set_item_output_cost_msg',
+    """<b>Цена продажи товара</b>
+    
+Введите новую цену продажи для данного товара (только в цифрах)
+""",
+    'en',
+    'he',
+    'ar'
+    ],
+
+    # admin_item_panel_set_item_count_msg
+    ['admin_item_panel_set_item_count_msg',
+    """<b>Колличество товара</b>
+    
+Введите новое колличество для данного товара (только в цифрах)
 """,
     'en',
     'he',

@@ -5,6 +5,11 @@ import texts
 from config import *
 import stg
 
+
+
+
+
+
 sql.execute(f"""CREATE TABLE IF NOT EXISTS mainapp_catlink(
 ident_id TEXT PRIMARY KEY,
 item_id TEXT,
@@ -101,6 +106,56 @@ def glob_texts(message):
             Stages(chat_id).set("None")
             stg.admin_items_add(chat_id)
 
+        elif stage.split("||")[0] == "admin_item_panel_set_item_firm":
+            item_id = stage.split("||")[1]
+            firm_name = message.text
+            st = configurer.Stock()
+            st.set(search_value=item_id, column="item_firm", value=firm_name)
+
+            send(chat_id, texts.get_text(chat_id, "new_value_setted_msg"), reply_markup=kmarkup().row(stg.back(chat_id, "admin_item")))
+            Stages(chat_id).set("None")
+
+        elif stage.split("||")[0] == "admin_item_panel_set_item_barcode":
+            item_id = stage.split("||")[1]
+            barcode = message.text
+            st = configurer.Stock()
+            st.set(search_value=item_id, column="barcode", value=barcode)
+
+            send(chat_id, texts.get_text(chat_id, "new_value_setted_msg"), reply_markup=kmarkup().row(stg.back(chat_id, "admin_item")))
+            Stages(chat_id).set("None")
+
+        elif stage.split("||")[0] == "admin_item_panel_set_item_input_cost":
+            item_id = stage.split("||")[1]
+            input_cost = message.text
+            if str_is_only_integers(input_cost):
+                st = configurer.Stock()
+                st.set(search_value=item_id, column="input_cost", value=input_cost)
+
+                send(chat_id, texts.get_text(chat_id, "new_value_setted_msg"), reply_markup=kmarkup().row(stg.back(chat_id, "admin_item")))
+                Stages(chat_id).set("None")
+
+        elif stage.split("||")[0] == "admin_item_panel_set_item_output_cost":
+            item_id = stage.split("||")[1]
+            output_cost = message.text
+            if str_is_only_integers(output_cost):
+                st = configurer.Stock()
+                st.set(search_value=item_id, column="output_cost", value=output_cost)
+
+                send(chat_id, texts.get_text(chat_id, "new_value_setted_msg"), reply_markup=kmarkup().row(stg.back(chat_id, "admin_item")))
+                Stages(chat_id).set("None")
+
+        elif stage.split("||")[0] == "admin_item_panel_set_item_count":
+            item_id = stage.split("||")[1]
+            item_count = message.text
+            if str_is_only_integers(item_count):
+                st = configurer.Stock()
+                st.set(search_value=item_id, column="item_count", value=item_count)
+
+                send(chat_id, texts.get_text(chat_id, "new_value_setted_msg"), reply_markup=kmarkup().row(stg.back(chat_id, "admin_item")))
+                Stages(chat_id).set("None")
+
+
+
 
 @bot.message_handler(content_types=['photo'])
 def glob_photo(message):
@@ -138,6 +193,7 @@ def glob_photo(message):
             st.set(search_value=item_id, column="picture", value=filepath)
 
             send(chat_id, texts.get_text(chat_id, "new_value_setted_msg"), reply_markup=kmarkup().row(stg.back(chat_id, "admin_item")))
+            Stages(chat_id).set("None")
 
 
 @bot.callback_query_handler(func=lambda m:True)
@@ -297,11 +353,12 @@ def glob_calls(call):
                     dm()
                 # set item in stock
                 elif call_value == "admin_item_panel_set_item_in_stock":
-                    stg.admin_item_panel_set(chat_id, item_id, set="in_stock")
+                    pass
                     dm()
-                # set item special files
+                # set item special files835 7710 0623
                 elif call_value == "admin_item_panel_set_item_special_files":
                     pass
+                    dm()
 
 
             if "admin_find" in call_value:

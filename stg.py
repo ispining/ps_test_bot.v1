@@ -332,22 +332,27 @@ def admin_item_panel_set(chat_id, item_id, set=None):
         msg = texts.get_text(chat_id, "admin_item_panel_set_item_firm_msg")
         k.row(back(chat_id, f"admin_item"))
         send(chat_id, msg, reply_markup=k)
+        Stages(chat_id).set(f"admin_item_panel_set_item_firm||{str(item_id)}")
     elif set == "barcode":
-        msg = texts.get_text(chat_id, "")
+        msg = texts.get_text(chat_id, "admin_item_panel_set_item_barcode_msg")
         k.row(back(chat_id, f"admin_item_panel||{item_id}||admin_find_by_category"))
         send(chat_id, msg, reply_markup=k)
+        Stages(chat_id).set(f"admin_item_panel_set_item_barcode||{str(item_id)}")
     elif set == "input_cost":
-        msg = texts.get_text(chat_id, "")
+        msg = texts.get_text(chat_id, "admin_item_panel_set_item_input_cost_msg")
         k.row(back(chat_id, f"admin_item_panel||{item_id}||admin_find_by_category"))
         send(chat_id, msg, reply_markup=k)
+        Stages(chat_id).set(f"admin_item_panel_set_item_input_cost||{str(item_id)}")
     elif set == "output_cost":
-        msg = texts.get_text(chat_id, "")
+        msg = texts.get_text(chat_id, "admin_item_panel_set_item_output_cost_msg")
         k.row(back(chat_id, f"admin_item_panel||{item_id}||admin_find_by_category"))
         send(chat_id, msg, reply_markup=k)
+        Stages(chat_id).set(f"admin_item_panel_set_item_output_cost||{str(item_id)}")
     elif set == "item_count":
-        msg = texts.get_text(chat_id, "")
+        msg = texts.get_text(chat_id, "admin_item_panel_set_item_count_msg")
         k.row(back(chat_id, f"admin_item_panel||{item_id}||admin_find_by_category"))
         send(chat_id, msg, reply_markup=k)
+        Stages(chat_id).set(f"admin_item_panel_set_item_count||{str(item_id)}")
     elif set == "files":
         #
         msg = texts.get_text(chat_id, "")
@@ -357,7 +362,7 @@ def admin_remove_item_someshit(chat_id, item_id, to_delete):
     st = configurer.Stock()
     st.item_id = item_id
     st.remove(to_delete)
-    admin_item_panel_set(chat_id, item_id, to_delete)
+    admin_item_panel(chat_id, item_id)
 
 
 def admin_edit_item_picture(chat_id, item_id):

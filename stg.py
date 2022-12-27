@@ -470,3 +470,15 @@ def customer_panel(chat_id):
 
     send(chat_id, msg, reply_markup=k)
 
+
+def admin_firm_panel(chat_id, ident_id):
+    cf = configurer.Firm()
+    k = kmarkup()
+
+    msg = texts.get_text(chat_id, "admin_firm_panel_msg").format(**{
+        "ident_id": ident_id,
+        "firm_name": cf.get(value=ident_id)['firm_name'],
+        "affiliate_count": str(len(cf.get(by="firm_id", value=ident_id)))
+    })
+    k.row(back(chat_id, ""))
+    send(chat_id, msg, reply_markup=k)

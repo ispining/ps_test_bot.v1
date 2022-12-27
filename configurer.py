@@ -331,6 +331,10 @@ class Firm:
             })
         return result
 
+    def affiliate_count(self):
+        afs = Affiliate().get(by="firm_id")
+
+
 # Affiliate model
 class Affiliate:
     def __init__(self):
@@ -373,11 +377,11 @@ class Affiliate:
         self.files = None
 
     def get(self, by='affiliate_id', value=None):
-
+        result = []
         sql.execute(f"SELECT * FROM mainapp_affiliate WHERE {str(by)} = '{str(value)}'")
 
         for a_id, a_name, firm_id, country, city, location, a_percent, phone1, phone2, email, picture, status, contact_id, reg_date, special_files in sql.fetchall():
-            return {
+            result.append({
                 "id": a_id,
                 "name": a_name,
                 "firm_id": firm_id,
@@ -393,7 +397,8 @@ class Affiliate:
                 "contact_id": contact_id,
                 "reg_date": reg_date,
                 "files": special_files
-            }
+            })
+        return result
 
     def set(self, by="affiliate_id", search_value=None, column=None, value=None, verbose=True):
 

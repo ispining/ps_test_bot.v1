@@ -486,6 +486,13 @@ def glob_calls(call):
                 dm()
 
 
+            elif call_value == "admin_firm_panel":
+                ident_id = cd[1]
+                stg.admin_firm_panel(chat_id, ident_id)
+                dm()
+
+
+
 
 
 

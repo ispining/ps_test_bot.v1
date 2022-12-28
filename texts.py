@@ -201,6 +201,16 @@ ar::{content}
     'ar'
     ],
 
+    # admin_find_by_name_msg
+    ['admin_find_by_name_msg',
+    """<b>Товар по категории</b>
+    
+Введите название товара""",
+    'en',
+    'he',
+    'ar'
+    ],
+
     # admin_find_by_category_selector_msg
     ['admin_find_by_category_selector_msg',
     """<b>Товар по категории</b>

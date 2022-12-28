@@ -234,7 +234,14 @@ class Staff:
     def get(self):
 
         if self.user_id == None:
+            result = []
             sql.execute(f"SELECT * FROM mainapp_staff")
+            fAll = sql.fetchall()
+            for user_id, status, vip, reg_date, special_files in fAll:
+                result.append({"user_id": user_id, "status": status, "vip": vip, "reg_date": reg_date, "special_files": special_files})
+            return result
+        elif self.user_id != None:
+            sql.execute(f"SELECT * FROM mainapp_staff WHERE user_id = '{str(self.user_id)}'")
             fAll = sql.fetchall()
             for user_id, status, vip, reg_date, special_files in fAll:
                 return {"user_id": user_id, "status": status, "vip": vip, "reg_date": reg_date, "special_files": special_files}

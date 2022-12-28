@@ -24,13 +24,13 @@ def admin_panel(chat_id):
             send(chat_id, texts.get_text(chat_id, "admin_msg"), reply_markup=k)
 
 
-def set_lang(chat_id, next):
+def set_lang(chat_id, next_call):
     k = kmarkup()
 
-    ru_btn = btn("Русский", callback_data=f"set_lang||ru||{str(next)}")
-    en_btn = btn("English", callback_data=f"set_lang||en||{str(next)}")
-    he_btn = btn("עברית", callback_data=f"set_lang||he||{str(next)}")
-    ar_btn = btn("Arabic", callback_data=f"set_lang||ar||{str(next)}")
+    ru_btn = btn("Русский", callback_data=f"set_lang||ru||{str(next_call)}")
+    en_btn = btn("English", callback_data=f"set_lang||en||{str(next_call)}")
+    he_btn = btn("עברית", callback_data=f"set_lang||he||{str(next_call)}")
+    ar_btn = btn("Arabic", callback_data=f"set_lang||ar||{str(next_call)}")
 
     msg = """
 <b>Select your language</b>    

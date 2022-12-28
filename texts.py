@@ -13,18 +13,28 @@ contents = [
      """<b>Админ панель</b>
 Выберите действие""",
      'en',
-     'he',
+     '''<b>פאנל ניהול</b>
+בחר פעולה''',
      'ar'
      ],
 
     #admin_items_msg
     ["admin_items_msg",
     """<b>Товары</b>
-Выберите данная платформа расчитана на не ограниченное колличество товаров, изза чего показ всех товаров не предусмотрен.
+Данная платформа расчитана на не ограниченное колличество товаров, изза чего показ всех товаров не предусмотрен.
 Вы можете сгенирировать список всех товаров в файл, и найти товар по идентификатору, названию, или производителю.""",
-    'en',
-    'he',
-    'ar'
+
+    '''<b>Products</b>
+This platform is designed for an unlimited number of products, which is why the display of all products is not provided.
+You can generate a list of all products in a file, and search for a product by id, name, or manufacturer.''',
+
+    '''<b>מוצרים</b>
+פלטפורמה זו מיועדת למספר בלתי מוגבל של מוצרים, וזו הסיבה שהתצוגה של כל המוצרים אינה מסופקת.
+אתה יכול ליצור רשימה של כל המוצרים בקובץ, ולחפש מוצר לפי מזהה, שם או יצרן.''',
+
+    '''<b> المنتجات </ b>
+تم تصميم هذه المنصة لعدد غير محدود من المنتجات ، وهذا هو سبب عدم عرض جميع المنتجات.
+يمكنك إنشاء قائمة بجميع المنتجات في ملف ، والبحث عن منتج حسب المعرف أو الاسم أو الشركة المصنعة.'''
 
     ],
 
@@ -32,9 +42,15 @@ contents = [
     ['admin_select_category_for_add_item',
     """<b>Добавление товара</b>
 Выберите категорию товара, или добавьте новую категорию""",
-    'en',
-    'he',
-    'ar'
+
+    '''<b>Adding a product</b>
+Select a product category, or add a new category''',
+
+    '''<b>הוספת מוצר</b>
+בחר קטגוריית מוצר, או הוסף קטגוריה חדשה''',
+
+    '''<b> إضافة منتج </ b>
+حدد فئة منتج ، أو أضف فئة جديدة'''
     ],
 
     # admin_add_item_panel
@@ -47,9 +63,27 @@ contents = [
 ❗ - Обязательные
 
 """,
-    'en',
-    'he',
-    'ar'
+
+    '''<b>Adding a product</b>
+Product category: {lcat}
+
+Complete the following items.
+
+❗ - Mandatory''',
+
+    '''<b>הוספת מוצר</b>
+קטגוריית מוצרים: {lcat}
+
+השלם את הפריטים הבאים.
+
+❗ - חובה''',
+
+    '''<b> إضافة منتج </ b>
+فئة المنتج: {lcat}
+
+أكمل العناصر التالية.
+
+❗ - إلزامي'''
     ],
 
     # admin_set_new_item_name_msg
@@ -59,9 +93,18 @@ contents = [
 
 Введите название нового товара.
 """,
-    'en',
-    'he',
-    'ar'
+    '''<b>Adding a product</b>
+Product category: {lcat}
+
+Enter the name of the new product''',
+    '''<b>הוספת מוצר</b>
+קטגוריית מוצרים: {lcat}
+
+הזן את שם המוצר החדש''',
+    '''<b> إضافة منتج </ b>
+فئة المنتج: {lcat}
+
+أدخل اسم المنتج الجديد'''
     ],
 
     # admin_set_new_item_picture_msg
@@ -73,9 +116,24 @@ contents = [
 
 (Этот пункт не является обязательным!)
 """,
-    'en',
-    'he',
-    'ar'
+    '''<b>Adding a product</b>
+Product category: {lcat}
+
+Add a product photo.
+
+(This item is optional!)''',
+    '''<b>הוספת מוצר</b>
+קטגוריית מוצרים: {lcat}
+
+הוסף תמונת מוצר.
+
+(פריט זה הוא אופציונלי!)''',
+    '''<b> إضافة منتج </ b>
+فئة المنتج: {lcat}
+
+أضف صورة المنتج.
+
+(هذا العنصر اختياري!)'''
     ],
 
     # admin_set_new_item_firm_msg
@@ -86,9 +144,21 @@ contents = [
 
 (Этот пункт не является обязательным!)
 """,
-    'en',
-    'he',
-    'ar'
+    '''<b>Adding a product</b>
+
+Enter the manufacturer's company
+
+(This item is optional!)''',
+    '''<b>הוספת מוצר</b>
+
+הזן את חברת היצרן
+
+(פריט זה הוא אופציונלי!)''',
+    '''<b> إضافة منتج </ b>
+
+أدخل الشركة المصنعة
+
+(هذا العنصر اختياري!)'''
     ],
 
     # admin_set_new_item_barcode_msg
@@ -99,9 +169,21 @@ contents = [
 
 (Этот пункт не является обязательным!)
 """,
-    'en',
-    'he',
-    'ar'
+    '''<b>Adding a product</b>
+
+Enter the product barcode
+
+(This item is optional!)''',
+    '''<b>הוספת מוצר</b>
+
+הזן את ברקוד המוצר
+
+(פריט זה הוא אופציונלי!)''',
+    '''<b> إضافة منتج </ b>
+
+أدخل الرمز الشريطي للمنتج
+
+(هذا العنصر اختياري!)'''
     ],
 
     # admin_set_new_item_input_cost_msg
@@ -112,9 +194,21 @@ contents = [
 
 (Этот пункт не является обязательным!)
 """,
-    'en',
-    'he',
-    'ar'
+    '''<b>Adding a product</b>
+
+Enter the purchase price of the item.
+
+(This item is optional!)''',
+    '''<b>הוספת מוצר</b>
+
+הזן את מחיר הרכישה של הפריט.
+
+(פריט זה הוא אופציונלי!)''',
+    '''<b> إضافة منتج </ b>
+
+أدخل سعر شراء العنصر.
+
+(هذا العنصر اختياري!)'''
     ],
 
     # admin_set_new_item_output_cost_msg
@@ -125,9 +219,21 @@ contents = [
 
 (Этот пункт не является обязательным!)
 """,
-    'en',
-    'he',
-    'ar'
+    '''<b>Adding a product</b>
+
+Enter the selling price of the item.
+
+(This item is optional!)''',
+    '''<b>הוספת מוצר</b>
+
+הזן את מחיר המכירה של הפריט.
+
+(פריט זה הוא אופציונלי!)''',
+    '''<b> إضافة منتج </ b>
+
+أدخل سعر بيع العنصر.
+
+(هذا العنصر اختياري!)'''
     ],
 
     # admin_set_new_item_count_msg
@@ -138,9 +244,21 @@ contents = [
 
 (Этот пункт не является обязательным!)
 """,
-    'en',
-    'he',
-    'ar'
+    '''<b>Adding a product</b>
+
+Enter the selling price of the item.
+
+(This item is optional!)''',
+    '''<b>הוספת מוצר</b>
+
+הזן את מחיר המכירה של הפריט.
+
+(פריט זה הוא אופציונלי!)''',
+    '''<b> إضافة منتج </ b>
+
+أدخل سعر بيع العنصر.
+
+(هذا العنصر اختياري!)'''
     ],
 
     # admin_add_category_msg
@@ -157,18 +275,48 @@ ar::{content}
 Можно отправить несколько языков в одном сообщении.
 Хотите добавить только один язык? Так тоже можно
 """,
-    'en',
-    'he',
-    'ar'
+    '''<b>Adding a category</b>
+
+Submit the category name using the following template:
+
+he::{content}
+ru::{content}
+en::{content}
+ar::{content}
+
+You can send multiple languages in one message.
+Want to add just one language? So it is also possible''',
+    '''<b>הוספת קטגוריה</b>
+
+שלח את שם הקטגוריה באמצעות התבנית הבאה:
+
+he::{תוכן}
+ru::{תוכן}
+en::{תוכן}
+ar::{תוכן}
+
+ניתן לשלוח מספר שפות בהודעה אחת.
+רוצה להוסיף רק שפה אחת? אז זה גם אפשרי''',
+    '''<b> إضافة فئة </ b>
+
+أرسل اسم الفئة باستخدام النموذج التالي:
+
+he :: {content}
+ru :: {content}
+en :: {content}
+ar :: {content}
+
+يمكنك إرسال لغات متعددة في رسالة واحدة.
+هل تريد إضافة لغة واحدة فقط؟ لذلك من الممكن أيضا'''
     ],
 
     # admin_set_new_item_done_call
     ['admin_set_new_item_done_call',
     """Товар успешно добавлен.
 """,
-    'en',
-    'he',
-    'ar'
+    'Product added successfully.',
+    'המוצר נוסף בהצלחה.',
+    'تمت إضافة المنتج بنجاح.'
     ],
 
 
@@ -176,9 +324,12 @@ ar::{content}
     ['admin_set_new_item_no_important_call',
     """ОШИБКА!
 Вы не заполнили обязательные поля для заполнения""",
-    'en',
-    'he',
-    'ar'
+    '''ERROR!
+You have not filled in the required fields''',
+    '''טעות!
+לא מילאת את השדות הנדרשים''',
+    '''خطأ!
+لم تقم بملء الحقول المطلوبة'''
     ],
 
     # admin_find_by_category_msg
@@ -186,9 +337,15 @@ ar::{content}
     """<b>Товар по категории</b>
     
 Выберите категорию товара""",
-    'en',
-    'he',
-    'ar'
+    '''<b>Product by category</b>
+    
+Select product category''',
+    '''<b>מוצר לפי קטגוריה</b>
+    
+בחר קטגוריית מוצרים''',
+    '''<b> المنتج حسب الفئة </ b>
+    
+حدد فئة المنتج'''
     ],
 
     # admin_find_by_id_msg
@@ -196,9 +353,15 @@ ar::{content}
     """<b>Товар по категории</b>
     
 Введите Ай ди товара""",
-    'en',
-    'he',
-    'ar'
+    '''<b>Product by category</b>
+    
+Enter product ID''',
+    '''<b>מוצר לפי קטגוריה</b>
+    
+הזן מזהה מוצר''',
+    '''<b> المنتج حسب الفئة </ b>
+    
+أدخل معرف المنتج'''
     ],
 
     # admin_find_by_name_msg
@@ -206,9 +369,15 @@ ar::{content}
     """<b>Товар по категории</b>
     
 Введите название товара""",
-    'en',
-    'he',
-    'ar'
+    '''<b>Product by category</b>
+    
+Enter product name''',
+    '''<b>מוצר לפי קטגוריה</b>
+    
+הזן את שם המוצר''',
+    '''<b> المنتج حسب الفئة </ b>
+    
+أدخل اسم المنتج'''
     ],
 
     # admin_find_by_category_selector_msg
@@ -216,9 +385,15 @@ ar::{content}
     """<b>Товар по категории</b>
     
 Выберите товар""",
-    'en',
-    'he',
-    'ar'
+    '''<b>Product by category</b>
+    
+Choose a product''',
+    '''<b>מוצר לפי קטגוריה</b>
+    
+בחר מוצר''',
+    '''<b> المنتج حسب الفئة </ b>
+    
+اختر منتجًا'''
     ],
 
     # admin_item_panel_msg
@@ -236,9 +411,42 @@ ar::{content}
 <b>На складе:</b> {in_stock}
 <b>Доп. файлы:</b> {special_files}
 """,
-    'en',
-    'he',
-    'ar'
+    '''<b>{name}</b>
+    
+<b>Item ID:</b> {item_id}
+<b>Product name:</b> {name}
+<b>Product photo:</b> {picture}
+<b>Manufacturer:</b> {item_firm}
+<b>Barcode:</b> {barcode}
+<b>Purchase price:</b> {input_cost}NIS
+<b>Sale price:</b> {output_cost}iss.
+<b>In stock:</b> {item_count}pcs.
+<b>Stock:</b> {in_stock}
+<b>Files:</b> {special_files}''',
+    '''<b>{name}</b>
+    
+<b>מזהה פריט:</b> {item_id}
+<b>שם המוצר:</b> {name}
+<b>תמונת מוצר:</b> {picture}
+<b>יצרן:</b> {item_firm}
+<b>ברקוד:</b> {barcode}
+<b>מחיר רכישה:</b> {input_cost}₪
+<b>מחיר מבצע:</b> {output_cost}₪.
+<b>במלאי:</b> {item_count} יחידות.
+<b>מלאי:</b> {in_stock}
+<b>קבצים:</b> {special_files}''',
+    '''<b> {name} </b>
+    
+<b> معرف العنصر: </ b> {item_id}
+<b> اسم المنتج: </ b> {name}
+<b> صورة المنتج: </ b> {picture}
+<b> الشركة المصنعة: </ b> {item_firm}
+<b> الرمز الشريطي: </ b> {barcode}
+<b> سعر الشراء: </ b> {input_cost} شيكل
+<b> سعر البيع: </ b> {output_cost} شيكل.
+<b> في المخزن: </ b> {item_count} قطعة.
+<b> المخزون: </ b> {in_stock}
+<b> الملفات: </ b> {special_files}'''
     ],
 
     # in_Dev
@@ -258,9 +466,15 @@ ar::{content}
     
 Выберите действие.
 """,
-    'en',
-    'he',
-    'ar'
+    '''<b>Image / Product photo</b>
+    
+Select an action.''',
+    '''<b>תמונה / תמונת מוצר</b>
+    
+בחר פעולה.''',
+    '''<b> صورة / صورة منتج </ b>
+    
+حدد إجراء.'''
     ],
 
     # admin_item_panel_set_item_firm_msg
@@ -269,9 +483,15 @@ ar::{content}
     
 Введите название конторы производителя
 """,
-    'en',
-    'he',
-    'ar'
+    '''<b>Product manufacturer</b>
+    
+Enter the name of the manufacturer's office''',
+    '''<b>יצרן מוצר</b>
+    
+הזן את שם משרד היצרן''',
+    '''<b> الشركة المصنعة للمنتج </ b>
+    
+أدخل اسم مكتب الشركة المصنعة'''
     ],
 
     # admin_item_panel_set_item_barcode_msg
@@ -280,9 +500,15 @@ ar::{content}
     
 Введите значения нового Штрих-кода
 """,
-    'en',
-    'he',
-    'ar'
+    '''<b>Product barcode</b>
+    
+Enter new Barcode values''',
+    '''<b>ברקוד מוצר</b>
+    
+הזן ערכי ברקוד חדשים''',
+    '''<b> الرمز الشريطي للمنتج </ b>
+    
+أدخل قيم الباركود الجديدة'''
     ],
 
     # admin_item_panel_set_item_input_cost_msg
@@ -291,9 +517,15 @@ ar::{content}
     
 Введите новую цену закупки для данного товара (только в цифрах)
 """,
-    'en',
-    'he',
-    'ar'
+    '''<b>Product purchase price</b>
+    
+Enter a new purchase price for this item (only in numbers)''',
+    '''<b>מחיר רכישת מוצר</b>
+    
+הזן מחיר רכישה חדש עבור פריט זה (במספרים בלבד)''',
+    '''<b> سعر شراء المنتج </ b>
+    
+أدخل سعر شراء جديدًا لهذا العنصر (بالأرقام فقط)'''
     ],
 
     # admin_item_panel_set_item_output_cost_msg
@@ -302,9 +534,15 @@ ar::{content}
     
 Введите новую цену продажи для данного товара (только в цифрах)
 """,
-    'en',
-    'he',
-    'ar'
+    '''<b>Product selling price</b>
+    
+Enter a new selling price for this item (in numbers only)''',
+    '''<b>מחיר מכירת מוצר</b>
+    
+הזן מחיר מכירה חדש עבור פריט זה (במספרים בלבד)''',
+    '''<b> سعر بيع المنتج </ b>
+    
+أدخل سعر بيع جديدًا لهذه السلعة (بالأرقام فقط)'''
     ],
 
     # admin_set_item_special_files_msg
@@ -314,31 +552,52 @@ ar::{content}
 Перед вами список файлов, привязанных к товару.
 Выберите нужный файл
 """,
-    'en',
-    'he',
-    'ar'
+    '''<b>Product files</b>
+    
+Here is a list of files associated with the product.
+Select the desired file''',
+    '''<b>קבצי מוצר</b>
+    
+להלן רשימה של קבצים המשויכים למוצר.
+בחר את הקובץ הרצוי''',
+    '''<b> ملفات المنتج </ b>
+    
+فيما يلي قائمة بالملفات المرتبطة بالمنتج.
+حدد الملف المطلوب'''
     ],
 
     # admin_item_panel_set_item_count_msg
     ['admin_item_panel_set_item_count_msg',
-    """<b>Колличество товара</b>
+    """<b>Количество товара</b>
     
-Введите новое колличество для данного товара (только в цифрах)
+Введите новое количество для данного товара (только в цифрах)
 """,
-    'en',
-    'he',
-    'ar'
+    '''<b>Product Quantity</b>
+
+Enter a new quantity for this product (only in numbers)''',
+    '''<b>כמות מוצר</b>
+
+הזן כמות חדשה עבור מוצר זה (במספרים בלבד)''',
+    '''<b> كمية المنتج </ b>
+
+أدخل كمية جديدة لهذا المنتج (بالأرقام فقط)'''
     ],
 
     # item_not_found_msg
     ['item_not_found_msg',
     """<b>ОШИБКА</b>
     
-Товар не был найден по указаным данным
+Товар не был найден по указанным данным
 """,
-    'en',
-    'he',
-    'ar'
+    '''<b>ERROR</b>
+    
+The product was not found according to the specified data''',
+    '''<b>שגיאה</b>
+    
+המוצר לא נמצא על פי הנתונים שצוינו''',
+    '''<b> خطأ </ b>
+    
+لم يتم العثور على المنتج وفقًا للبيانات المحددة'''
     ],
 
     # admin_edit_item_picture_msg
@@ -347,9 +606,15 @@ ar::{content}
     
 Пришлите новое фото товара
 """,
-    'en',
-    'he',
-    'ar'
+    '''<b>Product photo</b>
+    
+Submit a new product photo''',
+    '''<b>תמונת מוצר</b>
+    
+שלח תמונת מוצר חדשה''',
+    '''<b> صورة المنتج </ b>
+    
+إرسال صورة منتج جديد'''
     ],
 
     # new_value_setted_msg
@@ -358,9 +623,15 @@ ar::{content}
     
 Изменения были сохранены успешно
 """,
-    'en',
-    'he',
-    'ar'
+    '''<b>Saved</b>
+    
+Changes were saved successfully''',
+    '''<b>נשמר</b>
+    
+השינויים נשמרו בהצלחה''',
+    '''<b> المحفوظة </ b>
+    
+تم حفظ التغييرات بنجاح'''
     ],
 
     # admin_special_files_update
@@ -369,9 +640,15 @@ ar::{content}
     
 Отправь новый файл, который заменит текущий
 """,
-    'en',
-    'he',
-    'ar'
+    '''<b>Updating files</b>
+    
+Submit a new file to replace the current one''',
+    '''<b>עדכון קבצים</b>
+    
+שלח קובץ חדש כדי להחליף את הקובץ הנוכחי''',
+    '''<b> تحديث الملفات </ b>
+    
+قم بإرسال ملف جديد ليحل محل الملف الحالي'''
     ],
 
     # admin_firms_msg
@@ -380,9 +657,15 @@ ar::{content}
     
 Выберите фирму из списка
 """,
-    'en',
-    'he',
-    'ar'
+    '''<b>Firms and branches</b>
+    
+Select a company from the list''',
+    '''<b>חברות וסניפים</b>
+    
+בחר חברה מהרשימה''',
+    '''<b> الشركات والفروع </ b>
+    
+حدد شركة من القائمة'''
     ],
 
 
@@ -393,169 +676,161 @@ ar::{content}
     # items_btn
     ['items_btn',
     "Товары",
-    'en',
-    'he',
-    'ar'
+    'Items',
+    'פריטים',
+    'العناصر'
     ],
 
     # firms_btn
     ['firms_btn',
     "Фирмы",
-    'en',
-    'he',
-    'ar'
+    'Firms',
+    'חברות',
+    'الشركات'
     ],
 
     # add_btn
     ['add_btn',
     "Добавить",
-    'en',
-    'he',
-    'ar'
+    'Add',
+    'לְהוֹסִיף',
+    'يضيف'
     ],
 
     # find_by_id_btn
     ['find_by_id_btn',
     "Искать по Идентификатору",
-    'en',
-    'he',
-    'ar'
+    'Search by id',
+    'חפש לפי מזהה',
+    'البحث عن طريق معرف'
     ],
 
     # find_by_name_btn
     ['find_by_name_btn',
     "Искать по названию",
-    'en',
-    'he',
-    'ar'
+    'Search by name',
+    'חפש לפי שם',
+    'البحث عن طريق الإسم'
     ],
 
     # find_by_firm_btn
     ["find_by_firm_btn",
     "Искать по Производителю",
-    'en',
-    'he',
-    'ar'
+    'חפש לפי יצרן',
+    'חפש לפי יצרן',
+    'البحث عن طريق الشركة المصنعة'
     ],
 
     # find_by_category_btn
     ["find_by_category_btn",
     "Искать по Категории",
-    'en',
-    'he',
-    'ar'
+    'Search by Category',
+    'חפש לפי קטגוריה',
+    'البحث حسب الفئة'
     ],
 
     # generete_csv_btn
     ["generete_csv_btn",
     "Сгенирировать CSV файл",
-    'en',
-    'he',
-    'ar'
-    ],
-
-    # find_by_category_btn
-    ["find_by_category_btn",
-    "Найти по категории",
-    'en',
-    'he',
-    'ar'
+    'Generate CSV file',
+    'צור קובץ CSV',
+    'إنشاء ملف CSV'
     ],
 
     # set_item_id_btn
     ["set_item_id_btn",
     "Ай-ди товара",
-    'en',
-    'he',
-    'ar'
+    'Item id',
+    'מזהה פריט',
+    'تعريف العنصر'
     ],
 
     # set_item_name_btn
     ["set_item_name_btn",
     "Название товара",
-    'en',
-    'he',
-    'ar'
+    'Item name',
+    'שם הפריט',
+    'اسم العنصر'
     ],
 
     # set_item_picture_btn
     ["set_item_picture_btn",
     "Фото товара",
-    'en',
-    'he',
-    'ar'
+    'Item photo',
+    'תמונת פריט',
+    'صورة العنصر'
     ],
 
     # set_item_firm_btn
     ["set_item_item_firm_btn",
     "Изготовитель",
-    'en',
-    'he',
-    'ar'
+    'Manufacturer',
+    'יצרן',
+    'الشركه المصنعه'
     ],
 
     # set_item_item_in_stock_btn
     ["set_item_item_in_stock_btn",
     "Есть на складе",
-    'en',
-    'he',
-    'ar'
+    'Available in stock',
+    'זמין במלאי',
+    'متوفر في المخزون'
     ],
 
     # set_item_barcode_btn
     ["set_item_barcode_btn",
     "Штрихкод",
-    'en',
-    'he',
-    'ar'
+    'Barcode',
+    'ברקוד',
+    'الباركود'
     ],
 
     # set_item_input_cost_btn
     ["set_item_input_cost_btn",
     "Цена закупки",
-    'en',
-    'he',
-    'ar'
+    'Purchase price',
+    'מחיר רכישה',
+    'سعر الشراء'
     ],
 
     # set_item_output_cost_btn
     ["set_item_output_cost_btn",
     "Цена продажи",
-    'en',
-    'he',
-    'ar'
+    'Sale price',
+    'מחיר מבצע',
+    'سعر البيع'
     ],
 
     # set_item_creation_date_btn
     ["set_item_creation_date_btn",
     "Дата создания",
-    'en',
-    'he',
-    'ar'
+    'Creation date',
+    'תאריך יצירה',
+    'تاريخ الإنشاء'
     ],
 
     # set_item_exp_date_btn
     ["set_item_exp_date_btn",
     "Срок годности",
-    'en',
-    'he',
-    'ar'
+    'Exp date',
+    'תאריך תפוגה',
+    'تاريخ انتهاء الصلاحية'
     ],
 
     # set_item_package_num_btn
     ["set_item_package_num_btn",
     "Номер упаковки",
-    'en',
-    'he',
-    'ar'
+    'Package Number',
+    'מספר חבילה',
+    'رقم الباقة'
     ],
 
     # set_item_item_count_btn
     ["set_item_item_count_btn",
-    "Колличестов товар",
-    'en',
-    'he',
-    'ar'
+    "Количество товара",
+    'Quantity of Items',
+    'כמות פריטים',
+    'كمية العناصر'
     ],
 
     # back_btn
@@ -563,7 +838,7 @@ ar::{content}
     "Назад",
     'Back',
     'חזרה',
-    'ar'
+    'ظهر'
     ],
 
     # done_btn
@@ -571,55 +846,55 @@ ar::{content}
     "Сохранить",
     'Save',
     'שמירה',
-    'ar'
+    'أنقذ'
     ],
 
     # set_item_special_files_btn
     ["set_item_special_files_btn",
     "Доп. файлы",
-    'en',
-    'he',
-    'ar'
+    'Files',
+    'קבצים',
+    'الملفات'
     ],
 
     # remove_item_picture_btn
     ["remove_item_picture_btn",
     "Удалить фото товара",
-    'en',
-    'he',
-    'ar'
+    'Delete product photo',
+    'מחיקת תמונת מוצר',
+    'حذف صورة المنتج'
     ],
 
     # edit_item_picture_btn
     ["edit_item_picture_btn",
     "Ред. фото товара",
-    'en',
-    'he',
-    'ar'
+    'Edit item picture',
+    'עריכת תמונת פריט',
+    'تحرير صورة العنصر'
     ],
 
     # download_file
     ["download_file_btn",
     "Скачать файл",
-    'en',
-    'he',
-    'ar'
+    'Download file',
+    'הורדת קובץ',
+    'تحميل الملف'
     ],
 
     # update_file
     ["update_file",
     "Обновить файл",
-    'en',
-    'he',
-    'ar'
+    'Update File',
+    'עדכון קובץ',
+    'تحديث الملف'
     ],
 
     # remove_file
     ["remove_file",
     "Удалить файл",
-    'en',
-    'he',
-    'ar'
+    'Delete file',
+    'מחיקת קובץ',
+    'حذف الملف'
     ]
 
 ]

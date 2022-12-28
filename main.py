@@ -6,18 +6,13 @@ import texts
 from config import *
 import stg
 
+
 @bot.message_handler(commands=['admin'])
 def admin_command(message):
     chat_id = message.chat.id
     if message.chat.type == "private":
         s = configurer.Staff(str(chat_id))
-        if s.get() == None:
-            s.user_id = chat_id
-            s.status = "admin"
-            s.vip = "None"
-            s.reg_date = str(datetime.datetime.now())
-            s.special_files = ""
-            s.new()
+
         if s.get() != None:
             if configurer.Staff(str(chat_id)).get()['status'] == "admin":
                 if configurer.Lang(chat_id).get() in [None, "None"]:

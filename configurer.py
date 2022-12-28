@@ -738,6 +738,7 @@ class Csv:
         with open(os.getcwd() + self.CSV_PATH + self.filename, "w") as file:
             file.write(self.content)
 
+
     def categories(self, filter: str=None) -> str:
 
         self.content = "Category id;Russian;English;Hebrew;Arabic\n"
@@ -749,6 +750,7 @@ class Csv:
         self.generate_csv()
 
         return os.getcwd() + self.CSV_PATH + self.filename
+
 
     def items(self):
         self.content = "ident_id;name;item_firm;barcode;input_cost;output_cost;item_count\n"

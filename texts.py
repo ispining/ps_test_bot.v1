@@ -146,7 +146,7 @@ Add a product photo.
 """,
     '''<b>Adding a product</b>
 
-Enter the manufacturer's company
+Enter the manufacturer company
 
 (This item is optional!)''',
     '''<b>הוספת מוצר</b>
@@ -485,7 +485,7 @@ Select an action.''',
 """,
     '''<b>Product manufacturer</b>
     
-Enter the name of the manufacturer's office''',
+Enter the name of the manufacturer office''',
     '''<b>יצרן מוצר</b>
     
 הזן את שם משרד היצרן''',

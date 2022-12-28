@@ -59,6 +59,7 @@ class Lead:
         self.country = None
         self.city = None
         self.address = None
+        # ADDRESS 2
         self.phone1 = None
         self.phone2 = None
         self.email = None
@@ -283,6 +284,7 @@ class Firm:
         self.ident_id = None
         self.firm_name = None
         self.picture = None
+        # FIRM_AGENT
         self.contact_id = None
         self.phone = None
         self.site = None

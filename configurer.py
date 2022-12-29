@@ -674,6 +674,28 @@ c.add_category()
         return result
 
 
+class UnderCats:
+    def __init__(self):
+        def pre_db():
+            sql.execute(f"""CREATE TABLE IF NOT EXISTS undercats(
+            text TEXT,
+            text TEXT)""")
+
+        pre_db()
+
+    def exists(self):
+        pass
+
+
+    def get(self):
+        pass
+
+    def set(self):
+        pass
+
+    def add(self):
+        pass
+
 # Catlinks model
 class Catlinks:
     def __init__(self, ident_id=None, item_id=None, cat_id=None):
@@ -904,8 +926,10 @@ def new_category_text(source):
     result['cat_id'] = Randomizer().lower_with_int()
     for row in source.split("\n"):
         if row.replace(" ", "") != "":
-            if row.split("::")[0] in ["he", "en", "ru", "ar"]:
-                result[row.split("::")[0]] = row.split("::")[1]
+
+            rs = row.split("::")[0]
+            if rs in ["he", "en", "ru", "ar"]:
+                result[rs] = row.split("::")[1]
 
     return result
 

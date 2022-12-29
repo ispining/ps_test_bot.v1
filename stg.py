@@ -247,6 +247,7 @@ def admin_add_category(chat_id):
 
 
 def admin_find_by_category(chat_id, cat_id=None):
+
     # Categories stage
     if cat_id == None:
         k = kmarkup()
@@ -257,6 +258,7 @@ def admin_find_by_category(chat_id, cat_id=None):
             k.row(button)
         k.row(back(chat_id, "admin_item"))
         send(chat_id, msg, reply_markup=k)
+
     # category selected stage
     elif cat_id != None:
         k = kmarkup()

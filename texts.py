@@ -668,6 +668,22 @@ Select a company from the list''',
 حدد شركة من القائمة'''
     ],
 
+    # admin_firm_panel_msg
+    ['admin_firm_panel_msg',
+    """<b>Панель управления Фирмы</b>
+
+<b>Идентификатор фирмы:</b> {firm_name}
+<b>Название фирмы:</b> {firm_name}
+<b>Филиалов:</b> {affiliate_count}
+
+""",
+    '''en''',
+    '''he''',
+    '''ar'''
+    ],
+
+
+
 
 
 

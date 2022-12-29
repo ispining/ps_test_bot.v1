@@ -1,6 +1,7 @@
 import datetime
 import os
 import random
+import sqlite3
 import threading
 
 from config import *
@@ -675,29 +676,69 @@ c.add_category()
 
 
 class UnderCats:
-    def __init__(self):
+    def __init__(self, ident_id=None, cat_id=None, undercat=None,
+                 ru=None, en=None, he=None, ar=None):
         def pre_db():
-            sql.execute(f"""CREATE TABLE IF NOT EXISTS undercats(
-            text TEXT,
-            text TEXT)""")
+            sql.execute(f"""CREATE TABLE IF NOT EXISTS mainapp_undercats(
+            ident_id TEXT,
+            cat_id TEXT,
+            undercat_id TEXT,
+            ru TEXT
+            en TEXT,
+            he TEXT,
+            ar TEXT
+            )""")
+            db.commit()
+        self.ident_id = ident_id
+        self.cat_id = cat_id
+        self.undercat_id = undercat
+        self.ru = ru
+        self.en = en
+        self.he = he
+        self.ar = ar
 
         pre_db()
 
     def exists(self):
-        pass
-
+        sql.execute(f"SELECT * FROM mainapp_undercats WHERE ident_id = '{self.ident_id}'")
+        if sql.fetchall() is None:
+            return False
+        else:
+            return True
 
     def get(self):
-        pass
+        if self.undercat_id == None:
+            cmd = f"SELECT * FROM mainapp_undercats WHERE cat_id = '{str(self.cat_id)}'"
+        else:
+            cmd = f"SELECT * FROM mainapp_undercats WHERE cat_id = '{str(self.cat_id)}' AND undercat_id = '{str(self.undercat_id)}'"
+
+        sql.execute(cmd)
+        undercat_lst = sql.fetchall()
+
+        if len(undercat_lst) == 1:
+            return undercat_lst[0]
+        elif len(undercat_lst) > 1:
+            return undercat_lst
+        elif len(undercat_lst) < 1:
+            return None
 
     def set(self):
         pass
 
     def add(self):
-        pass
+        self.ident_id = Randomizer().lower_with_int()
+        self.undercat_id = self.ident_id
+        sql.execute(f"""INSERT INTO mainapp_undercats VALUES('{str(self.ident_id)}', '{str(self.cat_id)}', '{str(self.undercat_id)}', 
+        '{str(self.ru)}', '{str(self.en)}', '{str(self.he)}', '{str(self.ar)}')""")
+        db.commit()
+
+
+        return self.ident_id
+
 
 # Catlinks model
 class Catlinks:
+
     def __init__(self, ident_id=None, item_id=None, cat_id=None):
 
         sql.execute(f"""CREATE TABLE IF NOT EXISTS mainapp_catlinks(

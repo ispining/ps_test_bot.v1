@@ -363,6 +363,7 @@ def glob_calls(call):
                 stg.admin_firms(chat_id)
                 dm()
 
+            #
             elif call_value == "admin_firm_panel":
                 ident_id = cd[1]
                 stg.admin_firm_panel(chat_id, ident_id)
@@ -455,7 +456,7 @@ def glob_calls(call):
                     stg.admin_item_panel_set_item_in_stock(chat_id, item_id)
                     dm()
 
-            #
+            # set spec. files
             elif "admin_set_item_special_files" in call_value:
                 item_id = cd[1]
 
@@ -482,8 +483,10 @@ def glob_calls(call):
                     stg.admin_set_item_special_files_remove(chat_id, item_id, file_name)
                     dm()
 
-            #
+            # find items by...
             elif "admin_find" in call_value:
+
+                # find items by category
                 if call_value == "admin_find_by_category":
                     # Category list
                     if len(cd) == 1:
@@ -494,22 +497,18 @@ def glob_calls(call):
                     elif len(cd) == 2:
                         stg.admin_find_by_category(chat_id, cat_id=cd[1])
                         dm()
-                #
+
+                # find items by id
                 elif call_value == "admin_find_by_id":
                     #
                     stg.admin_find_by_id(chat_id)
                     dm()
 
+                # find items by name
                 elif call_value == "admin_find_by_name":
                     #
                     stg.admin_find_by_name(chat_id)
                     dm()
-
-
-
-
-
-
 
 
         # Agent back office
@@ -523,7 +522,7 @@ def glob_calls(call):
             pass
 
         elif call_category == "generete":
-            if call_value == "generete_csv":
+            if call_value == "generete_items_csv":
 
                 file_path = configurer.Csv("sources/csv/items.csv").items()
 
@@ -534,6 +533,8 @@ def glob_calls(call):
 
         else:
             send(chat_id, texts.get_text(chat_id, "in_Dev"))
+
+
 
 
 bot.polling(timeout=10000)

@@ -340,6 +340,14 @@ def glob_calls(call):
                 stg.admin_add_category(chat_id)
                 dm()
 
+            elif call_value == "admin_select_cat_without_undercat":
+                cat_id = cd[1]
+                k = kmarkup()
+                msg = texts.get_text(chat_id, f"admin_set_new_undercat_name")
+                k.back(chat_id, f"admin_add_category")
+                send(chat_id, msg, reply_markup=k)
+
+
             # remove item picture
             elif call_value == "admin_remove_item_picture":
                 item_id = cd[1]

@@ -329,7 +329,8 @@ def glob_calls(call):
             elif call_value == "admin_add_item_panel":
                 cat_id = cd[1]
                 if len(cd) == 3:
-                    stg.admin_add_item_panel(chat_id, cat_id, cd[2])
+                    undercat_id = cd[2]
+                    stg.admin_add_item_panel(chat_id, cat_id, undercat_id)
                 else:
                     stg.admin_add_item_panel(chat_id, cat_id)
                 dm()

@@ -675,8 +675,9 @@ c.add_category()
         return result
 
 
+# Under-Categories
 class UnderCats:
-    def __init__(self, ident_id=None, cat_id=None, undercat=None,
+    def __init__(self, ident_id=None, cat_id=None, undercat_id=None,
                  ru=None, en=None, he=None, ar=None):
         def pre_db():
             sql.execute(f"""CREATE TABLE IF NOT EXISTS mainapp_undercats(
@@ -691,7 +692,7 @@ class UnderCats:
             db.commit()
         self.ident_id = ident_id
         self.cat_id = cat_id
-        self.undercat_id = undercat
+        self.undercat_id = undercat_id
         self.ru = ru
         self.en = en
         self.he = he
@@ -706,7 +707,8 @@ class UnderCats:
         else:
             return True
 
-    def get(self):
+    def get(self) -> [list, dict]:
+        result = []
         if self.undercat_id == None:
             cmd = f"SELECT * FROM mainapp_undercats WHERE cat_id = '{str(self.cat_id)}'"
         else:
@@ -715,15 +717,48 @@ class UnderCats:
         sql.execute(cmd)
         undercat_lst = sql.fetchall()
 
-        if len(undercat_lst) == 1:
-            return undercat_lst[0]
-        elif len(undercat_lst) > 1:
-            return undercat_lst
-        elif len(undercat_lst) < 1:
-            return None
+        for row in undercat_lst:
+            result.append({
+                "ident_id": row[0],
+                "cat_id": row[1],
+                "undercat_id": row[2],
+                "ru": row[3],
+                "en": row[4],
+                "he": row[5],
+                "ar": row[6]
+            })
+        if all((self.cat_id!= None, self.cat_id != None)):
+            if len(result) != 0:
+                return result[0]
+        return result
 
-    def set(self):
-        pass
+    def set(self) -> [None, dict]:
+        if all((self.cat_id != None, self.undercat_id)):
+            res = {"ru": self.ru, "en": self.en, "he": self.he, "ar": self.ar}
+
+            updated = False
+
+            for lng in ['ru', 'en', 'he', 'ar']:
+                if res[lng] != None:
+                    cmd = f"UPDATE mainapp_undercats SET {lng} = '{str(res[lng])}'"
+
+                    if self.ident_id != None:
+                        cmd += f"WHERE ident_id = '{str(self.ident_id)}'"
+                        sql.execute(cmd)
+                        db.commit()
+                    elif all((self.cat_id != None, self.undercat_id != None)):
+                        cmd += f"WHERE cat_id = '{str(self.cat_id)}' AND undercat_id = '{str(self.undercat_id)}'"
+                        sql.execute(cmd)
+                        db.commit()
+
+
+                    if not updated:
+                        updated = True
+
+            if not updated:
+                return self.add()
+        else:
+            print("""[-] Can't  add UnderCats.cat_id and UnderCats.undercat_id """, end="\n\n")
 
     def add(self):
         self.ident_id = Randomizer().lower_with_int()
@@ -734,6 +769,24 @@ class UnderCats:
 
 
         return self.ident_id
+
+    def list_all_id(self):
+        result = []
+        sql.execute(f"SELECT * FROM mainapp_undercats WHERE cat_id = '{self.cat_id}'")
+        for i in sql.fetchall():
+            result.append(i[2])
+        return result
+
+    def show_content(self, user_id=None, lang=None):
+        result = None
+        if user_id != None:
+            lang = Lang(user_id).get()
+        if lang != None:
+            sql.execute(f"SELECT * FROM mainapp_undercats WHERE undercat_id = '{str(self.undercat_id)}'")
+            for _, __, ___,  ru, en, he, ar in sql.fetchall():
+                result = {"ru": ru, "en": en, "he": he, "ar": ar}[lang]
+
+        return result
 
 
 # Catlinks model

@@ -668,7 +668,7 @@ Select a company from the list''',
 حدد شركة من القائمة'''
     ],
 
-    # admin_firm_panel_msg
+    # admin_firm_panel_msg #
     ['admin_firm_panel_msg',
     """<b>Панель управления Фирмы</b>
 
@@ -679,6 +679,45 @@ Select a company from the list''',
 """,
     '''en''',
     '''he''',
+    '''ar'''
+    ],
+
+    # admin_add_undercat_msg #
+    ['admin_add_undercat_msg',
+    """<b>Добавление подкатегории</b>
+
+Отправьте название подкатегории с помощью следующего шаблона:
+
+he::{content}
+ru::{content}
+en::{content}
+ar::{content}
+
+Можно отправить несколько языков в одном сообщении.
+Хотите добавить только один язык? Так тоже можно
+""",
+    '''<b>Adding an under-category</b>
+
+Submit the under-category name using the following template:
+
+he::{content}
+ru::{content}
+en::{content}
+ar::{content}
+
+You can send multiple languages in one message.
+Want to add just one language? So it is also possible''',
+    '''<b>הוספת תת-קטגוריה</b>
+
+שלח את שם התת-קטגוריה באמצעות התבנית הבאה:
+
+he::{תוכן}
+ru::{תוכן}
+en::{תוכן}
+ar::{תוכן}
+
+ניתן לשלוח מספר שפות בהודעה אחת.
+רוצה להוסיף רק שפה אחת? אז זה גם אפשרי''',
     '''ar'''
     ],
 

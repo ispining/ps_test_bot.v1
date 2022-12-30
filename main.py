@@ -124,6 +124,24 @@ def glob_texts(message):
             except:
                 pass
 
+            k = kmarkup()
+            msg = texts.get_text(chat_id, "admin_add_undercat_msg")
+            k.row(stg.back(chat_id, f"admin_add_category"))
+            send(chat_id, msg, reply_markup=k)
+            Stages(chat_id).set(f"admin_add_undercat||{str(cat_source['cat_id'])}")
+
+        elif stage.split("||")[0] == f"admin_add_category":
+            cat_id = stage.split("||")[0]
+            undercat_dict = configurer.new_category_text(message.text)
+
+            uc = configurer.UnderCats()
+            uc.cat_id = cat_id
+            uc.ru = str(undercat_dict['ru'])
+            uc.en = str(undercat_dict['en'])
+            uc.he = str(undercat_dict['he'])
+            uc.ar = str(undercat_dict['ar'])
+            uc.add()
+
             Stages(chat_id).set("None")
             stg.admin_items_add(chat_id)
 
@@ -321,6 +339,35 @@ def glob_calls(call):
                 stg.admin_add_category(chat_id)
                 dm()
 
+            # remove item picture
+            elif call_value == "admin_remove_item_picture":
+                item_id = cd[1]
+                stg.admin_remove_item_someshit(chat_id, item_id, 'picture')
+                dm()
+
+            # set item picture
+            elif call_value == "admin_edit_item_picture":
+                item_id = cd[1]
+                stg.admin_edit_item_picture(chat_id, item_id)
+                dm()
+
+            #
+            elif call_value == "admin_select_item_file":
+                item_id = cd[1]
+                file_name = cd[2]
+                stg.admin_select_item_file(chat_id, item_id, file_name)
+                dm()
+
+            #
+            elif call_value == "admin_firms":
+                stg.admin_firms(chat_id)
+                dm()
+
+            elif call_value == "admin_firm_panel":
+                ident_id = cd[1]
+                stg.admin_firm_panel(chat_id, ident_id)
+                dm()
+
             # item panel content
             elif "admin_set_new_item" in call_value:
                 cat_id = cd[1]
@@ -371,18 +418,6 @@ def glob_calls(call):
                     else:
 
                         bot.answer_callback_query(call.id, texts.get_text(chat_id, "admin_set_new_item_no_important_call"), show_alert=True)
-
-            # remove item picture
-            elif call_value == "admin_remove_item_picture":
-                item_id = cd[1]
-                stg.admin_remove_item_someshit(chat_id, item_id, 'picture')
-                dm()
-
-            # set item picture
-            elif call_value == "admin_edit_item_picture":
-                item_id = cd[1]
-                stg.admin_edit_item_picture(chat_id, item_id)
-                dm()
 
             # set item values
             elif "admin_item_panel_set" in call_value:
@@ -448,13 +483,6 @@ def glob_calls(call):
                     dm()
 
             #
-            elif call_value == "admin_select_item_file":
-                item_id = cd[1]
-                file_name = cd[2]
-                stg.admin_select_item_file(chat_id, item_id, file_name)
-                dm()
-
-            #
             elif "admin_find" in call_value:
                 if call_value == "admin_find_by_category":
                     # Category list
@@ -477,16 +505,7 @@ def glob_calls(call):
                     stg.admin_find_by_name(chat_id)
                     dm()
 
-            #
-            elif call_value == "admin_firms":
-                stg.admin_firms(chat_id)
-                dm()
 
-
-            elif call_value == "admin_firm_panel":
-                ident_id = cd[1]
-                stg.admin_firm_panel(chat_id, ident_id)
-                dm()
 
 
 

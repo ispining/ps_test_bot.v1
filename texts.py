@@ -1036,8 +1036,8 @@ def db_text_updater():
 
 th = threading.Thread(target=db_text_updater)
 th.daemon = True
-th.start()
-threading.main_thread()
+#th.start()
+#threading.main_thread()
 
 
 # get texts for regular use

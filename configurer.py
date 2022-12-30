@@ -848,13 +848,14 @@ class Catlinks:
 class Csv:
     CSV_PATH = "/sources/csv/"
 
-    def __init__(self, filename, ):
+    def __init__(self, filename):
         self.filename = filename
         self.content = ''
 
     def generate_csv(self):
-        with open(os.getcwd() + self.CSV_PATH + self.filename, "w") as file:
-            file.write(self.content)
+        f = open(os.getcwd() + self.CSV_PATH + self.filename, "w")
+        f.write(self.content)
+        f.close()
 
 
     def categories(self, filter: str=None) -> str:
@@ -873,8 +874,9 @@ class Csv:
     def items(self):
         self.content = "ident_id;name;item_firm;barcode;input_cost;output_cost;item_count\n"
         sql.execute(f"SELECT * FROM mainapp_stock")
-        for _, item_ident, name, _____, item_firm, barcode, input_cost, output_cost, __, ___, item_count, ____ in sql.fetchall():
-            self.content += f"{item_ident};{name};{item_firm};{barcode};{input_cost};{output_cost};{item_count}\n"
+        for item in sql.fetchall():
+        #for item_ident, name, _____, item_firm, barcode, input_cost, output_cost, __, ___, item_count, ____ in sql.fetchall():
+            self.content += f"{item[0]};{item[2]};{item[4]};{item[5]};{item[6]};{item[7]};{item[9]}\n"
         self.generate_csv()
 
         return os.getcwd() + self.CSV_PATH + self.filename

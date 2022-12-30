@@ -286,7 +286,7 @@ def glob_calls(call):
         except:
             pass
 
-    call_category = call.data.split('_')
+    call_category = call.data.split('_')[0]
     cd = call.data.split("||")
     call_value = cd[0]
 
@@ -534,7 +534,7 @@ def glob_calls(call):
         elif call_category == "generete":
             if call_value == "generete_items_csv":
 
-                file_path = configurer.Csv("sources/csv/items.csv").items()
+                file_path = configurer.Csv("items.csv").items()
 
                 file = open(file_path, "rb")
                 bot.send_document(chat_id=chat_id, document=file)

@@ -63,12 +63,11 @@ def admin_items_add(chat_id):
     configurer.TG_item_pre_add().remove_not_used()
     k = kmarkup()
     msg = texts.get_text(chat_id, "admin_select_category_for_add_item")
-    k.row(btn("add_btn", callback_data=f"admin_add_category"))
     for cat_id in configurer.Categories().list_categories_id():
-        for undercat_id in configurer.UnderCats().list_all_id():
+        for undercat_id in configurer.UnderCats(cat_id=cat_id).list_all_id():
             b_end = configurer.UnderCats(undercat_id=undercat_id).show_content(user_id=chat_id)
             b_start = configurer.Categories(cat_id=cat_id).show_content(user_id=chat_id)
-            button = btn(b_start + ' => ' + b_end, callback_data=f"admin_add_item_panel||{undercat_id}")
+            button = btn(b_start + ' -> ' + b_end, callback_data=f"admin_add_item_panel||{undercat_id}")
             k.row(button)
     k.row(back(chat_id, "admin_item"))
     send(chat_id, msg, reply_markup=k)

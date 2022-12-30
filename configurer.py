@@ -684,7 +684,7 @@ class UnderCats:
             ident_id TEXT,
             cat_id TEXT,
             undercat_id TEXT,
-            ru TEXT
+            ru TEXT,
             en TEXT,
             he TEXT,
             ar TEXT
@@ -806,7 +806,7 @@ class Catlinks:
 
     def exists(self):
 
-        sql.execute(f"SELECT * FROM mainapp_catlink WHERE item_id = '{self.item_id} AND cat_id = '{self.cat_ids}'")
+        sql.execute(f"SELECT * FROM mainapp_catlink WHERE item_id = '{self.item_id}' AND cat_id = '{self.cat_ids}'")
         if sql.fetchone() is None:
             r = False
         else:

@@ -344,7 +344,7 @@ def glob_calls(call):
                 cat_id = cd[1]
                 k = kmarkup()
                 msg = texts.get_text(chat_id, f"admin_add_undercat_msg")
-                k.back(chat_id, f"admin_add_category")
+                k.row(stg.back(chat_id, f"admin_add_category"))
                 send(chat_id, msg, reply_markup=k)
                 Stages(chat_id).set(f"admin_add_undercat_for_exiting_cat")
 
@@ -416,7 +416,7 @@ def glob_calls(call):
                     dm()
 
                 elif call_value == "admin_set_new_item_done":
-                    tgi = configurer.TG_item_pre_add(cd[2])
+                    tgi = configurer.TG_item_pre_add(item_id=cd[2])
 
                     if all((tgi.show()['item_name'] != "None", tgi.show()['item_firm'] != "None")):
                         tgi.send_to_main_db()

@@ -261,6 +261,18 @@ Enter the selling price of the item.
 (هذا العنصر اختياري!)'''
     ],
 
+    # admin_add_cat_msg
+    ['admin_add_cat_msg',
+    """<b>Добавление категории</b>
+
+Виберите категорию, в которой хотите добавить подкатегорию. 
+Если вы хотите добавить и подкатегорию - нажмите на кнопку добавления
+""",
+    '''en''',
+    '''he''',
+    '''ar'''
+    ],
+
     # admin_add_category_msg
     ['admin_add_category_msg',
     """<b>Добавление категории</b>
@@ -681,6 +693,7 @@ Select a company from the list''',
     '''he''',
     '''ar'''
     ],
+
 
     # admin_add_undercat_msg #
     ['admin_add_undercat_msg',

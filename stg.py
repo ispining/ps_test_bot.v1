@@ -240,14 +240,20 @@ def admin_set_new_item_count(call, cat_id, item_id):
 
 
 def admin_add_category(chat_id):
-    """list cats to link undercats"""
+    """<b>Добавление категории</b>
+
+    Виберите категорию, в которой хотите добавить подкатегорию.
+    Если вы хотите добавить и подкатегорию - нажмите на кнопку добавления
+    """
     k = kmarkup()
-    msg = texts.get_text(chat_id, "admin_add_category_msg")
+    msg = texts.get_text(chat_id, "admin_add_cat_msg")
+
+    k.row(btn(texts.get_text(chat_id, "add_btn"), callback_data=f"admin_add_new_category"))
     for i in configurer.Categories().list_categories_id():
         k.row(btn(configurer.Categories(cat_id=i).show_content(user_id=chat_id), callback_data=f"admin_select_cat_without_undercat||{str(i)}"))
     k.row(back(chat_id, "admin_items_add"))
     send(chat_id, msg, reply_markup=k)
-    Stages(chat_id).set(f"admin_add_category")
+    #Stages(chat_id).set(f"admin_add_category")
 
 
 def admin_find_by_category(chat_id, cat_id=None):

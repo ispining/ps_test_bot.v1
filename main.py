@@ -130,7 +130,7 @@ def glob_texts(message):
             send(chat_id, msg, reply_markup=k)
             Stages(chat_id).set(f"admin_add_undercat||{str(cat_source['cat_id'])}")
 
-        elif stage.split("||")[0] == f"admin_add_category":
+        elif stage.split("||")[0] == f"admin_add_undercat":
             cat_id = stage.split("||")[0]
             undercat_dict = configurer.new_category_text(message.text)
 
@@ -343,9 +343,10 @@ def glob_calls(call):
             elif call_value == "admin_select_cat_without_undercat":
                 cat_id = cd[1]
                 k = kmarkup()
-                msg = texts.get_text(chat_id, f"admin_set_new_undercat_name")
+                msg = texts.get_text(chat_id, f"admin_add_undercat_msg")
                 k.back(chat_id, f"admin_add_category")
                 send(chat_id, msg, reply_markup=k)
+                Stages(chat_id).set(f"admin_add_undercat_for_exiting_cat")
 
 
             # remove item picture

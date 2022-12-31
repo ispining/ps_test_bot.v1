@@ -875,7 +875,6 @@ class Csv:
         self.content = "ident_id;name;item_firm;barcode;input_cost;output_cost;item_count\n"
         sql.execute(f"SELECT * FROM mainapp_stock")
         for item in sql.fetchall():
-        #for item_ident, name, _____, item_firm, barcode, input_cost, output_cost, __, ___, item_count, ____ in sql.fetchall():
             self.content += f"{item[0]};{item[2]};{item[4]};{item[5]};{item[6]};{item[7]};{item[9]}\n"
         self.generate_csv()
 

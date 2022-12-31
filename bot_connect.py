@@ -1,9 +1,11 @@
 import iluxaMod as ilm
 
 
-tg = ilm.tgBot("5709555806:AAEykTC9xPT9GUeGUCmk46RuFIh82cpN6UU")
+tg = ilm.tgBot("5665838136:AAHfXy2WeSkHUvbrrv2SkMPoptMCrrNWjPM")
 bot = tg.bot
 bot.parse_mode = "HTML"
+
+dev_ch = -1001626458217
 
 
 btn = tg.btn

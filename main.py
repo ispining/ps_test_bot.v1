@@ -102,48 +102,60 @@ def glob_texts(message):
             Stages(chat_id).set("None")
 
         # add new category
-        elif stage == "admin_add_category":
+        elif stage.split('||')[0] == "admin_add_category":
             cat_source = configurer.new_category_text(message.text)
+            unknown = True
             try:
                 configurer.Categories(cat_id=str(cat_source["cat_id"]), ru=str(cat_source["ru"])).add()
+                unknown = False
             except:
                 pass
 
             try:
                 configurer.Categories(cat_id=str(cat_source["cat_id"]), he=str(cat_source["he"])).add()
+                unknown = False
             except:
                 pass
 
             try:
                 configurer.Categories(cat_id=str(cat_source["cat_id"]), en=str(cat_source["en"])).add()
+                unknown = False
             except:
                 pass
 
             try:
                 configurer.Categories(cat_id=str(cat_source["cat_id"]), ar=str(cat_source['ar'])).add()
+                unknown = False
             except:
                 pass
 
-            k = kmarkup()
-            msg = texts.get_text(chat_id, "admin_add_undercat_msg")
-            k.row(stg.back(chat_id, f"admin_add_category"))
-            send(chat_id, msg, reply_markup=k)
-            Stages(chat_id).set(f"admin_add_undercat||{str(cat_source['cat_id'])}")
+            if unknown:
+                send(chat_id, texts.get_text(chat_id, "unknown_format_error_msg"))
+            else:
+                stg.admin_categories(chat_id)
+                Stages(chat_id).set("None")
 
+        #
         elif stage.split("||")[0] == f"admin_add_undercat":
-            cat_id = stage.split("||")[0]
+            cat_id = stage.split("||")[1]
             undercat_dict = configurer.new_category_text(message.text)
 
             uc = configurer.UnderCats()
             uc.cat_id = cat_id
-            uc.ru = str(undercat_dict['ru'])
-            uc.en = str(undercat_dict['en'])
-            uc.he = str(undercat_dict['he'])
-            uc.ar = str(undercat_dict['ar'])
+            print(undercat_dict)
+            if "ru" in undercat_dict.keys():
+                uc.ru = str(undercat_dict['ru'])
+            if "en" in undercat_dict.keys():
+                uc.en = str(undercat_dict['en'])
+            if "he" in undercat_dict.keys():
+                uc.he = str(undercat_dict['he'])
+            if "ar" in undercat_dict.keys():
+                uc.ar = str(undercat_dict['ar'])
             uc.add()
 
             Stages(chat_id).set("None")
-            stg.admin_items_add(chat_id)
+            stg.admin_category_panel_select(chat_id, cat_id)
+
 
         # update item firm
         elif stage.split("||")[0] == "admin_item_panel_set_item_firm":
@@ -301,7 +313,7 @@ def glob_calls(call):
                 stg.agent_panel(chat_id)
                 dm()
 
-        elif "admin" in call_value:
+        elif call_category == "admin":
 
             # Admin home page
             if call_value == "admin":
@@ -335,9 +347,23 @@ def glob_calls(call):
                     stg.admin_add_item_panel(chat_id, cat_id)
                 dm()
 
+            elif call_value == "admin_categories":
+                stg.admin_categories(chat_id)
+                dm()
+
             # Admin add category when add new item
             elif call_value == "admin_add_category":
                 stg.admin_add_category(chat_id)
+                dm()
+
+            elif call_value == "admin_category_panel_select":
+                cat_id = cd[1]
+                stg.admin_category_panel_select(chat_id, cat_id)
+                dm()
+
+            elif call_value == "admin_add_undercat_to_cat":
+                cat_id = cd[1]
+                stg.admin_add_undercat_to_cat(chat_id, cat_id)
                 dm()
 
             elif call_value == "admin_select_cat_without_undercat":

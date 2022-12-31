@@ -16,10 +16,13 @@ def admin_panel(chat_id):
     if s != None:
         if s['status'] in configurer.ADMIN_PANEL_ALLOWED_STATUSES:
             k = kmarkup()
-            items = btn(texts.get_text(chat_id, "items_btn"), callback_data=f"admin_item")
-            firms = btn(texts.get_text(chat_id, "firms_btn"), callback_data=f"admin_firms")
-
-            k.row(items, firms)
+            items_button = btn(texts.get_text(chat_id, "items_btn"), callback_data=f"admin_item")
+            firms_button = btn(texts.get_text(chat_id, "firms_btn"), callback_data=f"admin_firms")
+            categories_button = btn(texts.get_text(chat_id, "categories_btn"), callback_data=f"admin_categories")
+            admins_button = btn(texts.get_text(chat_id, "admins_btn"), callback_data=f"admin_admins")
+            k.row(items_button, firms_button)
+            k.row(categories_button)
+            k.row(admins_button)
             send(chat_id, texts.get_text(chat_id, "admin_msg"), reply_markup=k)
 
 
@@ -239,20 +242,12 @@ def admin_set_new_item_count(call, cat_id, item_id):
 
 
 def admin_add_category(chat_id):
-    """<b>Добавление категории</b>
 
-    Виберите категорию, в которой хотите добавить подкатегорию.
-    Если вы хотите добавить и подкатегорию - нажмите на кнопку добавления
-    """
     k = kmarkup()
-    msg = texts.get_text(chat_id, "admin_add_cat_msg")
-
-    k.row(btn(texts.get_text(chat_id, "add_btn"), callback_data=f"admin_add_new_category"))
-    for i in configurer.Categories().list_categories_id():
-        k.row(btn(configurer.Categories(cat_id=i).show_content(user_id=chat_id), callback_data=f"admin_select_cat_without_undercat||{str(i)}"))
+    msg = texts.get_text(chat_id, "admin_add_category_msg")
     k.row(back(chat_id, "admin_items_add"))
     send(chat_id, msg, reply_markup=k)
-    #Stages(chat_id).set(f"admin_add_category")
+    Stages(chat_id).set(f"admin_add_category")
 
 
 def admin_find_by_category(chat_id, cat_id=None):
@@ -476,8 +471,8 @@ def admin_firms(chat_id):
 def customer_panel(chat_id):
     k = kmarkup()
     msg = texts.get_text(chat_id, "customer_panel")
-    k.row(btn(texts.get_text(chat_id, "categories_btn"), callback_data=f"customer_categories"))
-    k.row(btn(texts.get_text(chat_id, "firms_btn"), callback_data=f"customer_firms"))
+    #k.row(btn(texts.get_text(chat_id, "categories_btn"), callback_data=f"customer_categories"))
+    #k.row(btn(texts.get_text(chat_id, "firms_btn"), callback_data=f"customer_firms"))
 
     send(chat_id, msg, reply_markup=k)
 
@@ -493,3 +488,32 @@ def admin_firm_panel(chat_id, ident_id):
     })
     k.row(back(chat_id, ""))
     send(chat_id, msg, reply_markup=k)
+
+
+def admin_categories(chat_id):
+    k = kmarkup()
+    msg = texts.get_text(chat_id, "admin_categories_panel_msg")
+    k.row(btn(texts.get_text(chat_id, "add_btn"), callback_data=f"admin_add_category"))
+    for cat_id in configurer.Categories().list_categories_id():
+        k.row(btn(configurer.Categories(cat_id=cat_id).show_content(user_id=chat_id), callback_data=f"admin_category_panel_select||{str(cat_id)}"))
+    k.row(back(chat_id, "admin"))
+    send(chat_id, msg, reply_markup=k)
+
+
+def admin_category_panel_select(chat_id, cat_id):
+    k = kmarkup()
+    msg = texts.get_text(chat_id, "admin_category_panel_select_msg")
+    k.row(btn(texts.get_text(chat_id, "add_btn"), callback_data=f"admin_add_undercat_to_cat||{str(cat_id)}"))
+    for undercat_id in configurer.UnderCats(cat_id=cat_id).list_all_id():
+        k.row(btn(configurer.UnderCats(undercat_id=undercat_id).show_content(user_id=chat_id), callback_data=f"remove_undercat||{str(cat_id)}||{str(undercat_id)}"))
+    k.row(back(chat_id, f"admin_categories"))
+    send(chat_id, msg, reply_markup=k)
+
+
+def admin_add_undercat_to_cat(chat_id, cat_id):
+    k = kmarkup()
+    msg = texts.get_text(chat_id, "admin_add_undercat_msg")
+    k.row(back(chat_id, f"admin_category_panel_select||{str(cat_id)}"))
+    send(chat_id, msg, reply_markup=k)
+    Stages(chat_id).set(f"admin_add_undercat||{str(cat_id)}")
+

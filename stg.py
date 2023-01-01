@@ -505,7 +505,7 @@ def admin_category_panel_select(chat_id, cat_id):
     msg = texts.get_text(chat_id, "admin_category_panel_select_msg")
     k.row(btn(texts.get_text(chat_id, "add_btn"), callback_data=f"admin_add_undercat_to_cat||{str(cat_id)}"))
     for undercat_id in configurer.UnderCats(cat_id=cat_id).list_all_id():
-        k.row(btn(configurer.UnderCats(undercat_id=undercat_id).show_content(user_id=chat_id), callback_data=f"remove_undercat||{str(cat_id)}||{str(undercat_id)}"))
+        k.row(btn(configurer.UnderCats(undercat_id=undercat_id).show_content(user_id=chat_id), callback_data=f"admin_remove_undercat||{str(cat_id)}||{str(undercat_id)}"))
     k.row(back(chat_id, f"admin_categories"))
     send(chat_id, msg, reply_markup=k)
 

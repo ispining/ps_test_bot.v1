@@ -11,6 +11,24 @@ def back(user_id, callback_data):
     return btn(bt, callback_data=callback_data)
 
 
+class Alerts:
+    def __init__(self, chat_id, back_call=None):
+        self.chat_id = chat_id
+        self.back_call = back_call
+
+    def no_permissions(self):
+        if self.back_call == None:
+            send(self.chat_id, texts.get_text(self.chat_id, "no_permissions_msg"))
+        else:
+            send(self.chat_id, texts.get_text(self.chat_id, "no_permissions_msg"), reply_markup=kmarkup().row(back(self.chat_id, self.back_call)))
+
+    def stage_for_nums(self):
+        if self.back_call == None:
+            send(self.chat_id, texts.get_text(self.chat_id, "nums_only_msg"))
+        else:
+            send(self.chat_id, texts.get_text(self.chat_id, "nums_only_msg"), reply_markup=kmarkup().row(back(self.chat_id, self.back_call)))
+
+
 def admin_panel(chat_id):
     s = configurer.Staff(chat_id).get()
     if s != None:

@@ -535,3 +535,64 @@ def admin_add_undercat_to_cat(chat_id, cat_id):
     send(chat_id, msg, reply_markup=k)
     Stages(chat_id).set(f"admin_add_undercat||{str(cat_id)}")
 
+
+def admin_admins(chat_id):
+    k = kmarkup()
+    msg = texts.get_text(chat_id, "admin_admins_msg")
+    admins = btn(texts.get_text(chat_id, "admins_set_btn"), callback_data=f"admin_admins_adminview")
+    developers = btn(texts.get_text(chat_id, "developers_set_btn"), callback_data=f"admin_admins_devview")
+    view_all = btn(texts.get_text(chat_id, "viewall_btn"), callback_data=f"admin_admins_viewall")
+    for button in [admins, developers, view_all]:
+        k.row(button)
+    k.row(back(chat_id, f"admin"))
+    send(chat_id, msg, reply_markup=k)
+
+
+def admin_admins_adminview(chat_id):
+    k = kmarkup()
+    msg = texts.get_text(chat_id, "admin_admins_adminview_msg")
+    admins_list = configurer.Staff().list_by_status('admin')
+
+    k.row(btn(texts.get_text(chat_id, "add_btn"), callback_data=f"admin_admins_add_admin"))
+    for user_id, vip, reg_date, special_files, status in admins_list:
+        b_view = bot.get_chat(user_id)
+        if b_view != None:
+            b_view = b_view.title
+            if b_view == None:
+                b_view = user_id
+        else:
+            b_view = user_id
+        k.row(btn(b_view, callback_data=f"admin_admins_panel||{str(user_id)}"))
+    k.row(back(chat_id, "admin_admins"))
+    send(chat_id, msg, reply_markup=k)
+    Stages(chat_id).set("None")
+
+
+def admin_admins_add_admin(chat_id):
+    k = kmarkup()
+    msg = texts.get_text(chat_id, "admin_admins_add_admin_msg")
+    k.row(back(chat_id, "admin_admins_adminview"))
+    send(chat_id, msg, reply_markup=k)
+    Stages(chat_id).set(f"admin_admins_add_admin||{str(chat_id)}")
+
+
+def admin_admins_panel(chat_id, admin_id):
+    admin_info = configurer.Staff(admin_id).get()
+
+    k = kmarkup()
+    msg = texts.get_text(chat_id, "admin_admins_panel_msg").format(**{
+        "user_id": str(admin_id),
+        "name": bot.get_chat(admin_id).first_name,
+        "username": bot.get_chat(admin_id).first_name,
+        "reg_date": admin_info['reg_date']
+    })
+    k.row(btn(texts.get_text(chat_id, "remove_admin_btn"), callback_data=f"admin_remove_admin||{str(admin_id)}"))
+    k.row(back(chat_id, "admin_admins_adminview"))
+    send(chat_id, msg, reply_markup=k)
+
+
+def admin_remove_admin(chat_id, call):
+
+    configurer.Staff(chat_id).remove_by_id()
+    bot.answer_callback_query(call.id, texts.get_text(chat_id, "admin_remove_admin_removed_msg"), show_alert=True)
+    admin_admins(chat_id)

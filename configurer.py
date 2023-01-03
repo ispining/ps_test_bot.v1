@@ -222,7 +222,8 @@ class Staff:
             user_id TEXT PRIMARY KEY,
             vip TEXT,
             reg_date TEXT,
-            special_files TEXT)""")
+            special_files TEXT,
+            status TEXT)""")
             db.commit()
 
         preDB()
@@ -239,13 +240,13 @@ class Staff:
             result = []
             sql.execute(f"SELECT * FROM mainapp_staff")
             fAll = sql.fetchall()
-            for user_id, status, vip, reg_date, special_files in fAll:
+            for user_id, vip, reg_date, special_files, status in fAll:
                 result.append({"user_id": user_id, "status": status, "vip": vip, "reg_date": reg_date, "special_files": special_files})
             return result
         elif self.user_id != None:
             sql.execute(f"SELECT * FROM mainapp_staff WHERE user_id = '{str(self.user_id)}'")
             fAll = sql.fetchall()
-            for user_id, status, vip, reg_date, special_files in fAll:
+            for user_id, vip, reg_date, special_files, status in fAll:
                 return {"user_id": user_id, "status": status, "vip": vip, "reg_date": reg_date, "special_files": special_files}
 
     def set(self, by="user_id", search_value=None, column=None, value=None, verbose=True):
@@ -259,7 +260,15 @@ class Staff:
 
     def new(self):
 
-        sql.execute(f"INSERT INTO mainapp_staff VALUES('{str(self.user_id)}', '{self.status}', '{str(self.vip)}', '{str(self.reg_date)}', '{str(self.special_files)}')")
+        sql.execute(f"INSERT INTO mainapp_staff VALUES('{str(self.user_id)}', '{str(self.vip)}', '{str(self.reg_date)}', '{str(self.special_files)}',  '{self.status}')")
+        db.commit()
+
+    def list_by_status(self, status):
+        sql.execute(f"SELECT * FROM mainapp_staff WHERE status = '{str(status)}'")
+        return sql.fetchall()
+
+    def remove_by_id(self):
+        sql.execute(f"DELETE FROM mainapp_staff WHERE user_id = '{str(self.user_id)}'")
         db.commit()
 
 

@@ -770,6 +770,85 @@ ar::{תוכן}
 У вас не достаточно прав, для выполнения данного действия
 """,
     '''en''',
+    '''<b>שגיעה</b>
+
+אין לך מספיק הרשאות לביצוע פעולה זו''',
+    '''ar'''
+    ],
+
+
+    # admin_admins_msg #
+    ['admin_admins_msg',
+    """<b>Члены администрации</b>
+
+Тут вы можете просматривать информацию о пользователях, которые имеют административный доступ.
+
+Выберите нужный раздел
+""",
+    '''en''',
+    '''he''',
+    '''ar'''
+    ],
+
+
+    # admin_admins_adminview_msg #
+    ['admin_admins_adminview_msg',
+    """<b>Члены администрации</b>
+
+Выберите Администратора из добавленых, либо добавьте нового
+""",
+    '''en''',
+    '''he''',
+    '''ar'''
+    ],
+
+
+    # admin_admins_add_admin_msg #
+    ['admin_admins_add_admin_msg',
+    """<b>Добавление администратора</b>
+
+Введите ID пользователя, которого хотите назначить дминистратором.
+
+""",
+    '''en''',
+    '''he''',
+    '''ar'''
+    ],
+
+
+    # admin_already_exists_msg #
+    ['admin_already_exists_msg',
+    """<b>ОШИБКА</b>
+
+Данный пользователь уже записан в базе данных как Админ.
+Вы не можете добавить его повторно
+
+""",
+    '''en''',
+    '''he''',
+    '''ar'''
+    ],
+
+
+    # admin_admins_panel_msg #
+    ['admin_admins_panel_msg',
+    """<b>Просмотр Админа</b>
+
+<b>Ай-ди пользователя: </b> {user_id}
+<b>Имя пользователя: </b> {name}
+<b>Юзернейм пользователя: </b> {username}
+<b>Дата регистрации пользователя: </b> {reg_date}
+""",
+    '''en''',
+    '''he''',
+    '''ar'''
+    ],
+
+
+    # admin_remove_admin_removed_msg #
+    ['admin_remove_admin_removed_msg',
+    """Администратор удален успешно!""",
+    '''en''',
     '''he''',
     '''ar'''
     ],
@@ -1019,6 +1098,38 @@ ar::{תוכן}
     'Administration',
     'הגדרת מנהלים',
     'ar'
+    ],
+
+    # admins_btn
+    ["admins_set_btn",
+    "Администраторы",
+    'Administrators',
+    'מנהלים',
+    'ar'
+    ],
+
+    # developers_set_btn
+    ["developers_set_btn",
+    "Разработчики",
+    'Developers',
+    'מפתחים',
+    'ar'
+    ],
+
+    # viewall_btn
+    ["viewall_btn",
+    "Просмотреть все",
+    'View all',
+    'לראות הכל',
+    'ar'
+    ],
+
+    # remove_admin_btn
+    ["remove_admin_btn",
+    "Удалить Админа",
+    'Remove admin',
+    'מחיקת מנהל',
+    'ar'
     ]
 
 ]
@@ -1092,8 +1203,8 @@ def db_text_updater():
 
 th = threading.Thread(target=db_text_updater)
 th.daemon = True
-#th.start()
-#threading.main_thread()
+th.start()
+threading.main_thread()
 
 
 # get texts for regular use

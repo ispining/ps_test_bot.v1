@@ -94,7 +94,7 @@ class ImportFromCsv:
         return result
 
 
-class Tests:
+class Test:
     class Item:
         def __str__(self):
             return "Items csv read test"

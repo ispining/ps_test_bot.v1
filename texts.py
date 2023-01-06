@@ -694,7 +694,6 @@ Select a company from the list''',
     '''ar'''
     ],
 
-
     # admin_add_undercat_msg #
     ['admin_add_undercat_msg',
     """<b>Добавление подкатегории</b>
@@ -734,8 +733,6 @@ ar::{תוכן}
     '''ar'''
     ],
 
-
-
     # admin_categories_panel_msg #
     ['admin_categories_panel_msg',
     """<b>Категории</b>
@@ -748,8 +745,6 @@ ar::{תוכן}
     '''ar'''
     ],
 
-
-
     # admin_category_panel_select_msg #
     ['admin_category_panel_select_msg',
     """<b>Подкатегории</b>
@@ -761,7 +756,6 @@ ar::{תוכן}
     '''he''',
     '''ar'''
     ],
-
 
     # no_permissions_msg #
     ['no_permissions_msg',
@@ -776,7 +770,6 @@ ar::{תוכן}
     '''ar'''
     ],
 
-
     # nums_only_msg #
     ['nums_only_msg',
     """<b>Ошибка</b>
@@ -789,7 +782,6 @@ ar::{תוכן}
 אין לך מספיק הרשאות לביצוע פעולה זו''',
     '''ar'''
     ],
-
 
     # admin_admins_msg #
     ['admin_admins_msg',
@@ -804,7 +796,6 @@ ar::{תוכן}
     '''ar'''
     ],
 
-
     # admin_admins_adminview_msg #
     ['admin_admins_adminview_msg',
     """<b>Члены администрации</b>
@@ -816,19 +807,17 @@ ar::{תוכן}
     '''ar'''
     ],
 
-
     # admin_admins_add_admin_msg #
     ['admin_admins_add_admin_msg',
     """<b>Добавление администратора</b>
 
-Введите ID пользователя, которого хотите назначить дминистратором.
+Введите ID пользователя, которого хотите назначить администратором.
 
 """,
     '''en''',
     '''he''',
     '''ar'''
     ],
-
 
     # admin_already_exists_msg #
     ['admin_already_exists_msg',
@@ -843,6 +832,18 @@ ar::{תוכן}
     '''ar'''
     ],
 
+    # developer_already_exists_msg #
+    ['developer_already_exists_msg',
+    """<b>ОШИБКА</b>
+
+Данный пользователь уже записан в базе данных как разработчик.
+Вы не можете добавить его повторно.
+
+""",
+    '''en''',
+    '''he''',
+    '''ar'''
+    ],
 
     # admin_admins_panel_msg #
     ['admin_admins_panel_msg',
@@ -858,10 +859,62 @@ ar::{תוכן}
     '''ar'''
     ],
 
+    # admin_devs_panel_msg #
+    ['admin_devs_panel_msg',
+    """<b>Просмотр Программистов</b>
+
+<b>Ай-ди пользователя: </b> {user_id}
+<b>Имя пользователя: </b> {name}
+<b>Юзернейм пользователя: </b> {username}
+<b>Дата регистрации пользователя: </b> {reg_date}
+""",
+    '''en''',
+    '''he''',
+    '''ar'''
+    ],
 
     # admin_remove_admin_removed_msg #
     ['admin_remove_admin_removed_msg',
     """Администратор удален успешно!""",
+    '''en''',
+    '''he''',
+    '''ar'''
+    ],
+
+    # admin_admins_devview_msg #
+    ['admin_admins_devview_msg',
+"""<b>Разработчики</b>
+
+Выберите Разработчика из добавленых, либо добавьте нового
+""",
+    '''en''',
+    '''he''',
+    '''ar'''
+    ],
+
+    # admin_admins_add_admin_added_msg #
+    ['admin_admins_add_admin_added_msg',
+    """Администратор добавлен успешно!""",
+    '''en''',
+    '''he''',
+    '''ar'''
+    ],
+
+    # admin_admins_add_developer_added_msg #
+    ['admin_admins_add_developer_added_msg',
+    """Разработчик добавлен успешно!""",
+    '''en''',
+    '''he''',
+    '''ar'''
+    ],
+
+    # admin_admins_add_developer_msg #
+    ['admin_admins_add_developer_msg',
+    """<b>Разработчики</b>
+    
+Введите ID пользователя, которого хотите назначить разработчиком.
+
+    """,
     '''en''',
     '''he''',
     '''ar'''
@@ -1143,6 +1196,14 @@ ar::{תוכן}
     "Удалить Админа",
     'Remove admin',
     'מחיקת מנהל',
+    'ar'
+    ],
+
+    # remove_dev_btn
+    ["remove_dev_btn",
+    "Удалить Программиста",
+    'Remove programmer',
+    'מחיקת מתכנת',
     'ar'
     ]
 

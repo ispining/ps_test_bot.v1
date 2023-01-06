@@ -1,11 +1,8 @@
 import datetime
-import os
-import random
-import sqlite3
 import threading
 
 from config import *
-
+from sources.csv import csvToDB
 
 GLOBAL_VERBOSE = False
 ADMIN_PANEL_ALLOWED_STATUSES = ['admin']
@@ -865,6 +862,14 @@ class Csv:
         f = open(os.getcwd() + self.CSV_PATH + self.filename, "w")
         f.write(self.content)
         f.close()
+
+    def upload_items(self, filename: str) -> None:
+        list_items = csvToDB.ImportFromCsv(filename).list_items()
+        items_num = len(list_items)
+        for item in list_items:
+
+            pass
+
 
 
     def categories(self, filter: str=None) -> str:

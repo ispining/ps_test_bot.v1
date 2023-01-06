@@ -3,45 +3,44 @@ import csv
 from pprint import pprint
 
 
-
-class Import:
+class ImportFromCsv:
     def __init__(self, filename):
         self.filename = filename
-        self.vars =  ['ident id',
+        self.vars = ['ident_id', # str
                 'item_type',
-                'barcode',
-                "name",
-                "posted",
-                'recomended',
-                'catalog_view',
-                'description',
-                'about',
+                'barcode', # str
+                "name", # str
+                "posted", # bool
+                'recomended', # bool
+                'catalog_view', # bool (visible, hidden)
+                'description', # str
+                'about', #  long str
                 'start_sales',
                 'end_sales',
-                'mas_status',
-                'mas_type',
-                "in_stock",
-                "stock",
-                "minimal_stock",
-                "buy_without_stock",
-                'one_by_one',
-                'kilograms',
-                'x',
-                'y',
-                'z',
-                'can_review',
+                'mas_status', # taxable?
+                'mas_type', # parent
+                "in_stock", # bool
+                "stock", # empty
+                "minimal_stock", # empty
+                "buy_without_stock", # bool
+                'one_by_one', # bool
+                'kilograms', # float
+                'x', # int
+                'y', # int
+                'z', # int
+                'can_review', # bool
                 'category_cost',
                 'tags',
-                'deluvery_type',
-                'downliad limit',
-                'days_left_to_download',
-                'parent',
-                'mekuvazim',
-                'upgraded',
-                'mashlimim',
-                'source',
-                'btn_text',
-                'location',
+                'delivery_type', # str
+                'download limit',
+                'days_left_to_download', # str
+                'parent', #str (category)
+                'mekuvazim', # str
+                'upgraded',# empty
+                'mashlimim',# empty
+                'source', # str (url)
+                'btn_text', # empty
+                'location', # str (str/list)
                 's1_shemot',
                 's1_arahim',
                 's1_showed',
@@ -80,7 +79,6 @@ class Import:
                 
                 row_numval += 1
             return result
-    
 
     def test_useble(self):
         result = {}
@@ -96,6 +94,15 @@ class Import:
         return result
 
 
-items_list = Import("items.csv").test_useble()
-pprint(items_list)
+class Tests:
+    class Item:
+        def __str__(self):
+            return "Items csv read test"
+
+        def show_items_value(self, value):
+            items_list = ImportFromCsv("../../items.csv").list_items()
+            for item in items_list:
+                print(item[value])
+                print()
+
 

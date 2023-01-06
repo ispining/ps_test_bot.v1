@@ -591,8 +591,58 @@ def admin_admins_panel(chat_id, admin_id):
     send(chat_id, msg, reply_markup=k)
 
 
-def admin_remove_admin(chat_id, call):
-
-    configurer.Staff(chat_id).remove_by_id()
+def admin_remove_admin(call, admin_id):
+    chat_id = call.fom_user.id
+    configurer.Staff(admin_id).remove_by_id()
     bot.answer_callback_query(call.id, texts.get_text(chat_id, "admin_remove_admin_removed_msg"), show_alert=True)
+    admin_admins(chat_id)
+    
+    
+def admin_admins_devview(chat_id):
+    k = kmarkup()
+    msg = texts.get_text(chat_id, "admin_admins_devview_msg")
+    devs_list = configurer.Staff().list_by_status('developer')
+
+    k.row(btn(texts.get_text(chat_id, "add_btn"), callback_data=f"admin_admins_add_developer"))
+    for user_id, vip, reg_date, special_files, status in devs_list:
+        b_view = bot.get_chat(user_id)
+        if b_view != None:
+            b_view = b_view.title
+            if b_view == None:
+                b_view = user_id
+        else:
+            b_view = user_id
+        k.row(btn(b_view, callback_data=f"admin_devs_panel||{str(user_id)}"))
+    k.row(back(chat_id, "admin_admins"))
+    send(chat_id, msg, reply_markup=k)
+    Stages(chat_id).set("None")
+
+
+def admin_admins_add_developer(chat_id):
+    k = kmarkup()
+    msg = texts.get_text(chat_id, "admin_admins_add_developer_msg")
+    k.row(back(chat_id, "admin_admins_devview"))
+    send(chat_id, msg, reply_markup=k)
+    Stages(chat_id).set(f"admin_admins_add_developer||{str(chat_id)}")
+
+
+def admin_devs_panel(chat_id, dev_id):
+    dev_info = configurer.Staff(dev_id).get()
+
+    k = kmarkup()
+    msg = texts.get_text(chat_id, "admin_devs_panel_msg").format(**{
+        "user_id": str(dev_id),
+        "name": bot.get_chat(dev_id).first_name,
+        "username": bot.get_chat(dev_id).first_name,
+        "reg_date": dev_info['reg_date']
+    })
+    k.row(btn(texts.get_text(chat_id, "remove_dev_btn"), callback_data=f"admin_remove_dev||{str(dev_id)}"))
+    k.row(back(chat_id, "admin_admins_adminview"))
+    send(chat_id, msg, reply_markup=k)
+
+
+def admin_remove_dev(call, dev_id):
+    chat_id = call.message.chat.id
+    configurer.Staff(chat_id).remove_by_id()
+    bot.answer_callback_query(call.id, texts.get_text(chat_id, "admin_remove_developer_removed_msg"), show_alert=True)
     admin_admins(chat_id)

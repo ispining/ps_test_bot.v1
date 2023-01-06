@@ -51,6 +51,16 @@ def customer_command(message):
             stg.customer_panel(chat_id)
 
 
+@bot.message_handler(commands=['my_id'])
+def id_command(message):
+    chat_id = message.chat.id
+    user_id = message.from_user.id
+    if message.chat.type == "private":
+        send(chat_id, f"<b>Your ID:</b> <code>{str(user_id)}</code>")
+    else:
+        send(chat_id, f"<b>Personal ID:</b> <code>{str(user_id)}</code>\n<b>Group ID:</b> <code>{str(chat_id)}</code>")
+
+
 @bot.message_handler(content_types=['text'])
 def glob_texts(message):
     chat_id = message.chat.id
@@ -256,12 +266,29 @@ def glob_texts(message):
                     stff.status = "admin"
                     stff.reg_date = str(datetime.datetime.now()).split(" ")[0]
                     stff.new()
-                    msg = texts.get_text(chat_id, "admin_admins_add_admin_added")
+                    msg = texts.get_text(chat_id, "admin_admins_add_admin_added_msg")
                     send(chat_id, msg)
                     Stages(chat_id).set("None")
                     stg.admin_admins_adminview(chat_id)
                 else:
                     send(chat_id, texts.get_text(chat_id, "admin_already_exists_msg"), reply_markup=kmarkup().row(stg.back(chat_id, "admin_admins_adminview")))
+
+            else:
+                alert_func.stage_for_nums()
+
+        elif stage.split("||")[0] == "admin_admins_add_developer":
+            if str_is_only_integers(message.text):
+                if configurer.Staff(message.text).get() == None:
+                    stff = configurer.Staff(chat_id)
+                    stff.status = "developer"
+                    stff.reg_date = str(datetime.datetime.now()).split(" ")[0]
+                    stff.new()
+                    msg = texts.get_text(chat_id, "admin_admins_add_developer_added")
+                    send(chat_id, msg)
+                    Stages(chat_id).set("None")
+                    stg.admin_admins_adminview(chat_id)
+                else:
+                    send(chat_id, texts.get_text(chat_id, "developer_already_exists_msg"), reply_markup=kmarkup().row(stg.back(chat_id, "admin_admins_adminview")))
 
             else:
                 alert_func.stage_for_nums()
@@ -612,6 +639,24 @@ def glob_calls(call):
                 stg.admin_remove_admin(call, admin_id)
                 dm()
 
+            elif call_value == "admin_admins_devview":
+                stg.admin_admins_devview(chat_id)
+                dm()
+
+            elif call_value == "admin_admins_add_developer":
+                stg.admin_admins_add_developer(chat_id)
+                dm()
+
+            elif call_value == "admin_devs_panel":
+                dev_id = cd[1]
+                stg.admin_devs_panel(chat_id, dev_id)
+                dm()
+
+            elif call_value == "admin_remove_dev":
+                dev_id = cd[1]
+                stg.admin_remove_dev(chat_id, dev_id)
+                dm()
+
 
 
         # Agent back office
@@ -647,5 +692,8 @@ def glob_calls(call):
 
 
 
-
-bot.polling(timeout=10000)
+while True:
+    try:
+        bot.polling(timeout=10000)
+    except Exception as ex:
+        print(ex)

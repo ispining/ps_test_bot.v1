@@ -868,9 +868,33 @@ class Csv:
         items_num = len(list_items)
         for item in list_items:
 
-            pass
+            @timer
+            def stock_update():
+                ident_id, barcode, kilograms, location, minimal_stock, name = (item['ident_id'], item['barcode'], item['kilograms'], item['location'], item['minimal_stock'], item['name'])
 
+                pass
 
+            @timer
+            def config_update():
+                ident_id, buy_without_stock, can_review, one_by_one, recomended = (item['ident_id'], item['buy_without_stock'], item['can_review'], item['one_by_one'], item['recomended'])
+
+                pass
+
+            @timer
+            def content_update():
+                ident_id, btn_text, description, about, posted_by = (item['ident_id'], item['btn_text'], item['description'], item['about'], item['posted_by'])
+
+                pass
+
+            @timer
+            def catlink_update():
+                pass
+
+            @timer
+            def other_update():
+                ident_id, mas_type, mas_status, delivery_type = (item["ident_id"], item["mas_type"], item["mas_status"], item["delivery_type"])
+
+                pass
 
     def categories(self, filter: str=None) -> str:
 

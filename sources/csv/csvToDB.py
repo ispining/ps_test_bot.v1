@@ -10,7 +10,7 @@ class ImportFromCsv:
                 'item_type',
                 'barcode', # str
                 "name", # str
-                "posted", # bool
+                "posted_by", # bool
                 'recomended', # bool
                 'catalog_view', # bool (visible, hidden)
                 'description', # str

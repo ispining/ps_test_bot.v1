@@ -91,6 +91,8 @@ def glob_texts(message):
             ctg = configurer.TG_item_pre_add()
             ctg.item_id = stage.split("||")[2]
             ctg.item_firm = message.text
+            ctg.input_cost = 0
+            ctg.output_cost = 0
             ctg.add()
             stg.admin_add_item_panel(chat_id, stage.split("||")[1], stage.split("||")[2])
             Stages(chat_id).set("None")
@@ -135,30 +137,20 @@ def glob_texts(message):
         # add new category
         elif stage.split('||')[0] == "admin_add_category":
             cat_source = configurer.new_category_text(message.text)
+            cat_keys = cat_source.keys()
             unknown = True
-            try:
-                configurer.Categories(cat_id=str(cat_source["cat_id"]), ru=str(cat_source["ru"])).add()
+            if "ru" in cat_keys:
+                configurer.Categories(cat_id=str(cat_source["cat_id"]), ru=str(cat_source['ru'])).add()
                 unknown = False
-            except:
-                pass
-
-            try:
-                configurer.Categories(cat_id=str(cat_source["cat_id"]), he=str(cat_source["he"])).add()
+            if "en" in cat_keys:
+                configurer.Categories(cat_id=str(cat_source["cat_id"]), en=str(cat_source['en'])).add()
                 unknown = False
-            except:
-                pass
-
-            try:
-                configurer.Categories(cat_id=str(cat_source["cat_id"]), en=str(cat_source["en"])).add()
+            if "he" in cat_keys:
+                configurer.Categories(cat_id=str(cat_source["cat_id"]), he=str(cat_source['he'])).add()
                 unknown = False
-            except:
-                pass
-
-            try:
+            if "ar" in cat_keys:
                 configurer.Categories(cat_id=str(cat_source["cat_id"]), ar=str(cat_source['ar'])).add()
                 unknown = False
-            except:
-                pass
 
             if unknown:
                 send(chat_id, texts.get_text(chat_id, "unknown_format_error_msg"))
@@ -293,11 +285,54 @@ def glob_texts(message):
             else:
                 alert_func.stage_for_nums()
 
+        elif stage.split("||")[0] == "admin_add_firm":
+            k = kmarkup()
+            msg = texts.get_text(chat_id, "admin_add_firm_phone_msg")
+            k.row(stg.back(chat_id, "admin_add_firm"))
+            send(chat_id, msg, reply_markup=k)
+            Stages(chat_id).set(f"admin_add_firm_phone||{str(message.text)}")
+
+        elif stage.split("||")[0] == "admin_add_firm_phone":
+            if str_is_only_integers(message.text):
+
+                firm = configurer.Firm()
+                firm.ident_id = configurer.Randomizer().lower_with_int()
+                firm.firm_name = stage.split("||")[1]
+                firm.phone = message.text
+                firm.reg_date = str(datetime.datetime.now().date())
+                firm.new()
+                stg.admin_firm_panel(chat_id, firm.ident_id)
+                Stages(chat_id).set("None")
+
+            else:
+                Alerts(chat_id).stage_for_nums()
+
+        elif stage.split('||')[0] == "admin_edit_firm_name":
+            firm = configurer.Firm()
+
+            firm.set(by='ident_id', search_value=stage.split("||")[1], column="firm_name", value=message.text)
+
+            send(chat_id, texts.get_text(chat_id, ""))
+
+            stg.admin_edit_firm_data(chat_id, stage.split("||")[1])
+            Stages(chat_id).set("None")
+
+
 
 @bot.message_handler(content_types=['photo'])
 def glob_photo(message):
     chat_id = message.chat.id
+
+    def download_file(name_for_save):
+        PATH = f"{os.getcwd()}/source/csv/{name_for_save}"
+        file_info = bot.get_file(message.document.file_id)
+        downloaded_file = bot.download_file(file_info.file_path)
+        with open(PATH, 'wb') as new_file:
+            new_file.write(downloaded_file)
+        return PATH
+
     if message.chat.type == "private":
+
         stage = Stages(chat_id).get()
         if stage.split("||")[0] == "admin_set_new_item_picture":
             item_id = stage.split('||')[2]
@@ -331,6 +366,25 @@ def glob_photo(message):
 
             send(chat_id, texts.get_text(chat_id, "new_value_setted_msg"), reply_markup=kmarkup().row(stg.back(chat_id, "admin_item")))
             Stages(chat_id).set("None")
+        elif stage.split("||")[0] == "admin_edit_firm_picture":
+            ident_id = stage.split("||")[1]
+
+            fileID = message.photo[-1].file_id
+            file_info = bot.get_file(fileID)
+            downloaded_file = bot.download_file(file_info.file_path)
+            filepath = f"sources/firm_photo/{ident_id}||{str(datetime.datetime.now()).split('.')[0]}.jpg"
+            with open(filepath, 'wb') as new_file:
+                new_file.write(downloaded_file)
+
+            firm = configurer.Firm()
+
+            firm.set(by='ident_id', search_value=stage.split("||")[1], column="picture", value=filepath)
+
+            send(chat_id, texts.get_text(chat_id, ""))
+
+            stg.admin_edit_firm_data(chat_id, stage.split("||")[1])
+            Stages(chat_id).set("None")
+
 
 
 @bot.message_handler(content_types=['document'])
@@ -338,11 +392,19 @@ def doc_message(message):
     chat_id = message.chat.id
     if message.chat.type == "private":
         stage = Stages(chat_id).get()
+
+        def download_file(name_for_save):
+            PATH = f"{os.getcwd()}/source/csv/{name_for_save}"
+            file_info = bot.get_file(message.document.file_id)
+            downloaded_file = bot.download_file(file_info.file_path)
+            with open(PATH, 'wb') as new_file:
+                new_file.write(downloaded_file)
+            return PATH
+
         if stage.split("||")[0] == "admin_set_item_special_files_update":
             item_id = stage.split("||")[1]
             old_file = stage.split("||")[2]
             file_name = message.document.file_name
-
             os.remove(f"sources/items_files/{str(item_id)}/{str(old_file)}")
 
             @configurer.thread(with_timer=True)
@@ -353,6 +415,17 @@ def doc_message(message):
                     new_file.write(downloaded_file)
 
             stg.admin_select_item_file(chat_id, item_id, file_name)
+            Stages(chat_id).set("None")
+        elif stage.split("||")[0] == "upload_items_from_csv":
+
+            send(chat_id, texts.get_text(chat_id, "start_parse_msg"))
+
+            filepath = download_file("items_upload.csv")
+            configurer.Csv(filepath).upload_items()
+
+            send(chat_id, texts.get_text(chat_id, "items_parsed_msg"))
+
+            stg.admin_items(chat_id)
             Stages(chat_id).set("None")
 
 
@@ -468,6 +541,16 @@ def glob_calls(call):
             # Firms list
             elif call_value == "admin_firms":
                 stg.admin_firms(chat_id)
+                dm()
+
+            elif call_value == "admin_edit_firm_name":
+                ident_id = cd[1]
+                stg.admin_edit_firm_name(chat_id, ident_id)
+                dm()
+
+            elif call_value == "admin_edit_firm_picture":
+                ident_id = cd[1]
+                stg.admin_edit_firm_picture(chat_id, ident_id)
                 dm()
 
             # admin firm panel
@@ -617,6 +700,12 @@ def glob_calls(call):
                     stg.admin_find_by_name(chat_id)
                     dm()
 
+                elif call_value == "admin_find_by_undercat":
+                    undercat_id = cd[1]
+                    stg.admin_find_by_undercat(chat_id, undercat_id)
+                    dm()
+
+
             elif call_value == "admin_admins":
                 stg.admin_admins(chat_id)
                 dm()
@@ -657,6 +746,14 @@ def glob_calls(call):
                 stg.admin_remove_dev(chat_id, dev_id)
                 dm()
 
+            elif call_value == "admin_add_firm":
+                stg.admin_add_firm(chat_id)
+                dm()
+
+            elif call_value == "admin_edit_firm_data":
+                firm_id = cd[1]
+                stg.admin_edit_firm_data(chat_id, firm_id)
+                dm()
 
 
         # Agent back office
@@ -679,21 +776,19 @@ def glob_calls(call):
 
 
 
-        elif call_category == "generete":
+        elif call_category in ["generete", "upload"]:
             if call_value == "generete_items_csv":
                 file_path = configurer.Csv("items.csv").items()
                 file = open(file_path, "rb")
                 bot.send_document(chat_id=chat_id, document=file)
                 stg.admin_items(chat_id)
-
+            elif call_value == "upload_items_from_csv":
+                stg.upload_items_from_csv(chat_id)
+                dm()
 
         else:
             send(chat_id, texts.get_text(chat_id, "in_Dev"))
 
 
 
-while True:
-    try:
-        bot.polling(timeout=10000)
-    except Exception as ex:
-        print(ex)
+bot.polling()

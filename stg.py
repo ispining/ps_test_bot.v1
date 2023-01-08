@@ -36,6 +36,7 @@ def admin_panel(chat_id):
             k = kmarkup()
             items_button = btn(texts.get_text(chat_id, "items_btn"), callback_data=f"admin_item")
             firms_button = btn(texts.get_text(chat_id, "firms_btn"), callback_data=f"admin_firms")
+
             categories_button = btn(texts.get_text(chat_id, "categories_btn"), callback_data=f"admin_categories")
             admins_button = btn(texts.get_text(chat_id, "admins_btn"), callback_data=f"admin_admins")
             k.row(items_button, firms_button)
@@ -72,8 +73,9 @@ def admin_items(chat_id):
     find_by_name = btn(texts.get_text(chat_id, "find_by_name_btn"), callback_data=f"admin_find_by_name")
     #find_by_firm = btn(texts.get_text(chat_id, "find_by_firm_btn"), callback_data=f"admin_find_by_firm")
     generete_items_csv = btn(texts.get_text(chat_id, "generete_csv_btn"), callback_data=f"generete_items_csv")
+    upload_items_csv = btn(texts.get_text(chat_id, "upload_from_csv_btn"), callback_data=f"upload_items_from_csv")
 
-    for button in [items_add, find_by_category, find_by_id, find_by_name, generete_items_csv]:
+    for button in [items_add, find_by_category, find_by_id, find_by_name, generete_items_csv, upload_items_csv]:
         k.row(button)
 
     k.row(back(chat_id, "admin"))
@@ -284,16 +286,51 @@ def admin_find_by_category(chat_id, cat_id=None):
     # category selected stage
     elif cat_id != None:
         k = kmarkup()
-        sql.execute(f"SELECT * FROM mainapp_catlink WHERE cat_id = '{str(cat_id)}'")
-        for ident_id, item_id, cat in sql.fetchall():
-            if cat == cat_id:
-                cat = configurer.Categories(cat_id=cat_id).show_content(user_id=chat_id)
-                button = btn(cat, callback_data=f"admin_item_panel||{item_id}||admin_find_by_category")
-                k.row(button)
-        msg = texts.get_text(chat_id, f"admin_find_by_category_selector_msg||{cat_id}")
-        k.row(back(chat_id, "admin_find_by_category"))
+
+        for undercat_id in configurer.UnderCats(cat_id=cat_id).list_all_id():
+            undercat = configurer.UnderCats(undercat_id=undercat_id).show_content(chat_id)
+            button = btn(undercat, callback_data=f"admin_find_by_undercat||{undercat_id}||1")
+            k.row(button)
+        msg = texts.get_text(chat_id, f"admin_find_by_category_selector_msg")
+        k.row(back(chat_id, f"admin_find_by_category"))
         send(chat_id, msg, reply_markup=k)
 
+
+def admin_find_by_undercat(chat_id, undercat_id, page="1"):
+    page = int(page)
+    step = 10
+    from_item = page * step - step
+    to_item = page * step
+    items_id = configurer.Catlinks(cat_id=undercat_id).list_undercat_items()
+
+    last_page_btn = btn("< < <", callback_data=f"admin_find_by_undercat||{undercat_id}||{str(page - 1)}")
+    next_page_btn = btn("> > >", callback_data=f"admin_find_by_undercat||{undercat_id}||{str(page + 1)}")
+
+    k = kmarkup()
+    stock = configurer.Stock()
+    item_num = 0
+
+    for item_id in items_id:
+        if item_num >= from_item and item_num < to_item:
+
+            k.row(btn(stock.get(value=item_id)['name'], callback_data=f"admin_item_panel||{str(item_id)}"))
+        item_num += 1
+
+    if len(items_id) <= 10:
+        pass
+    elif from_item == 0:
+        k.row(next_page_btn)
+    elif to_item >= len(items_id):
+        k.row(last_page_btn)
+    else:
+        k.row(last_page_btn, next_page_btn)
+    k.row(back(chat_id, f"admin_find_by_category"))
+    send(chat_id, texts.get_text(chat_id, "admin_find_by_undercat_list_items_msg").format(**{
+        "page_num": str(page),
+        "from_item": str((int(page)*10)-9),
+        "to_item": str((int(page)*10)+1)
+
+    }), reply_markup=k)
 
 def admin_find_by_id(chat_id):
     k = kmarkup()
@@ -330,7 +367,7 @@ def admin_item_panel(chat_id, item_id):
             "output_cost": str(stock_dict['output_cost']),
             "item_count": str(stock_dict['item_count']),
             "in_stock": str(stock_dict['in_stock']),
-            "special_files": str(stock_dict['special_files'])
+            "special_files": str(stock_dict['files'])
         })
         k.row(btn(texts.get_text(chat_id, "set_item_name_btn"), callback_data=f"admin_item_panel_set_name||{str(item_id)}"))
         k.row(btn(texts.get_text(chat_id, "set_item_picture_btn"), callback_data=f"admin_item_panel_set_item_picture||{str(item_id)}"))
@@ -338,7 +375,7 @@ def admin_item_panel(chat_id, item_id):
         k.row(btn(texts.get_text(chat_id, "set_item_barcode_btn"), callback_data=f"admin_item_panel_set_item_barcode||{str(item_id)}"))
         k.row(btn(texts.get_text(chat_id, "set_item_input_cost_btn"), callback_data=f"admin_item_panel_set_item_input_cost||{str(item_id)}"))
         k.row(btn(texts.get_text(chat_id, "set_item_output_cost_btn"), callback_data=f"admin_item_panel_set_item_output_cost||{str(item_id)}"))
-        k.row(btn(texts.get_text(chat_id, "set_item_count_btn"), callback_data=f"admin_item_panel_set_item_count||{str(item_id)}"))
+        k.row(btn(texts.get_text(chat_id, "set_item_item_count_btn"), callback_data=f"admin_item_panel_set_item_count||{str(item_id)}"))
         k.row(btn(texts.get_text(chat_id, "set_item_item_in_stock_btn"), callback_data=f"admin_item_panel_set_item_in_stock||{str(item_id)}"))
         k.row(btn(texts.get_text(chat_id, "set_item_special_files_btn"), callback_data=f"admin_item_panel_set_item_special_files||{str(item_id)}"))
 
@@ -368,7 +405,7 @@ def admin_item_panel_set(chat_id, item_id, set=None):
         k.row(btn(texts.get_text(chat_id, "remove_item_picture_btn"), callback_data=f"admin_remove_item_picture||{str(item_id)}"))
         k.row(btn(texts.get_text(chat_id, "edit_item_picture_btn"), callback_data=f"admin_edit_item_picture||{str(item_id)}"))
         k.row(back(chat_id, f"admin_item"))
-        if picture == "None":
+        if picture in ["None", "", None]:
             send(chat_id, msg, reply_markup=k)
         else:
             bot.send_photo(chat_id=chat_id, photo=open(item_info['picture'], "rb"), caption=msg, reply_markup=k)
@@ -480,10 +517,19 @@ def agent_panel(chat_id):
 def admin_firms(chat_id):
     k = kmarkup()
     msg = texts.get_text(chat_id, "admin_firms_msg")
+    btn(texts.get_text(chat_id, "add_btn"), callback_data=f"admin_add_firm")
     for firm in configurer.Firm().listall():
         k.row(btn(firm['firm_name'], callback_data=f"admin_firm_panel||{str(firm['ident_id'])}"))
     k.row(back(chat_id, "admin"))
     send(chat_id, msg, reply_markup=k)
+
+
+def admin_add_firm(chat_id):
+    k = kmarkup()
+    msg = texts.get_text(chat_id, "admin_add_firm_msg")
+    k.row(back(chat_id, f"admin_firms"))
+    send(chat_id, msg, reply_markup=k)
+    Stages(chat_id).set(f"admin_add_firm")
 
 
 def customer_panel(chat_id):
@@ -497,16 +543,57 @@ def customer_panel(chat_id):
 
 def admin_firm_panel(chat_id, ident_id):
     cf = configurer.Firm()
+    cf.ident_id = ident_id
     k = kmarkup()
-
     msg = texts.get_text(chat_id, "admin_firm_panel_msg").format(**{
         "ident_id": ident_id,
         "firm_name": cf.get(value=ident_id)['firm_name'],
-        "affiliate_count": str(len(cf.get(by="firm_id", value=ident_id)))
+        "affiliate_count": str(cf.affiliate_count())
     })
-    k.row(back(chat_id, ""))
+
+    k.row(btn(texts.get_text(chat_id, "affiliates_btn"), callback_data=f"admin_firm_affiliates||{str(ident_id)}"))
+    k.row(btn(texts.get_text(chat_id, "edit_data_btn"), callback_data=f"admin_edit_firm_data||{str(ident_id)}"))
+
+
+
+    k.row(back(chat_id, "admin_firms"))
     send(chat_id, msg, reply_markup=k)
 
+
+def admin_edit_firm_data(chat_id, firm_id):
+    k = kmarkup()
+
+    msg = texts.get_text(chat_id, "admin_edit_firm_data_msg")
+
+    name_btn = btn(texts.get_text(chat_id, "firm_name_btn"), callback_data=f"admin_edit_firm_name||{str(firm_id)}")
+    picture_btn = btn(texts.get_text(chat_id, "firm_picture_btn"), callback_data=f"admin_edit_firm_picture||{str(firm_id)}")
+    contact_id_btn = btn(texts.get_text(chat_id, "firm_contact_id_btn"), callback_data=f"admin_edit_firm_contact_id||{str(firm_id)}")
+    phone_btn = btn(texts.get_text(chat_id, "firm_phone_btn"), callback_data=f"admin_edit_firm_phone||{str(firm_id)}")
+    site_btn = btn(texts.get_text(chat_id, "firm_site_btn"), callback_data=f"admin_edit_firm_site||{str(firm_id)}")
+    email_btn = btn(texts.get_text(chat_id, "firm_email_btn"), callback_data=f"admin_edit_firm_email||{str(firm_id)}")
+
+    files_btn = btn(texts.get_text(chat_id, "firm_files_btn"), callback_data=f"admin_edit_firm_files||{str(firm_id)}")
+
+    for button in [name_btn, picture_btn, contact_id_btn, phone_btn, site_btn, email_btn, files_btn]:
+        k.row(button)
+
+    send(chat_id, msg, reply_markup=k)
+
+
+def admin_edit_firm_name(chat_id, ident_id):
+    k = kmarkup()
+    msg = texts.get_text(chat_id, "")
+    k.row(back(chat_id, f""))
+    send(chat_id, msg, reply_markup=k)
+    Stages(chat_id).set(f"admin_edit_firm_name||{str(ident_id)}")
+
+
+def admin_edit_firm_picture(chat_id, ident_id):
+    k = kmarkup()
+    msg = texts.get_text(chat_id, "")
+    k.row(back(chat_id, f""))
+    send(chat_id, msg, reply_markup=k)
+    Stages(chat_id).set(f"admin_edit_firm_picture||{str(ident_id)}")
 
 def admin_categories(chat_id):
     k = kmarkup()
@@ -643,6 +730,14 @@ def admin_devs_panel(chat_id, dev_id):
 
 def admin_remove_dev(call, dev_id):
     chat_id = call.message.chat.id
-    configurer.Staff(chat_id).remove_by_id()
+    configurer.Staff(dev_id).remove_by_id()
     bot.answer_callback_query(call.id, texts.get_text(chat_id, "admin_remove_developer_removed_msg"), show_alert=True)
     admin_admins(chat_id)
+
+
+def upload_items_from_csv(chat_id):
+    k = kmarkup()
+    msg = texts.get_text(chat_id, "upload_items_from_csv_msg")
+    k.row(back(chat_id, "admin_item"))
+    send(chat_id, msg, reply_markup=k)
+    Stages(chat_id).set("upload_items_from_csv")

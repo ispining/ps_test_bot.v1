@@ -24,3 +24,4 @@ class OpenAI:
 
 # r = OpenAI().get_code_response("""Сайт Онлайн Магазин django + react""")
 # pprint(r)
+

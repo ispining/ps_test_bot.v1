@@ -348,7 +348,8 @@ class Firm:
         return result
 
     def affiliate_count(self):
-        afs = Affiliate().get(by="firm_id")
+        return len(Affiliate().get(by="firm_id"))
+
 
 
 # Affiliate model
@@ -638,7 +639,7 @@ c.add_category()
             
             """
 
-            sql.execute(f"INSERT INTO mainapp_categories VALUES ('{str(self.cat_id)}', '{str(self.ru)}', '{str(self.he)}', '{str(self.en)}', '{str(self.ar)}'")
+            sql.execute(f"INSERT INTO mainapp_categories VALUES ('{str(self.cat_id)}', '{str(self.ru)}', '{str(self.en)}', '{str(self.he)}', '{str(self.ar)}')")
             db.commit()
         else:
             if self.ru != "ru":
@@ -799,7 +800,6 @@ class UnderCats:
 class Catlinks:
 
     def __init__(self, ident_id=None, item_id=None, cat_id=None):
-
         sql.execute(f"""CREATE TABLE IF NOT EXISTS mainapp_catlinks(
         ident_id TEXT PRIMARY KEY,
         item_id TEXT,
@@ -849,6 +849,157 @@ class Catlinks:
 
             return result
 
+    def list_undercat_items(self):
+        if not self.exists():
+            result = []
+
+            sql.execute(f"SELECT * FROM mainapp_catlink WHERE cat_id = '{self.cat_ids}'")
+            for cat_link in sql.fetchall():
+                result.append(cat_link[1])
+
+            return result
+
+
+class Names:
+
+    class Item:
+        def __init__(self, ident_id=None):
+            def preDB():
+                sql.execute(f"""CREATE TABLE IF NOT EXISTS mainapp_item_names(
+                ident_id TEXT PRIMARY KEY,
+                ru TEXT,
+                en TEXT,
+                he TEXT,
+                ar TEXT)""")
+                db.commit()
+
+            preDB()
+            self.ident_id = ident_id
+
+        def exists(self):
+            sql.execute(f"SELECT * FROM mainapp_item_names WHERE ident_id = '{str(self.ident_id)}'")
+            if sql.fetchone() is None:
+                return False
+            else:
+                return True
+
+        def set(self, ru=None, en=None, he=None, ar=None):
+            if self.exists():
+                if ru != None:
+                    sql.execute(f"UPDATE mainapp_item_names SET ru = '{str(ru)}' WHERE ident_id = '{str(self.ident_id)}'")
+                    db.commit()
+                if en != None:
+                    sql.execute(f"UPDATE mainapp_item_names SET ru = '{str(en)}' WHERE ident_id = '{str(self.ident_id)}'")
+                    db.commit()
+                if he != None:
+                    sql.execute(f"UPDATE mainapp_item_names SET ru = '{str(he)}' WHERE ident_id = '{str(self.ident_id)}'")
+                    db.commit()
+                if ar != None:
+                    sql.execute(f"UPDATE mainapp_item_names SET ru = '{str(ar)}' WHERE ident_id = '{str(self.ident_id)}'")
+                    db.commit()
+
+            else:
+                sql.execute(f"INSERT INTO mainapp_item_names VALUES('{str(self.ident_id)}', '{str(ru)}', '{str(en)}', '{str(he)}', '{str(ar)}')")
+                db.commit()
+
+        def get(self):
+            """
+            :return: {"ident_id", "ru", "en","he", "ar"}
+            """
+            sql.execute(f"SELECT * FROM mainapp_item_names WHERE ident_id = '{str(self.ident_id)}'")
+            for row in sql.fetchall():
+                return {
+                    "ident_id": row[0],
+                    "ru": row[1],
+                    "en": row[2],
+                    "he": row[3],
+                    "ar": row[4],
+                }
+
+
+class ItemConfig:
+    def __init__(self, ident_id=None, buy_without_stock=False, can_review=True, one_by_one=False, recomended=False):
+        def preDB():
+            sql.execute(f"""CREATE TABLE IF NOT EXISTS mainapp_item_configs(
+            ident_id TEXT PRIMARY KEY,
+            buy_without_stock TEXT, 
+            can_review TEXT, 
+            one_by_one TEXT, 
+            recomended TEXT
+            )""")
+            db.commit()
+        preDB()
+        self.ident_id = ident_id
+        self.buy_without_stock = buy_without_stock
+        self.can_review = can_review
+        self.one_by_one = one_by_one
+        self.recomended = recomended
+
+        if not self.exists():
+            sql.execute(f"""INSERT INTO mainapp_item_configs VALUES (
+            '{str(self.ident_id)}', 
+            '{str(buy_without_stock)}', 
+            '{str(can_review)}', 
+            '{str(one_by_one)}', 
+            '{str(recomended)}'
+            )""")
+            db.commit()
+
+    def exists(self):
+        sql.execute(f"SELECT * FROM mainapp_item_configs WHERE ident_id = '{str(self.ident_id)}'")
+        if sql.fetchone() is None:
+            return False
+        else:
+            return True
+
+    def get(self):
+        sql.execute(f"SELECT * FROM mainapp_item_configs WHERE ident_id = '{str(self.ident_id)}'")
+        for row in sql.fetchall():
+            ident_id = self.ident_id
+            buy_without_stock = row[1]
+            can_review = row[2]
+            one_by_one = row[3]
+            recomended = row[4]
+            return {
+                "ident_id": ident_id,
+                "buy_without_stock": buy_without_stock,
+                "can_review": can_review,
+                "one_by_one": one_by_one,
+                "recomended": recomended
+            }
+
+    def set(self):
+        if self.buy_without_stock in [True, "True", False, "False", 0, "0", 1, "1"]:
+            if self.buy_without_stock in [True, "True", 1, "1"]:
+                self.buy_without_stock = "True"
+            else:
+                self.buy_without_stock = "False"
+
+            sql.execute(f"UPDATE mainapp_item_configs SET buy_without_stock = '{str(self.buy_without_stock)}' WHERE ident_id = '{str(self.ident_id)}'")
+            db.commit()
+
+        if self.can_review in [True, "True", False, "False", 0, "0", 1, "1"]:
+            if self.can_review in [True, "True", 1, "1"]:
+                self.can_review = "True"
+            else:
+                self.can_review = "False"
+            sql.execute(f"UPDATE mainapp_item_configs SET can_review = '{str(self.can_review)}' WHERE ident_id = '{str(self.ident_id)}'")
+            db.commit()
+        if self.one_by_one in [True, "True", False, "False", 0, "0", 1, "1"]:
+            if self.one_by_one in [True, "True", 1, "1"]:
+                self.one_by_one = "True"
+            else:
+                self.one_by_one = "False"
+            sql.execute(f"UPDATE mainapp_item_configs SET one_by_one = '{str(self.one_by_one)}' WHERE ident_id = '{str(self.ident_id)}'")
+            db.commit()
+        if self.recomended in [True, "True", False, "False", 0, "0", 1, "1"]:
+            if self.recomended in [True, "True", 1, "1"]:
+                self.recomended = "True"
+            else:
+                self.recomended = "False"
+            sql.execute(f"UPDATE mainapp_item_configs SET recomended = '{str(self.recomended)}' WHERE ident_id = '{str(self.ident_id)}'")
+            db.commit()
+
 
 # CSV convert tools
 class Csv:
@@ -863,42 +1014,17 @@ class Csv:
         f.write(self.content)
         f.close()
 
-    def upload_items(self, filename: str) -> None:
-        list_items = csvToDB.ImportFromCsv(filename).list_items()
+    def upload_items(self, verbose=GLOBAL_VERBOSE) -> None:
+        list_items = csvToDB.ImportFromCsv(self.filename).list_items()
         items_num = len(list_items)
+        num = 1
         for item in list_items:
 
-            @timer
-            def stock_update():
-                ident_id, barcode, kilograms, location, minimal_stock, name = (item['ident_id'], item['barcode'], item['kilograms'], item['location'], item['minimal_stock'], item['name'])
-
-                pass
-
-            @timer
-            def config_update():
-                ident_id, buy_without_stock, can_review, one_by_one, recomended = (item['ident_id'], item['buy_without_stock'], item['can_review'], item['one_by_one'], item['recomended'])
-
-                pass
-
-            @timer
-            def content_update():
-                ident_id, btn_text, description, about, posted_by = (item['ident_id'], item['btn_text'], item['description'], item['about'], item['posted_by'])
-
-                pass
-
-            @timer
-            def catlink_update():
-                pass
-
-            @timer
-            def other_update():
-                ident_id, mas_type, mas_status, delivery_type = (item["ident_id"], item["mas_type"], item["mas_status"], item["delivery_type"])
-
-                pass
+            num += 1
 
     def categories(self, filter: str=None) -> str:
 
-        self.content = "Category id;Russian;English;Hebrew;Arabic\n"
+        self.content = "Category id,Russian,English,Hebrew,Arabic\n"
         sql.execute(f"SELECT * FROM mainapp_categories")
         for row in sql.fetchall():
            for item in row:
@@ -907,7 +1033,6 @@ class Csv:
         self.generate_csv()
 
         return os.getcwd() + self.CSV_PATH + self.filename
-
 
     def items(self):
         self.content = "ident_id;name;item_firm;barcode;input_cost;output_cost;item_count\n"
@@ -918,7 +1043,6 @@ class Csv:
 
         return os.getcwd() + self.CSV_PATH + self.filename
 
-
     def leads(self):
         self.content = "User id;First Name;Last Name;Teudat Zeut;Country;City;Address;Phone1;Phone2;email;Reg Date;Birth Date;Agent id\n"
 
@@ -926,7 +1050,6 @@ class Csv:
         for user_id, fn, ln, tz, _, status, country, city, address, p1, p2, email, reg_date, b_d, agent_id, __ in sql.fetchall():
             self.content += f"{user_id};{fn};{ln};{tz};{country};{city};{address};{p1};{p2};{email};{reg_date};{b_d};{agent_id}\n"
         self.generate_csv()
-
 
         return os.getcwd() + self.CSV_PATH + self.filename
 
@@ -938,10 +1061,17 @@ class Randomizer:
         self.low_str = "abcdefghijklmnopqrstuvwxyz"
         self.high_str = self.low_str.upper()
 
-    def lower_with_int(self, char_size=9):
+    def lower_with_int(self, char_size: int = 9):
         r = ""
         for i in range(char_size):
             r += random.choice(self.ineg+self.low_str)
+
+        return r
+
+    def only_low_str(self, char_size: int = 9):
+        r = ""
+        for i in range(char_size):
+            r += random.choice(self.low_str)
 
         return r
 
@@ -1054,15 +1184,129 @@ class TG_item_pre_add:
         db.commit()
 
 
+class Content:
+    class Item:
+        def __init__(self, ident_id=None):
+            def preDB():
+                sql.execute(f"""CREATE TABLE IF NOT EXISTS mainapp_item_content (
+                ident_id TEXT PRIMARY KEY,
+                btn_text TEXT,
+                description TEXT,
+                about TEXT,
+                posted_by TEXT
+                )""")
+            preDB()
+            self.ident_id = ident_id
+
+        def exists(self):
+            sql.execute(f"SELECT * FROM mainapp_item_content WHERE ident_id = '{str(self.ident_id)}'")
+            if sql.fetchone() is None:
+                return False
+            else:
+                return True
+
+        def set(self, btn_text=None, description=None, about=None, posted_by=None):
+            """
+            format {'btn_text', 'description', 'about', 'posted_by'}
+
+            :param btn_text: ident id for Names class
+            :param description: ident id for Names class
+            :param about: ident id for Names class
+            :param posted_by: ident id for Names class
+            :return:  None
+            """
+            if self.exists():
+                if btn_text != None:
+                    txt_id = self.get()['btn_text']
+                    Names().Item(txt_id).set(he=btn_text)
+                if description != None:
+                    txt_id = self.get()['description']
+                    Names().Item(txt_id).set(he=btn_text)
+                if about != None:
+                    txt_id = self.get()['about']
+                    Names().Item(txt_id).set(he=btn_text)
+                if posted_by != None:
+                    txt_id = self.get()['posted_by']
+                    Names().Item(txt_id).set(he=btn_text)
+
+            else:
+                names = Names()
+                btn_id = "None"
+                description_id = "None"
+                about_id = "None"
+                posted_by_id = "None"
+                if btn_text != None:
+                    try:
+                        new_btn_id = Randomizer().only_low_str()
+                        it = names.Item(ident_id=new_btn_id)
+                        it.set(he=btn_text)
+                        btn_id = new_btn_id
+                    except:
+                        pass
+                if description != None:
+                    try:
+                        new_description_id = Randomizer().only_low_str()
+                        it = names.Item(ident_id=new_description_id)
+                        it.set(he=description)
+                        description_id = new_description_id
+                    except:
+                        pass
+                if about != None:
+                    try:
+                        new_about_id = Randomizer().only_low_str()
+                        it = names.Item(ident_id=new_about_id)
+                        it.set(he=about)
+                        about_id = new_about_id
+                    except:
+                        pass
+                if posted_by != None:
+                    try:
+                        new_posted_by_id = Randomizer().only_low_str()
+                        it = names.Item(ident_id=new_posted_by_id)
+                        it.set(he=about)
+                        posted_by_id = new_posted_by_id
+                    except:
+                        pass
+
+                sql.execute(f"INSERT INTO mainapp_item_content VALUES('{str(self.ident_id)}, {str(btn_id)}', '{str(description_id)}', '{str(about_id)}', '{str(posted_by_id)}')")
+                db.commit()
+
+        def get(self, lang=None):
+            """
+
+            :param lang: ru, en, he, ar
+            :return: {"ident_id", "ident_id", "description", "about", "posted_by"}
+            """
+            sql.execute(f"SELECT * FROM mainapp_item_content WHERE ident_id = '{str(self.ident_id)}'")
+            for row in sql.fetchall():
+                if lang == None:
+                    r = {
+                        "ident_id": row[0],
+                        "btn_text": Names().Item(row[1]).get(),
+                        "description": Names().Item(row[2]).get(),
+                        "about": Names().Item(row[3]).get(),
+                        "posted_by": Names().Item(row[4]).get()
+                    }
+                else:
+                    r = {
+                        "ident_id": row[0],
+                        "btn_text": Names().Item(row[1]).get()[lang],
+                        "description": Names().Item(row[2]).get()[lang],
+                        "about": Names().Item(row[3]).get()[lang],
+                        "posted_by": Names().Item(row[4]).get()[lang]
+                    }
+                return r
+
+
 def new_category_text(source):
     result = {}
     result['cat_id'] = Randomizer().lower_with_int()
     for row in source.split("\n"):
-        if row.replace(" ", "") != "":
+        lng = row.split("::")[0]
 
-            rs = row.split("::")[0]
-            if rs in ["he", "en", "ru", "ar"]:
-                result[rs] = row.split("::")[1]
+        if row.replace(" ", "") != "":
+            if lng in ["he", "en", "ru", "ar"]:
+                    result[lng] = row.split("::")[1]
 
     return result
 
@@ -1102,3 +1346,5 @@ def id_admin(user_id):
 
 def is_agent(user_id):
     return Firm().get(by="contact_id", value=user_id) != None
+
+
